@@ -109,7 +109,7 @@ const Messages = () => {
 export default function App() {
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="QuoteService">
+			<Stack.Navigator initialRouteName="TaskList">
 				<Stack.Screen name="Login" component={LoginScreen} />
 				<Stack.Screen name="Register" component={RegisterScreen} />
 
