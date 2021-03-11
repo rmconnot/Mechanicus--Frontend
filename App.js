@@ -10,7 +10,27 @@ import {
 	View,
 } from "react-native";
 import { Provider, createClient, useQuery, useMutation } from "urql";
+// =====
+// SCREENS-LOG IN, REGISTER
+import LoginScreen from './js/screens/LoginScreen';
+import RegisterScreen from './js/screens/RegisterScreen';
+// SCREENS-TASK
+import TaskListScreen from './js/screens/TaskListScreen';
+// SCREENS-VEHICLE
+import VehicleListScreen from './js/screens/VehicleListScreen';
+import AddVehicleVINScreen from './js/screens/AddVehicleVINScreen';
+import AddVehicleManualScreen from './js/screens/AddVehicleManualScreen';
+// SCREENS-PROFILE
+import ProfileScreen from './js/screens/ProfileScreen';
+// =====
+// nav dependencies
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+// navigation
+const Stack = createStackNavigator();
+
+// connect to backend
 const client = createClient({
 	url: "https://mechanicus--backend.herokuapp.com/graphql",
 });
@@ -79,15 +99,30 @@ const Messages = () => {
 
 export default function App() {
 	return (
-		<Provider value={client}>
-			<View style={styles.container}>
-				<Input />
-				<View style={styles.responseView}>
-					<Messages />
-				</View>
-				<StatusBar style="auto" />
-			</View>
-		</Provider>
+		<NavigationContainer>
+			<Stack.Navigator initialRouteName="TaskList">
+				<Stack.Screen name="Login" component={LoginScreen} />
+				<Stack.Screen name="Register" component={RegisterScreen} />
+
+				<Stack.Screen name="TaskList" component={TaskListScreen} />
+
+				<Stack.Screen name="VehicleList" component={VehicleListScreen} />
+				<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
+				<Stack.Screen name="AddVehicleManual" component={AddVehicleManualScreen} />
+
+				<Stack.Screen name="Profile" component={ProfileScreen} />
+
+			</Stack.Navigator>
+		</NavigationContainer>
+		// <Provider value={client}>
+		// 	<View style={styles.container}>
+		// 		<Input />
+		// 		<View style={styles.responseView}>
+		// 			<Messages />
+		// 		</View>
+		// 		<StatusBar style="auto" />
+		// 	</View>
+		// </Provider>
 	);
 }
 
