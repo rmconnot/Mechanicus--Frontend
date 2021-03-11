@@ -23,6 +23,22 @@ class TabNav extends React.Component {
     }
 }
 
+export function NavGroup({
+    navigation,
+    options = [
+        {title: "Task", to: "TaskList"},
+        {title: "Garage", to: "VehicleList"}
+    ]
+}){
+    const navigate = navigation.navigate;
+    return (
+        <View style={styles.navGroupContainer}> 
+            <TabNav style={styles.navGroupItem} title={options[0].title} to={options[0].to} navigate={navigate} />
+            <TabNav style={styles.navGroupItem} title={options[1].title} to={options[1].to} navigate={navigate} />
+        </View>
+    );
+}
+
 /* <BottomNav> */
 export default function BottomNav({ navigation }) {
     let navigate = navigation.navigate;
@@ -42,11 +58,23 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
         elevation: 2,
 	},
+    spaceBetween: {
+        justifyContent: "space-between"
+    },
 	bottomNav: {
         flex: 1/3
     },
     navBtn: {
         alignSelf: "stretch",
         backgroundColor: "#E0E0E0"
+    },
+    navGroupContainer: {
+        width: "100%",
+		flexDirection: "row",
+        padding: 16,
+        justifyContent: "space-between"
+    },
+    navGroupItem: {
+        width: "30%",
     }
 });
