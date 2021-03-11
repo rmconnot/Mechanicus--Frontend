@@ -29,8 +29,8 @@ export class VehicleListScreen extends React.Component {
     render() {
         return (
             <View style={VehicleListStyles.container}>
-                <View style={VehicleListStyles.headerSeection}>
-                    <View style={VehicleListStyles.TitleSection}>
+                <View style={VehicleListStyles.headerSection}>
+                    <View style={VehicleListStyles.titleSection}>
                         <Text>Garage</Text>
                         <Button
                             title="Edit"
@@ -83,18 +83,7 @@ export class VehicleListScreen extends React.Component {
                     }}
                 />
                 <View>
-                    <Button
-                        title="Home"
-                        onPress={() => Alert.alert('jump to the home page')}
-                    />
-                    <Button
-                        title="Garage"
-                        onPress={() => Alert.alert('refresh the garage page')}
-                    />
-                    <Button
-                        title="Account"
-                        onPress={() => Alert.alert('jump to the account page')}
-                    />
+                    <BottomNav navigation={ navigation }/>
                 </View>
 
             </View>

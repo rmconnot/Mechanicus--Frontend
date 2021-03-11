@@ -24,6 +24,7 @@ import TaskListScreen from './js/screens/TaskListScreen';
 import AddVehicleVINScreen from './js/screens/AddVehicleVINScreen';
 import AddVehicleManualScreen from './js/screens/AddVehicleManualScreen';
 import { VehicleListScreen } from './VehicleListScreen';
+import { TaskDetailPastScreen } from './TaskDetailPastScreen';
 // SCREENS-PROFILE
 import ProfileScreen from './js/screens/ProfileScreen';
 // =====
@@ -105,11 +106,12 @@ const Messages = () => {
 export default function App() {
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="TaskList">
+			<Stack.Navigator initialRouteName="TaskDetailPast">
 				<Stack.Screen name="Login" component={LoginScreen} />
 				<Stack.Screen name="Register" component={RegisterScreen} />
 
 				<Stack.Screen name="TaskList" component={TaskListScreen} />
+				<Stack.Screen name="TaskDetailPast" component={TaskDetailPastScreen} />
 
 				<Stack.Screen name="VehicleList" component={VehicleListScreen} />
 				<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
