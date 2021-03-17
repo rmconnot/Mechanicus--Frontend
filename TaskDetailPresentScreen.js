@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, Image, Button } from 'react-native';
 import { TaskDetailStyles } from './Styles';
 
-export class TaskDetailPastScreen extends React.Component {
+export class TaskDetailPresentScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,7 +20,8 @@ export class TaskDetailPastScreen extends React.Component {
                     serviceOne: 'Vehicle inspection', 
                     serviceOnePrice: '$$$', 
                     serviceTwo: 'Oil Change', 
-                    serviceTwoPrice: '$$$'}
+                    serviceTwoPrice: '$$$'
+                }
 			}
         }
 
@@ -33,9 +34,18 @@ export class TaskDetailPastScreen extends React.Component {
             <View style={TaskDetailStyles.container}>
                 <View style={TaskDetailStyles.headerSection}>
                     <View style={TaskDetailStyles.titleSection}>
-                        <Text>{this.state.currentNoteList.make}, {this.state.currentNoteList.year}</Text>
-                        <Text>{this.state.currentNoteList.vin}</Text>
-                        <Text>{this.state.currentNoteList.scheduleDate}</Text>
+                        <View style={TaskDetailStyles.titleText}>
+                            <Text>{this.state.currentNoteList.make}, {this.state.currentNoteList.year}</Text>
+                            <Text>{this.state.currentNoteList.vin}</Text>
+                            <Text>{this.state.currentNoteList.scheduleDate}</Text> 
+                        </View>
+                        <View style={TaskDetailStyles.titleBtn}>
+                           <Button
+                            title="Cancel"
+                            onPress={() => Alert.alert('jump to the cancel page')}
+                        /> 
+                        </View>
+                        
                     </View>
 
                     <View style={TaskDetailStyles.timeline}>

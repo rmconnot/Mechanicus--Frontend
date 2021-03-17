@@ -58,6 +58,49 @@ export const VehicleListStyles = StyleSheet.create({
     },
 });
 
+////////////////////////////////// TaskList //////////////////////////////////////////
+export const TaskListStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: '10%',
+        justifyContent: 'flex-start',
+    },
+    headerSection: {
+        flex:0.6
+    },
+    headerBtn:{
+        flex:0.6,
+        flexDirection: 'row',
+        
+        
+    },
+    taskContainer: {
+        flex:1,
+        paddingBottom: '20%'
+        
+    },
+    listContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'stretch', // this turns out to be important!
+        width: '100%',
+    },
+    listCardContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 0.8,
+        flexDirection: 'row',
+        paddingLeft:20
+    },
+    listText: {
+        flex: 0.6
+    },
+    listImage: {
+        flex: 0.5
+    }
+});
+
 ////////////////////////////////// TaskDetail ////////////////////////////////////////
 export const TaskDetailStyles = StyleSheet.create({
     container: {
@@ -70,8 +113,14 @@ export const TaskDetailStyles = StyleSheet.create({
         flex:0.3
     },
     titleSection:{
-        flex:0.3,
+        flexDirection:'row'
+    },
+    titleText: {
+        flex:0.7,
         justifyContent: 'center',
+    },
+    titleBtn: {
+        flex:0.3,
     },
     timeline: {
         flex:0.7,
@@ -86,7 +135,7 @@ export const TaskDetailStyles = StyleSheet.create({
     },
     timelineLineIcon: {
         width: 80,
-        paddingTop: '25%'
+        paddingTop: '15%'
     },
     listContainer:{
         flex:0.3
@@ -95,7 +144,7 @@ export const TaskDetailStyles = StyleSheet.create({
         fontWeight: '800'
     },
     listItem:{
-        flex:0.5,
+        flex:0.15,
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'stretch',
@@ -103,19 +152,22 @@ export const TaskDetailStyles = StyleSheet.create({
     },
     listCardContainer: {
         flex: 0.6,
-        paddingRight: '50%'
+        paddingRight: '20%'
     },
     listCardContent: {
-        flex: 0.6,
-        flexDirection:'row'
+        flex: 1,
+        
     },
     listText: {
-        flex: 0.5,
+        flex: 0.9,
+        paddingLeft: '50%',
+        paddingBottom:'90%'
+        
+        
     },
     listImage: {
-        flex: 0.5,
-        width: 100, 
-        height: 100
+        flex: 0.1,
+        paddingRight: '30%',
     },
 
 });
