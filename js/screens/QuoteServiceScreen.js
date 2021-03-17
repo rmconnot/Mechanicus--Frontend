@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { CheckboxGroup } from '../common/Form';
 import { NavGroup } from '../common/BottomNav';
+import { QuoteProgress } from '../common/Progress';
 
 const navOption = [
     {
@@ -34,6 +35,7 @@ export default function QuoteServiceScreen({ navigation }) {
     return (
         <View style={styles.container}> 
             <View>
+                <QuoteProgress curStep={2} status={[true,false,false]} />
                 <CheckboxGroup options={sampleServiceList} />
             </View>
             
