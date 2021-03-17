@@ -9,10 +9,10 @@ export const VehicleListStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
-    headerSeection: {
+    headerSection: {
         flex:0.8
     },
-    TitleSection:{
+    titleSection:{
         flex:0.3,
         flexDirection: 'row',
         
@@ -56,4 +56,118 @@ export const VehicleListStyles = StyleSheet.create({
         width: 28,
         height: 28,
     },
+});
+
+////////////////////////////////// TaskList //////////////////////////////////////////
+export const TaskListStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: '10%',
+        justifyContent: 'flex-start',
+    },
+    headerSection: {
+        flex:0.6
+    },
+    headerBtn:{
+        flex:0.6,
+        flexDirection: 'row',
+        
+        
+    },
+    taskContainer: {
+        flex:1,
+        paddingBottom: '20%'
+        
+    },
+    listContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'stretch', // this turns out to be important!
+        width: '100%',
+    },
+    listCardContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 0.8,
+        flexDirection: 'row',
+        paddingLeft:20
+    },
+    listText: {
+        flex: 0.6
+    },
+    listImage: {
+        flex: 0.5
+    }
+});
+
+////////////////////////////////// TaskDetail ////////////////////////////////////////
+export const TaskDetailStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    headerSection: {
+        flex:0.3
+    },
+    titleSection:{
+        flexDirection:'row'
+    },
+    titleText: {
+        flex:0.7,
+        justifyContent: 'center',
+    },
+    titleBtn: {
+        flex:0.3,
+    },
+    timeline: {
+        flex:0.7,
+        flexDirection: 'row',
+    },
+    timelineSection: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    timelineCircleIcon: {
+        width: '65%'
+    },
+    timelineLineIcon: {
+        width: 80,
+        paddingTop: '15%'
+    },
+    listContainer:{
+        flex:0.3
+    },
+    listTitle: {
+        fontWeight: '800'
+    },
+    listItem:{
+        flex:0.15,
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'stretch',
+        paddingRight: '30%'
+    },
+    listCardContainer: {
+        flex: 0.6,
+        paddingRight: '20%'
+    },
+    listCardContent: {
+        flex: 1,
+        
+    },
+    listText: {
+        flex: 0.9,
+        paddingLeft: '50%',
+        paddingBottom:'90%'
+        
+        
+    },
+    listImage: {
+        flex: 0.1,
+        paddingRight: '30%',
+    },
+
 });
