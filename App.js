@@ -23,7 +23,7 @@ import TaskListScreen from './js/screens/TaskListScreen';
 // import VehicleListScreen from './js/screens/VehicleListScreen';
 import AddVehicleVINScreen from './js/screens/AddVehicleVINScreen';
 import AddVehicleManualScreen from './js/screens/AddVehicleManualScreen';
-import { VehicleListScreen } from './VehicleListScreen';
+import { VehicleListScreen } from './js/screens/VehicleListScreen';
 // SCREENS-PROFILE
 import ProfileScreen from './js/screens/ProfileScreen';
 // SCREENS-GET A QUOTE
