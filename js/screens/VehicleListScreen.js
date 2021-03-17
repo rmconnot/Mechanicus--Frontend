@@ -1,56 +1,10 @@
 import React from 'react';
 import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, Image, Button, StyleSheet } from 'react-native';
 import BottomNav from '../common/BottomNav';
+import { VehicleCard } from '../common/Card';
+import QuoteVehicleScreen from './QuoteVehicleScreen';
 
-class VehicleCard extends React.Component {
-    props: {
-        item : Object,
-    }
 
-    static defaultProps = {
-        item: {
-            id:1,
-            make:'Honda', 
-            model:'CR-V', 
-            year:"2019", 
-            imageURL:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
-        }
-    }
-
-    render(){
-        const item = this.props.item;
-        return (
-            <View style={VehicleListStyles.listContainer}>
-                <View style={VehicleListStyles.listCardContainer}> 
-                    <View style={VehicleListStyles.listImage}>
-                        <Image
-                        style={{width: 100, height: 100}}
-                        source={{ uri: item.imageURL }} />
-                    </View>
-                    <View style={VehicleListStyles.listText}>
-                        <Text>
-                        {item.make}, {item.year}
-                        </Text>
-                        <Text>
-                            {item.model}
-                            </Text>
-                    </View>
-                    
-                </View>
-                    <View style={VehicleListStyles.listButtonsContainer}>
-                        <Button
-                            title="Service history"
-                            onPress={() => Alert.alert('jump to the history page')}
-                        />
-                            <Button
-                            title="Get a quote"
-                            onPress={() => Alert.alert('jump to the quote page')}
-                        />
-                    </View>
-            </View>
-        );
-    }
-}
 
 export class VehicleListScreen extends React.Component {
     constructor(props) {
@@ -79,7 +33,19 @@ export class VehicleListScreen extends React.Component {
     render() {
         const renderItem = ({item}) => {
             return (
-                <VehicleCard item={item} />
+                <View>
+                    <VehicleCard item={item} />
+                    <View style={VehicleListStyles.listButtonsContainer}>
+                        <Button
+                            title="Service history"
+                            onPress={() => Alert.alert('jump to the history page')}
+                        />
+                            <Button
+                            title="Get a quote"
+                            onPress={() => this.props.navigation.navigate("QuoteVehicle") }
+                        />
+                    </View>
+                </View>
             );
         };
         return (

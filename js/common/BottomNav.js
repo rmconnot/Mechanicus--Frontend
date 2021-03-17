@@ -6,7 +6,7 @@ class TabNav extends React.Component {
         to: string,
         title: String,
         navigate: () => mixed,
-        active: string,//check if tab is activated
+        active: string, //check if tab is activated
     };
 
     render(){
