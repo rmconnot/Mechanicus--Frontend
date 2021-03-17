@@ -13,11 +13,12 @@ import {
 	View,
 } from "react-native";
 import { Provider, createClient, useQuery, useMutation } from "urql";
-// =====
+
 // SCREENS-LOG IN, REGISTER
-import LoginScreen from './js/screens/LoginScreen';
-import RegisterScreen from './js/screens/RegisterScreen';
+import LoginScreen from "./js/screens/LoginScreen";
+import RegisterScreen from "./js/screens/RegisterScreen";
 // SCREENS-TASK
+
 import {TaskListScreen} from './TaskListScreen';
 // SCREENS-VEHICLE
 // import VehicleListScreen from './js/screens/VehicleListScreen';
@@ -26,13 +27,28 @@ import AddVehicleManualScreen from './js/screens/AddVehicleManualScreen';
 import { VehicleListScreen } from './VehicleListScreen';
 import { TaskDetailPastScreen } from './TaskDetailPastScreen';
 import { TaskDetailPresentScreen } from './TaskDetailPresentScreen';
+
+import { TaskListScreen } from "./TaskListScreen";
+// SCREENS-VEHICLE
+// import VehicleListScreen from './js/screens/VehicleListScreen';
+import AddVehicleVINScreen from "./js/screens/AddVehicleVINScreen";
+import AddVehicleManualScreen from "./js/screens/AddVehicleManualScreen";
+
+import { VehicleListScreen } from "./VehicleListScreen";
+import { TaskDetailPastScreen } from "./TaskDetailPastScreen";
+import { TaskDetailPresentScreen } from "./TaskDetailPresentScreen";
+
+
 // SCREENS-PROFILE
-import ProfileScreen from './js/screens/ProfileScreen';
+import ProfileScreen from "./js/screens/ProfileScreen";
+// SCREENS-GET A QUOTE
+import QuoteVehicleScreen from "./js/screens/QuoteVehicleScreen";
+import QuoteServiceScreen from "./js/screens/QuoteServiceScreen";
+import QuoteReviewScreen from "./js/screens/QuoteReviewScreen";
 // =====
 // nav dependencies
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 // navigation
 const Stack = createStackNavigator();
@@ -113,22 +129,25 @@ export default function App() {
 
 				<Stack.Screen name="TaskList" component={TaskListScreen} />
 				<Stack.Screen name="TaskDetailPast" component={TaskDetailPastScreen} />
+
 				<Stack.Screen name="TaskDetailPresent" component={TaskDetailPresentScreen} />
+
 
 				<Stack.Screen name="VehicleList" component={VehicleListScreen} />
 				<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
-				<Stack.Screen name="AddVehicleManual" component={AddVehicleManualScreen} />
+				<Stack.Screen
+					name="AddVehicleManual"
+					component={AddVehicleManualScreen}
+				/>
 
 				<Stack.Screen name="Profile" component={ProfileScreen} />
 
-
+				<Stack.Screen name="QuoteVehicle" component={QuoteVehicleScreen} />
+				<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />
+				<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
 
 	);
 }
-
-
-
-
 
