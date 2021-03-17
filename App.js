@@ -13,11 +13,21 @@ import {
 	View,
 } from "react-native";
 import { Provider, createClient, useQuery, useMutation } from "urql";
-// =====
+
 // SCREENS-LOG IN, REGISTER
 import LoginScreen from "./js/screens/LoginScreen";
 import RegisterScreen from "./js/screens/RegisterScreen";
 // SCREENS-TASK
+
+import {TaskListScreen} from './TaskListScreen';
+// SCREENS-VEHICLE
+// import VehicleListScreen from './js/screens/VehicleListScreen';
+import AddVehicleVINScreen from './js/screens/AddVehicleVINScreen';
+import AddVehicleManualScreen from './js/screens/AddVehicleManualScreen';
+import { VehicleListScreen } from './VehicleListScreen';
+import { TaskDetailPastScreen } from './TaskDetailPastScreen';
+import { TaskDetailPresentScreen } from './TaskDetailPresentScreen';
+
 import { TaskListScreen } from "./TaskListScreen";
 // SCREENS-VEHICLE
 // import VehicleListScreen from './js/screens/VehicleListScreen';
@@ -27,6 +37,7 @@ import AddVehicleManualScreen from "./js/screens/AddVehicleManualScreen";
 import { VehicleListScreen } from "./VehicleListScreen";
 import { TaskDetailPastScreen } from "./TaskDetailPastScreen";
 import { TaskDetailPresentScreen } from "./TaskDetailPresentScreen";
+
 
 // SCREENS-PROFILE
 import ProfileScreen from "./js/screens/ProfileScreen";
@@ -118,10 +129,9 @@ export default function App() {
 
 				<Stack.Screen name="TaskList" component={TaskListScreen} />
 				<Stack.Screen name="TaskDetailPast" component={TaskDetailPastScreen} />
-				<Stack.Screen
-					name="TaskDetailPresent"
-					component={TaskDetailPresentScreen}
-				/>
+
+				<Stack.Screen name="TaskDetailPresent" component={TaskDetailPresentScreen} />
+
 
 				<Stack.Screen name="VehicleList" component={VehicleListScreen} />
 				<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
@@ -137,5 +147,7 @@ export default function App() {
 				<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>
+
 	);
 }
+
