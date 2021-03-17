@@ -6,7 +6,7 @@ class TabNav extends React.Component {
         to: string,
         title: String,
         navigate: () => mixed,
-        active: string,//check if tab is activated
+        active: string, //check if tab is activated
     };
 
     render(){
@@ -21,6 +21,22 @@ class TabNav extends React.Component {
             </View>
         );
     }
+}
+
+export function NavGroup({
+    navigation,
+    options = [
+        {title: "Task", to: "TaskList"},
+        {title: "Garage", to: "VehicleList"}
+    ]
+}){
+    const navigate = navigation.navigate;
+    return (
+        <View style={styles.navGroupContainer}> 
+            <TabNav style={styles.navGroupItem} title={options[0].title} to={options[0].to} navigate={navigate} />
+            <TabNav style={styles.navGroupItem} title={options[1].title} to={options[1].to} navigate={navigate} />
+        </View>
+    );
 }
 
 /* <BottomNav> */
@@ -42,11 +58,23 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
         elevation: 2,
 	},
+    spaceBetween: {
+        justifyContent: "space-between"
+    },
 	bottomNav: {
         flex: 1/3
     },
     navBtn: {
         alignSelf: "stretch",
         backgroundColor: "#E0E0E0"
+    },
+    navGroupContainer: {
+        width: "100%",
+		flexDirection: "row",
+        padding: 16,
+        justifyContent: "space-between"
+    },
+    navGroupItem: {
+        width: "30%",
     }
 });

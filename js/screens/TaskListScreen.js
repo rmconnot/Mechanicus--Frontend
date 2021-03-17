@@ -9,6 +9,10 @@ export default function TaskListScreen({ navigation }) {
         <View style={styles.container}> 
             <View>
                 <Text>home page, task list</Text>
+                <Button 
+                    title={"Get a Quote"}
+                    onPress={() => navigation.navigate("QuoteVehicle")}
+                />
             </View>
             <BottomNav navigation={ navigation }/>
         </View>

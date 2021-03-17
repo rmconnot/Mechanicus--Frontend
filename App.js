@@ -23,9 +23,13 @@ import TaskListScreen from './js/screens/TaskListScreen';
 // import VehicleListScreen from './js/screens/VehicleListScreen';
 import AddVehicleVINScreen from './js/screens/AddVehicleVINScreen';
 import AddVehicleManualScreen from './js/screens/AddVehicleManualScreen';
-import { VehicleListScreen } from './VehicleListScreen';
+import { VehicleListScreen } from './js/screens/VehicleListScreen';
 // SCREENS-PROFILE
 import ProfileScreen from './js/screens/ProfileScreen';
+// SCREENS-GET A QUOTE
+import QuoteVehicleScreen from './js/screens/QuoteVehicleScreen';
+import QuoteServiceScreen from './js/screens/QuoteServiceScreen';
+import QuoteReviewScreen from './js/screens/QuoteReviewScreen';
 // =====
 // nav dependencies
 import { NavigationContainer } from '@react-navigation/native';
@@ -116,6 +120,10 @@ export default function App() {
 				<Stack.Screen name="AddVehicleManual" component={AddVehicleManualScreen} />
 
 				<Stack.Screen name="Profile" component={ProfileScreen} />
+
+				<Stack.Screen name="QuoteVehicle" component={QuoteVehicleScreen} />
+				<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />
+				<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
 
 
 			</Stack.Navigator>
