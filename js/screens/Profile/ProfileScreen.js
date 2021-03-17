@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import BottomNav from '../common/BottomNav';
+import { View, Text, Button, StyleSheet } from 'react-native';
+import BottomNav from '../../common/BottomNav';
 
 
-/* <VehicleListScreen> */
-export default function VehicleListScreen({ navigation }) {
+
+/* <ProfileScreen> */
+export default function ProfileScreen({ navigation }) {
     return (
         <View style={styles.container}> 
             <View>
-                <Text>garage, vehicle list</Text>
+                <Text>user's account info</Text>
             </View>
             <BottomNav navigation={ navigation }/>
         </View>

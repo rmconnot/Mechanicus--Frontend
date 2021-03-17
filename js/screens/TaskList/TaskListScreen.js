@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import BottomNav from '../common/BottomNav';
+import BottomNav from '../../common/BottomNav';
 
 
 /* <TaskListScreen> */
