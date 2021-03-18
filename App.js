@@ -13,12 +13,14 @@ import {
 	View,
 } from "react-native";
 import { Provider, createClient, useQuery, useMutation } from "urql";
-// =====
+
 // SCREENS-LOG IN, REGISTER
 
 import { TaskDetailPastScreen } from "./TaskDetailPastScreen";
 import { TaskDetailPresentScreen } from "./TaskDetailPresentScreen";
 
+// SCREENS-PROFILE
+import ProfileScreen from "./js/screens/ProfileScreen";
 // SCREENS-GET A QUOTE
 import QuoteVehicleScreen from "./js/screens/QuoteVehicleScreen";
 import QuoteServiceScreen from "./js/screens/QuoteServiceScreen";
@@ -122,6 +124,7 @@ export default function App() {
 
 				<Stack.Screen name="TaskList" component={TaskListScreen} />
 				<Stack.Screen name="TaskDetailPast" component={TaskDetailPastScreen} />
+
 				<Stack.Screen
 					name="TaskDetailPresent"
 					component={TaskDetailPresentScreen}
