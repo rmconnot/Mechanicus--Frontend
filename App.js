@@ -25,6 +25,7 @@ import TaskListScreen from './js/screens/TaskList/TaskListScreen';
 import AddVehicleVINScreen from './js/screens/AddVehicleVIN/AddVehicleVINScreen';
 import AddVehicleManualScreen from './js/screens/AddVehicleManual/AddVehicleManualScreen';
 import { VehicleListScreen } from './js/screens/VehicleList/VehicleListScreen';
+import { ScheduleScreen } from './js/screens/Schedule/ScheduleScreen';
 // SCREENS-PROFILE
 import ProfileScreen from './js/screens/Profile/ProfileScreen';
 // =====
@@ -106,7 +107,7 @@ const Messages = () => {
 export default function App() {
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="SignUp">
+			<Stack.Navigator initialRouteName="Schedule">
 				<Stack.Screen name="LogIn" component={LoginScreen} />
 				<Stack.Screen name="SignUp" component={SignUpScreen} />
 				<Stack.Screen name="Register" component={RegisterScreen} />
@@ -116,6 +117,7 @@ export default function App() {
 				<Stack.Screen name="VehicleList" component={VehicleListScreen} />
 				<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
 				<Stack.Screen name="AddVehicleManual" component={AddVehicleManualScreen} />
+				<Stack.Screen name="Schedule" component={ScheduleScreen} />
 
 				<Stack.Screen name="Profile" component={ProfileScreen} />
 
