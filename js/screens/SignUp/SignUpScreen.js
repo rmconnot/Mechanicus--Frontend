@@ -93,13 +93,13 @@ export class SignUpScreen extends React.Component {
             placeholderTextColor="#003f5c"
             onChangeText={text => this.setState({confirmPassword:text})}/>
         </View>
-        <TouchableOpacity style={styles.loginBtn} onPress={this.onCreateAccount}>
-          <Text style={styles.loginText}>Register as New User</Text>
+        <TouchableOpacity style={styles.registerBtn} onPress={this.onCreateAccount}>
+          <Text style={styles.registerText}>Register as New User</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={{marginTop: 10}} onPress={() => {
+        <TouchableOpacity style={styles.cancelBtn} onPress={() => {
           this.props.navigation.goBack();
         }}>
-          <Text style={styles.loginText}>Cancel</Text>
+          <Text style={styles.cancelText}>Cancel</Text>
         </TouchableOpacity>
 
       </View>
