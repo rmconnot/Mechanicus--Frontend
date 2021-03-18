@@ -15,25 +15,28 @@ import {
 import { Provider, createClient, useQuery, useMutation } from "urql";
 // =====
 // SCREENS-LOG IN, REGISTER
-import LoginScreen from "./js/screens/LoginScreen";
-import RegisterScreen from "./js/screens/RegisterScreen";
-// SCREENS-TASK
-import { TaskListScreen } from "./TaskListScreen";
-// SCREENS-VEHICLE
-// import VehicleListScreen from './js/screens/VehicleListScreen';
-import AddVehicleVINScreen from "./js/screens/AddVehicleVINScreen";
-import AddVehicleManualScreen from "./js/screens/AddVehicleManualScreen";
 
-import { VehicleListScreen } from "./VehicleListScreen";
 import { TaskDetailPastScreen } from "./TaskDetailPastScreen";
 import { TaskDetailPresentScreen } from "./TaskDetailPresentScreen";
 
-// SCREENS-PROFILE
-import ProfileScreen from "./js/screens/ProfileScreen";
 // SCREENS-GET A QUOTE
 import QuoteVehicleScreen from "./js/screens/QuoteVehicleScreen";
 import QuoteServiceScreen from "./js/screens/QuoteServiceScreen";
 import QuoteReviewScreen from "./js/screens/QuoteReviewScreen";
+
+import LoginScreen from "./js/screens/Login/LoginScreen";
+import { SignUpScreen } from "./js/screens/SignUp/SignUpScreen";
+import RegisterScreen from "./js/screens/Register/RegisterScreen";
+// SCREENS-TASK
+import TaskListScreen from "./js/screens/TaskList/TaskListScreen";
+// SCREENS-VEHICLE
+// import VehicleListScreen from './js/screens/VehicleListScreen';
+import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
+import AddVehicleManualScreen from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
+import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
+// SCREENS-PROFILE
+import ProfileScreen from "./js/screens/Profile/ProfileScreen";
+
 // =====
 // nav dependencies
 import { NavigationContainer } from "@react-navigation/native";
@@ -112,8 +115,9 @@ const Messages = () => {
 export default function App() {
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="TaskList">
-				<Stack.Screen name="Login" component={LoginScreen} />
+			<Stack.Navigator initialRouteName="SignUp">
+				<Stack.Screen name="LogIn" component={LoginScreen} />
+				<Stack.Screen name="SignUp" component={SignUpScreen} />
 				<Stack.Screen name="Register" component={RegisterScreen} />
 
 				<Stack.Screen name="TaskList" component={TaskListScreen} />
