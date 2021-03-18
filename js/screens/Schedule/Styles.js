@@ -3,19 +3,19 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7ad7f0',
     alignItems: 'center',
     justifyContent: 'center',
   },
   logo:{
     fontSize: 40,
-    color: "#ffffff",
     marginBottom: 40
   },
   inputView:{
     width:"80%",
     backgroundColor:"#fff",
-    borderRadius:25,
+    borderRadius:10,
+    borderWidth: 2,
+    borderColor: 'black',
     height:50,
     marginBottom:20,
     justifyContent:"center",
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
   },
   registerBtn:{
     width:"80%",
-    backgroundColor: "#fff",
-    borderRadius:25,
+    backgroundColor: "#0074d9",
+    borderRadius:10,
     borderWidth: 2.5,
     borderColor: "#fff",
     height:50,
@@ -43,13 +43,13 @@ const styles = StyleSheet.create({
     marginBottom:10
   },
   registerText:{
-    color:"#7ad7f0",
+    color:"#fff",
     fontSize:16
   },
   cancelBtn:{
     width:"80%",
     backgroundColor:"#7ad7f0",
-    borderRadius:25,
+    borderRadius:10,
     borderWidth: 2.5,
     borderColor: "#fff",
     height:50,
@@ -61,6 +61,10 @@ const styles = StyleSheet.create({
   cancelText:{
     color:"#fff",
     fontSize:16
+  },
+  timePickerView:{
+      flexDirection:"row",
+      width:"100%",
   }
 });
 
