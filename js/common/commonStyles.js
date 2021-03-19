@@ -54,4 +54,12 @@ export const commonStyles = StyleSheet.create({
         width: 28,
         height: 28,
     },
+    cardShape:{
+        elevation: 3,
+        backgroundColor: "white",
+        padding: 8,
+        borderRadius: 2,
+        margin: 6,
+        marginHorizontal: 8,
+    },
 });

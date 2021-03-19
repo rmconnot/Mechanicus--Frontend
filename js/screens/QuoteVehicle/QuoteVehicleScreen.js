@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { NavGroup } from '../common/BottomNav';
-import { QuoteProgress } from '../common/Progress';
+import { NavGroup } from '../../common/BottomNav';
+import { QuoteProgress } from '../../common/Progress';
 
 const navOption = [
     {

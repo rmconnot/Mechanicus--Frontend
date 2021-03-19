@@ -34,6 +34,50 @@ export class VehicleCard extends React.Component {
     }
 }
 
+export class TaskCard extends React.Component {
+    props={
+        item: Object,
+        navigation: Object,
+    }
+
+    static defaultProps = {
+        item: {
+            id:"1",
+            make:'Honda', 
+            model:'CR-V', 
+            year:"2019", 
+            imageURL:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
+        }
+    }
+
+    render(){
+        const item = this.props.item;
+        return (
+            <TouchableOpacity 
+            style={[styles.row, styles.cardShape]}
+            onPress={ (e) => this.props.navigation.navigate("TaskDetailPast")}
+            > 
+                <View style={styles.col2}>
+                    <Image
+                    style={{width: "100%", height: 100}}
+                    source={{ uri: item.imageURL }} />
+                </View>
+                <View style={styles.col2}>
+                    <Text>
+                    {item.make}, {item.year}
+                    </Text>
+                    <Text>
+                        {item.model}
+                    </Text>
+                    <Text>{item.scheduleDate}</Text>
+                    <Text>Service: {item.service.serviceOne}, {item.service.serviceTwo}</Text>
+                    <Text>Mechanician: {item.mechanician}</Text>
+                </View>
+                
+            </TouchableOpacity>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -43,11 +87,16 @@ const styles = StyleSheet.create({
     },
     row:{
         flexDirection: "row",
-        marginVertical: 8,
+        marginVertical: 6,
         marginHorizontal: 8,
     },
     col2: {//half of the row
         flex: 0.5,
         paddingHorizontal: 4,
-    }
+    },
+    cardShape:{
+        elevation: 3,
+        backgroundColor: "white",
+        padding: 8
+    },
 });
