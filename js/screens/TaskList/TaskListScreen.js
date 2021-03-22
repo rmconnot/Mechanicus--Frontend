@@ -42,11 +42,17 @@ export class TaskListScreen extends React.Component {
     }
 
     render() {
-        const renderItem = ({item}) => {
+        const renderItemPast = ({item}) => {
             return (
-                <TaskCard item={item} navigation={this.props.navigation}/>
+                <TaskCard item={item} navigation={this.props.navigation} to="TaskDetailPast"/>
             );
         };
+        const renderItemPresent = ({item}) => {
+            return (
+                <TaskCard item={item} navigation={this.props.navigation} to="TaskDetailPresent"/>
+            );
+        };
+
         return (
         <SafeAreaView style={styles.container}>
             <View style={styles.main }>
@@ -62,7 +68,7 @@ export class TaskListScreen extends React.Component {
                     <Text>Active tasks</Text>
                     <FlatList
                     data={smapleTasksList}
-                    renderItem={renderItem}
+                    renderItem={renderItemPresent}
                     />
                 </View>
                 <View>
@@ -70,7 +76,7 @@ export class TaskListScreen extends React.Component {
                     <Text>March</Text>
                     <FlatList
                     data={smapleTasksList}
-                    renderItem={renderItem}
+                    renderItem={renderItemPast}
                     />
                 </View>
             </View>

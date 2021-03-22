@@ -26,8 +26,8 @@ import QuoteReviewScreen from "./js/screens/QuoteReview/QuoteReviewScreen";
 
 // SCREENS-TASK
 import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
-import { TaskDetailPastScreen } from "./js/screens/TaskPastDetail/TaskDetailPastScreen";
-import { TaskDetailPresentScreen } from "./TaskDetailPresentScreen";
+import { TaskDetailPastScreen } from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
+import { TaskDetailPresentScreen } from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
 // SCREENS-VEHICLE
 import AddVehicleVINScreen from './js/screens/AddVehicleVIN/AddVehicleVINScreen';

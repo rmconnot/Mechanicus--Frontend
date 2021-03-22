@@ -3,9 +3,24 @@ import { StyleSheet } from 'react-native';
 export const commonStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
+        paddingHorizontal: 8,
+    },
+    row:{
+        flexDirection: "row",
+        marginVertical: 8,
+        marginHorizontal: 8,
+    },
+    spaceBetween: {
+        justifyContent:"space-between",
+    },
+    col2: {//half of the row
+        flex: 0.5,
+        paddingHorizontal: 4,
+    },
+    sectionTitle:{
+        backgroundColor:"#ccc",
+        padding: 4,
+        fontSize: 16
     },
     headerSeection: {
         flex:0.8
@@ -62,4 +77,5 @@ export const commonStyles = StyleSheet.create({
         margin: 6,
         marginHorizontal: 8,
     },
+    
 });

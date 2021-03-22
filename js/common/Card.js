@@ -38,6 +38,7 @@ export class TaskCard extends React.Component {
     props={
         item: Object,
         navigation: Object,
+        to: String,
     }
 
     static defaultProps = {
@@ -47,15 +48,16 @@ export class TaskCard extends React.Component {
             model:'CR-V', 
             year:"2019", 
             imageURL:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
-        }
+        },
+        to: "TaskDetailPast"
     }
 
     render(){
-        const item = this.props.item;
+        const { item, to } = this.props;
         return (
             <TouchableOpacity 
             style={[styles.row, styles.cardShape]}
-            onPress={ (e) => this.props.navigation.navigate("TaskDetailPast")}
+            onPress={ (e) => this.props.navigation.navigate(to)}
             > 
                 <View style={styles.col2}>
                     <Image
