@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bfe9ddf6-7ebc-496e-b3e3-99b2afe839c7" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1puVbdyABb7syOogSuswKH6NVDP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bfe9ddf6-7ebc-496e-b3e3-99b2afe839c7" name="Default Changelist" comment="" />
+      <created>1616033034383</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1616033034383</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="581" y="209" width="883" height="556" key="AVDManager" timestamp="1616034271668">
+      <screen x="0" y="25" width="1440" height="794" />
+    </state>
+    <state x="581" y="209" width="883" height="556" key="AVDManager/0.25.1440.794@0.25.1440.794" timestamp="1616034271668" />
+    <state x="294" y="164" width="883" height="554" key="AVDManager/0.25.1440.797@0.25.1440.797" timestamp="1616033362080" />
+    <state x="147" y="67" key="SettingsEditor" timestamp="1616033955136">
+      <screen x="0" y="25" width="1440" height="794" />
+    </state>
+    <state x="147" y="67" key="SettingsEditor/0.25.1440.794@0.25.1440.794" timestamp="1616033955136" />
+    <state x="443" y="79" key="SettingsEditor/0.25.1440.799@0.25.1440.799" timestamp="1616033586853" />
+    <state x="351" y="201" key="run.anything.popup" timestamp="1616033977765">
+      <screen x="0" y="25" width="1440" height="794" />
+    </state>
+    <state x="351" y="201" key="run.anything.popup/0.25.1440.794@0.25.1440.794" timestamp="1616033977765" />
+  </component>
+</project>

@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 	container: {
 		width: "100%",
 		flexDirection: "row",
-		elevation: 2,
+		elevation: 8,
 	},
 	spaceBetween: {
 		justifyContent: "space-between",

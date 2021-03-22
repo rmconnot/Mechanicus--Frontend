@@ -2,22 +2,22 @@
 import { StyleSheet } from 'react-native';
 
 ////////////////////////////////// VehicleList ////////////////////////////////////////
-export const VehicleListStyles = StyleSheet.create({
+export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
+    },
+    main: {
+        paddingHorizontal: 8,
     },
     headerSection: {
         flex:0.8
     },
     titleSection:{
-        flex:0.3,
         flexDirection: 'row',
-        
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 12,
     },
     listContainer: {
         flex: 1,
