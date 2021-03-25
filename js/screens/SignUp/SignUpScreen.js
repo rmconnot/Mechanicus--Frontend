@@ -1,108 +1,139 @@
-import React from 'react';
-import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
-import styles from './Styles';
+import React, { useState } from "react";
+import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
+import styles from "./Styles";
+import { useMutation } from "urql";
 
-export class SignUpScreen extends React.Component {
+const createCustomerMutation = `mutation ($email: String!, $phone: String!, $password: String!) {
+	createCustomer(
+	  email: $email
+	  phone: $phone
+	  password: $password
+	) {
+	  id
 
-  static navigationOptions = {
-    title: '',
-    headerTransparent: 'true'
-  };
-  
-  constructor(props) {
-    super(props);
-    // this.dataModel = getDataModel();
-    this.state = {
-      email:"",
-      phone:"",
-      password:"",
-      confirmPassword: ""
-    };
-  }
+	}}`;
 
-  onCreateAccount = async () => {
-    if(this.state.password != this.state.confirmPassword) {
-        Alert.alert(
-          'Password could not be confirmed',
-          'Please check your input',
-          [{ text: 'OK',style: 'OK'}]
-        );
-        return;
-    }
-    if(this.state.password.length < 6) {
-        Alert.alert(
-          'Invalid Password',
-          'Password should include at least 4 characters',
-          [{ text: 'OK',style: 'OK'}]
-        );
-        return;
-    }
-    
-    let users = this.dataModel.getUsers();
-    for (let user of users) {
-      if (user.email === this.state.email) {
-        console.log("found matching user");
-        Alert.alert(
-          'Duplicate User',
-          'User ' + this.state.emailInput + ' already exists.',
-          [{ text: 'OK',style: 'OK'}]
-        );
-        return;
-      }
-    }
-    console.log("no matching user found, creating");
+export const SignUpScreen = ({ navigation }) => {
+	const [input, setInput] = useState({
+		email: "",
+		phone: "",
+		password: "",
+		confirmPassword: "",
+	});
+	const [request, makeRequest] = useMutation(createCustomerMutation);
 
-    let newUser = await this.dataModel.createUser(
-      this.state.email,
-      this.state.password,
-      this.state.displayName
-    );
-    this.props.navigation.navigate('LogIn');
-  }
-  render(){
-    return (
-      <View style={styles.container}>
-        <Text style={styles.logo}>Create Account</Text>
-        <View style={styles.inputView} >
-          <TextInput  
-            style={styles.inputText}
-            placeholder="Enter your Email" 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({email:text})}/>
-        </View>
-        <View style={styles.inputView} >
-          <TextInput  
-            style={styles.inputText}
-            placeholder="Enter your phone number" 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({phone:text})}/>
-        </View>
-        <View style={styles.inputView} >
-          <TextInput  
-            secureTextEntry
-            style={styles.inputText}
-            placeholder="Enter your Password" 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({password:text})}/>
-        </View>
-        <View style={styles.inputView} >
-          <TextInput  
-            secureTextEntry
-            style={styles.inputText}
-            placeholder="Confirm your Password" 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({confirmPassword:text})}/>
-        </View>
-        <TouchableOpacity style={styles.registerBtn} onPress={this.onCreateAccount}>
-          <Text style={styles.registerText}>Register as New User</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.cancelBtn} onPress={() => {
-          this.props.navigation.goBack();
-        }}>
-          <Text style={styles.cancelText}>Cancel</Text>
-        </TouchableOpacity>
+	const passwordValidation = () => {
+		if (input.password != input.confirmPassword) {
+			Alert.alert("Password error", "Passwords do not match", [
+				{ text: "OK", style: "OK" },
+			]);
+			return false;
+		} else if (input.password.length < 6) {
+			Alert.alert(
+				"Password error",
+				"Password length must exceed 6 characters",
+				[{ text: "OK", style: "OK" }]
+			);
+			return false;
+		}
+		return true;
+	};
 
-      </View>
-    );
-  }
-}
+	const phoneValidation = () => {
+		if (input.phone.length != 12) {
+			Alert.alert("Phone number error", "Invalid phone number", [
+				{ text: "OK", style: "OK" },
+			]);
+			return false;
+		}
+		return true;
+	};
+
+	const handleSubmission = async () => {
+		let validPassword = await passwordValidation();
+		let validPhone = await phoneValidation();
+		if (validPassword && validPhone) {
+			makeRequest({
+				email: input.email,
+				phone: input.phone,
+				password: input.password,
+			}).then((result) => {
+				if (result.error) {
+					Alert.alert("Email already in use", result.error.message, [
+						{ text: "OK", style: "OK" },
+					]);
+				} else {
+					console.log(result);
+					navigation.navigate("TaskList", {
+						currentUser: {
+							id: result.data.createCustomer.id,
+						},
+					});
+					return;
+				}
+			});
+		}
+	};
+
+	return (
+		<View style={styles.container}>
+			<Text style={styles.logo}>Create Account</Text>
+			<View style={styles.inputView}>
+				<TextInput
+					style={styles.inputText}
+					placeholder="Enter your Email"
+					placeholderTextColor="#003f5c"
+					onChangeText={(text) =>
+						setInput((prevState) => ({ ...prevState, email: text.trim() }))
+					}
+				/>
+			</View>
+			<View style={styles.inputView}>
+				<TextInput
+					style={styles.inputText}
+					placeholder="Enter your phone number"
+					placeholderTextColor="#003f5c"
+					onChangeText={(text) =>
+						setInput((prevState) => ({ ...prevState, phone: text.trim() }))
+					}
+				/>
+			</View>
+			<View style={styles.inputView}>
+				<TextInput
+					// secureTextEntry
+					style={styles.inputText}
+					placeholder="Enter your Password"
+					placeholderTextColor="#003f5c"
+					onChangeText={(text) =>
+						setInput((prevState) => ({ ...prevState, password: text.trim() }))
+					}
+				/>
+			</View>
+			<View style={styles.inputView}>
+				<TextInput
+					// secureTextEntry
+					style={styles.inputText}
+					placeholder="Confirm your Password"
+					placeholderTextColor="#003f5c"
+					onChangeText={(text) =>
+						setInput((prevState) => ({
+							...prevState,
+							confirmPassword: text.trim(),
+						}))
+					}
+				/>
+			</View>
+			<TouchableOpacity style={styles.registerBtn} onPress={handleSubmission}>
+				<Text style={styles.registerText}>Register as New User</Text>
+			</TouchableOpacity>
+			{/* <TouchableOpacity
+				style={styles.cancelBtn}
+				onPress={() => {
+					this.props.navigation.goBack();
+				}}
+			>
+				<Text style={styles.cancelText}>Cancel</Text>
+			</TouchableOpacity> */}
+		</View>
+	);
+};
