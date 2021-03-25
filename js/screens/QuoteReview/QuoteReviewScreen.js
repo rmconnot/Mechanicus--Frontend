@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { NavGroup } from '../common/BottomNav';
-import { QuoteProgress } from '../common/Progress';
-import { VehicleCard } from '../common/Card';
+import { NavGroup } from '../../common/BottomNav';
+import { QuoteProgress } from '../../common/Progress';
+import { VehicleCard } from '../../common/Card';
 import { FlatList } from 'react-native-gesture-handler';
 import { render } from 'react-dom';
+import { styles } from './Styles';
 
 const navOption = [
     {
         title: "Cancel", to: "QuoteService",
     },{
-        title: "Schedule", to: "QuoteReview",
+        title: "Schedule", to: "Schedule",
     }
 ];
 
@@ -74,16 +75,3 @@ export default function QuoteReviewScreen({ navigation }) {
         </View>
     );
 } 
-
-const styles = StyleSheet.create({
-	container: {
-        flex: 1,
-		justifyContent: "space-between",
-	},
-    row:{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingHorizontal: 8,
-    }
-	
-});

@@ -57,6 +57,30 @@ export class QuoteProgress extends React.Component {
     }
 }
 
+export class TaskProgress extends React.Component {
+    props: {
+        curStep: Number,
+        status: Array, //shows the if each step is done
+    };
+
+    static defaultProps = {
+        curStep: 1,
+        status: [true,false,false],
+    };
+
+    render(){
+        let {curStep,status} = this.props;
+        return (
+            <View style={styles.center}>
+                <View style={styles.container}>
+                    <ProgressDot num={1} label={"confirm"} active={curStep==1?true:false} done={status[0]}/>
+                    <ProgressDot num={2} label={"repair"} active={curStep==2?true:false} done={status[1]} />
+                    <ProgressDot num={3} label={"complete"} active={curStep==3?true:false} done={status[2]} />
+                </View>
+            </View>
+        );
+    }
+}
 const styles = StyleSheet.create({
     center: {
         flexDirection: "row",

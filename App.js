@@ -2,22 +2,19 @@ import React from "react";
 import { Provider, createClient } from "urql";
 
 // SCREENS-LOG IN, REGISTER
-
-import { TaskDetailPastScreen } from "./TaskDetailPastScreen";
-import { TaskDetailPresentScreen } from "./TaskDetailPresentScreen";
-
-// SCREENS-GET A QUOTE
-import QuoteVehicleScreen from "./js/screens/QuoteVehicleScreen";
-import QuoteServiceScreen from "./js/screens/QuoteServiceScreen";
-import QuoteReviewScreen from "./js/screens/QuoteReviewScreen";
-
 import LoginScreen from "./js/screens/Login/LoginScreen";
 import { SignUpScreen } from "./js/screens/SignUp/SignUpScreen";
 import RegisterScreen from "./js/screens/Register/RegisterScreen";
+
+// SCREENS-GET A QUOTE
+import QuoteVehicleScreen from "./js/screens/QuoteVehicle/QuoteVehicleScreen";
+import QuoteServiceScreen from "./js/screens/QuoteService/QuoteServiceScreen";
+import QuoteReviewScreen from "./js/screens/QuoteReview/QuoteReviewScreen";
+
 // SCREENS-TASK
-import TaskListScreen from "./js/screens/TaskList/TaskListScreen";
-// SCREENS-VEHICLE
-// import VehicleListScreen from './js/screens/VehicleListScreen';
+import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
+import { TaskDetailPastScreen } from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
+import { TaskDetailPresentScreen } from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
 import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
 import AddVehicleManualScreen from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
@@ -106,7 +103,7 @@ export default function App() {
 	return (
 		<Provider value={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="SignUp">
+				<Stack.Navigator initialRouteName="TaskList">
 					<Stack.Screen name="LogIn" component={LoginScreen} />
 					<Stack.Screen name="SignUp" component={SignUpScreen} />
 					<Stack.Screen name="Register" component={RegisterScreen} />
@@ -116,7 +113,6 @@ export default function App() {
 						name="TaskDetailPast"
 						component={TaskDetailPastScreen}
 					/>
-
 					<Stack.Screen
 						name="TaskDetailPresent"
 						component={TaskDetailPresentScreen}
