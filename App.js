@@ -1,10 +1,9 @@
 import React from "react";
 import { Provider, createClient } from "urql";
 
-// SCREENS-LOG IN, REGISTER
+// SCREENS-LOG IN, Sign up
 import LoginScreen from "./js/screens/Login/LoginScreen";
 import { SignUpScreen } from "./js/screens/SignUp/SignUpScreen";
-import RegisterScreen from "./js/screens/Register/RegisterScreen";
 
 // SCREENS-GET A QUOTE
 import QuoteVehicleScreen from "./js/screens/QuoteVehicle/QuoteVehicleScreen";
@@ -12,7 +11,7 @@ import QuoteServiceScreen from "./js/screens/QuoteService/QuoteServiceScreen";
 import QuoteReviewScreen from "./js/screens/QuoteReview/QuoteReviewScreen";
 
 // SCREENS-TASK
-import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
+import TaskListScreen from "./js/screens/TaskList/TaskListScreen";
 import { TaskDetailPastScreen } from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
 import { TaskDetailPresentScreen } from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
@@ -103,10 +102,9 @@ export default function App() {
 	return (
 		<Provider value={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="TaskList">
+				<Stack.Navigator initialRouteName="QuoteService">
 					<Stack.Screen name="LogIn" component={LoginScreen} />
 					<Stack.Screen name="SignUp" component={SignUpScreen} />
-					<Stack.Screen name="Register" component={RegisterScreen} />
 
 					<Stack.Screen name="TaskList" component={TaskListScreen} />
 					<Stack.Screen

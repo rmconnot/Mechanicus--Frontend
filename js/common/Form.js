@@ -41,6 +41,30 @@ export function Checkbox({
     );
 } 
 
+export function ServiceCheckbox({
+    id = "test",
+    text = "option displayed",
+    price = 100,
+    checked = false,
+    handleStatus = ()=>{}, //handle status change in checkboxes
+}) {
+    const [status, onChangeStatus] = React.useState(checked);
+    const changeStatus = () => {
+        handleStatus({checked: !status, id: id});
+        onChangeStatus(!status);
+    };
+    return (
+        <TouchableOpacity 
+        style={styles.checkboxContainer}
+        activeOpacity={0.6}
+        onPress={ e => changeStatus() }
+        > 
+            <Text>{text},{price}</Text>
+            <View style={[styles.checkboxMark,status?styles.checkboxMarkActive:""]}></View>
+        </TouchableOpacity>
+    );
+} 
+
 export function CheckboxGroup({
     options = sampleOptions,
 }) {
@@ -69,7 +93,7 @@ export function CheckboxGroup({
     };
     const renderItem = ({item}) => {
         return (
-            <Checkbox id={item.id} text={item.text} checked={item.checked} handleStatus={handleStatus}/>
+            <ServiceCheckbox id={item.id} text={item.type} price={item.price} checked={item.checked} handleStatus={handleStatus}/>
         );
     };
     return (

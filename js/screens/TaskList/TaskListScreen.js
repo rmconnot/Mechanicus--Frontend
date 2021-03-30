@@ -3,9 +3,15 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import BottomNav from "../../common/BottomNav";
 
 /* <TaskListScreen> */
-export default function TaskListScreen({ navigation, route }) {
-	const { currentUser } = route.params;
-	console.log(currentUser);
+export default function TaskListScreen({ 
+	navigation, 
+	route = {
+		params: {
+			currentUser: "temp",
+		}
+	},
+}) {
+	// const { currentUser } = route.params;
 	return (
 		<View style={styles.container}>
 			<View>
