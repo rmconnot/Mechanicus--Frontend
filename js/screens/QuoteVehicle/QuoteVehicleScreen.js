@@ -59,8 +59,9 @@ export default function QuoteVehicleScreen({
         );
     };
     
-    console.log("####vehicle");
-    console.log(route.params);
+    // console.log("####vehicle");
+    // console.log(route.params);
+
     return (
         <View style={styles.container}> 
             <View>

@@ -73,12 +73,13 @@ export default function QuoteServiceScreen({ route, navigation }) {
     // }
     //===========
 
-    const [selections, onChangeSelections] = useState(route.params.services||[]);
+    const [selections, onChangeSelections] = useState(route.params.services || []);
+    //item {checked: Boolean, id: Int}
     const handleSelections = item => {
         let temp = selections.slice();
         let index = selections.indexOf(item.id);
         //if item is not checked and exist in selections, remove it from selections
-        if(!item.checked && index!=-1){
+        if(!item.checked && index != -1){
             temp.splice(index,1);
             onChangeSelections(temp);
         }//if item is checked and not in selections, add it in
@@ -87,14 +88,21 @@ export default function QuoteServiceScreen({ route, navigation }) {
             onChangeSelections(temp);
         }
     };
+
     // console.log("####service");
     // console.log(route.params);
 
+    // console.log(selections);
+    
     return (
         <View style={styles.container}> 
             <View>
                 <QuoteProgress curStep={2} status={[true,false,false]} />
-                <CheckboxGroup selections={selections} options={data?data.services:emptyServiceList} handleSelections={handleSelections}/>
+                <CheckboxGroup 
+                selections={selections} 
+                options={data?data.services:emptyServiceList} 
+                handleSelections={handleSelections}
+                />
             </View>
             
             <NavGroup 

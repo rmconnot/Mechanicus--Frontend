@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, Alert, StyleSheet, FlatList } from 'react-native';
 import { NavGroup } from '../../common/BottomNav';
 import { QuoteProgress } from '../../common/Progress';
 import { VehicleCard } from '../../common/Card';
-import { FlatList } from 'react-native-gesture-handler';
 import { render } from 'react-dom';
 import { styles } from './Styles';
 import { TabRouter } from '@react-navigation/routers';
+import { useQuery } from "urql";
+
+const getSelectedServices = `
+query($services: [Int!]! ) {
+	selectedServices(services: $services ) {
+        id
+	    type
+        price
+	}
+}
+`;
 
 const navOption = [
     {
@@ -45,16 +55,48 @@ function ServiceEntry({
 }
 /* <QuoteReviewScreen> */
 export default function QuoteReviewScreen({ route, navigation }) {
-    let { vehicle, services } = route.params;
-    const renderItem = (item) => {
+
+    //get service options from database
+    //==========
+    const [result, reexecuteQuery] = useQuery({
+        query: getSelectedServices,
+        variables: {
+            services: route.params.services,
+        }
+    });
+    const { data, fetching, error } = result;
+    if (error) {
+        Alert.alert("Error!",result.error.message,[
+            { text: "OK", style: "OK" },
+        ]);
+    }
+    // if (data) {
+    //     console.log(data.services);
+    // }
+    //===========
+
+    const { vehicle, services } = route.params;
+    const renderItem = ({item}) => {
         return (
-            <ServiceEntry text={item.text} price={item.price} />
+            <ServiceEntry text={item.type} price={item.price} />
         );
     };
-    let sum = 0;//total price
+    
+    //get total price of services
+    const getTotalPrice = () => {
+        let sum = 0;
+        if(data){
+            let list = data.selectedServices;
+            list.forEach(item=>{
+                sum += item.price;
+            });
+        }
+        return sum;
+    };
+
     // console.log("####review");
     // console.log(route.params);
-
+    
     return (
         <View style={styles.container}> 
             <View>
@@ -65,13 +107,13 @@ export default function QuoteReviewScreen({ route, navigation }) {
                 </View>
                 <View>
                     <Text>Service</Text>
-                    {/* <FlatList 
-                        data={services}
+                    <FlatList 
+                        data={data?data.selectedServices:[]}
                         renderItem={renderItem}
                         keyExtractor={item => String(item.id)}
-                    /> */}
+                    />
                     <View>
-                        <Text>Total price:{sum}</Text>
+                        <Text>Total price:{getTotalPrice()}</Text>
                     </View>
                 </View>
 

@@ -24,7 +24,7 @@ export function Checkbox({
     checked = false,
     handleStatus = ()=>{}, //handle status change in checkboxes
 }) {
-    const [status, onChangeStatus] = React.useState(checked);
+    const [status, onChangeStatus] = useState(checked);
     const changeStatus = () => {
         handleStatus({checked: !status, id: id});
         onChangeStatus(!status);
@@ -48,7 +48,7 @@ export function ServiceCheckbox({
     checked = false,
     handleStatus = ()=>{}, //handle status change in checkboxes
 }) {
-    const [status, onChangeStatus] = React.useState(checked);
+    const [status, onChangeStatus] = useState(checked);
     const changeStatus = () => {
         handleStatus({checked: !status, id: id});
         onChangeStatus(!status);
@@ -70,13 +70,14 @@ export function CheckboxGroup({
     options = sampleOptions,
     handleSelections,
 }) {    
+    console.log(selections);
     const renderItem = ({item}) => {
         return (
             <ServiceCheckbox 
             id={item.id} 
             text={item.type} 
             price={item.price} 
-            checked={item.id in selections} 
+            checked={selections.includes(item.id)} 
             handleStatus={handleSelections}
             />
         );

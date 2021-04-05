@@ -9,7 +9,7 @@ function TabNav({
 	active = true,
 	data = {},
 }){
-	console.log(data);
+
 	return (
 		<View style={styles.bottomNav}>
 			<Button
