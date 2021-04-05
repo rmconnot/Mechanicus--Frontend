@@ -9,10 +9,11 @@ export class VehicleCard extends React.Component {
     static defaultProps = {
         item: {
             id:1,
+            vin: '123456789012',
             make:'Honda', 
             model:'CR-V', 
             year:"2019", 
-            imageURL:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
+            imgUrl:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
         }
     }
 
@@ -23,9 +24,10 @@ export class VehicleCard extends React.Component {
                 <View style={styles.col2}>
                     <Image
                     style={{width: "100%", height: 100}}
-                    source={{ uri: item.imageURL }} />
+                    source={{ uri: item.imgUrl }} />
                 </View>
                 <View style={styles.col2}>
+                    <Text>{item.vin}</Text>
                     <Text>{item.make}, {item.year}</Text>
                     <Text>{item.model}</Text>
                 </View>

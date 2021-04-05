@@ -1,34 +1,33 @@
 import * as React from "react";
 import { View, Text, Button, StyleSheet, FlatList } from "react-native";
 
-class TabNav extends React.Component {
-	props: {
-		to: string,
-		title: String,
-		navigate: () => mixed,
-		active: string, //check if tab is activated
-	};
 
-	render() {
-		let to = this.props.to;
-		return (
-			<View style={styles.bottomNav}>
-				<Button
-					style={styles.navBtn}
-					title={this.props.title}
-					onPress={() => this.props.navigate(to)}
-				/>
-			</View>
-		);
-	}
+function TabNav({
+	navigation,
+	to,
+	title = "next",
+	active = true,
+	data = {},
+}){
+	console.log(data);
+	return (
+		<View style={styles.bottomNav}>
+			<Button
+				style={styles.navBtn}
+				title={title}
+				onPress={() => navigation.navigate(to, data)}
+			/>
+		</View>
+	);
 }
 
 export function NavGroup({
 	navigation,
 	options = [
-		{ title: "Task", to: "TaskList" },
-		{ title: "Garage", to: "VehicleList" },
+		{ title: "Task", to: "TaskList", data: {} },
+		{ title: "Garage", to: "VehicleList", data: {} },
 	],
+	data,
 }) {
 	const navigate = navigation.navigate;
 	return (
@@ -37,13 +36,15 @@ export function NavGroup({
 				style={styles.navGroupItem}
 				title={options[0].title}
 				to={options[0].to}
-				navigate={navigate}
+				navigation={navigation}
+				data={data}
 			/>
 			<TabNav
 				style={styles.navGroupItem}
 				title={options[1].title}
 				to={options[1].to}
-				navigate={navigate}
+				navigation={navigation}
+				data={data}
 			/>
 		</View>
 	);
@@ -51,12 +52,11 @@ export function NavGroup({
 
 /* <BottomNav> */
 export default function BottomNav({ navigation }) {
-	let navigate = navigation.navigate;
 	return (
 		<View style={styles.container}>
-			<TabNav title="Task" to="TaskList" navigate={navigate} />
-			<TabNav title="Garage" to="VehicleList" navigate={navigate} />
-			<TabNav title="Profile" to="Profile" navigate={navigate} />
+			<TabNav title="Task" to="TaskList" navigation={navigation} />
+			<TabNav title="Garage" to="VehicleList" navigation={navigation} />
+			<TabNav title="Profile" to="Profile" navigation={navigation} />
 		</View>
 	);
 }

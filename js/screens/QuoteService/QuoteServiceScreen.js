@@ -4,8 +4,9 @@ import { CheckboxGroup } from '../../common/Form';
 import { NavGroup } from '../../common/BottomNav';
 import { QuoteProgress } from '../../common/Progress';
 import { useQuery } from "urql";
+import { TabRouter } from '@react-navigation/routers';
 
-const retrieveServices = `
+const getServices = `
 query {
 	services {
         id
@@ -54,11 +55,12 @@ const sampleServiceList = [
 ];
 
 /* <QuoteServiceScreen> */
-export default function QuoteServiceScreen({ navigation }) {
-    let navigate = navigation.navigate;
+export default function QuoteServiceScreen({ route, navigation }) {
 
+    //get service options from database
+    //==========
     const [result, reexecuteQuery] = useQuery({
-        query: retrieveServices,
+        query: getServices,
     });
     const { data, fetching, error } = result;
     if (error) {
@@ -66,18 +68,43 @@ export default function QuoteServiceScreen({ navigation }) {
             { text: "OK", style: "OK" },
         ]);
     }
-    if (data) {
-        console.log(data.services);
-    }
+    // if (data) {
+    //     console.log(data.services);
+    // }
+    //===========
+
+    const [selections, onChangeSelections] = useState(route.params.services||[]);
+    const handleSelections = item => {
+        let temp = selections.slice();
+        let index = selections.indexOf(item.id);
+        //if item is not checked and exist in selections, remove it from selections
+        if(!item.checked && index!=-1){
+            temp.splice(index,1);
+            onChangeSelections(temp);
+        }//if item is checked and not in selections, add it in
+        else if(item.checked && index == -1){
+            temp.push(item.id);
+            onChangeSelections(temp);
+        }
+    };
+    // console.log("####service");
+    // console.log(route.params);
 
     return (
         <View style={styles.container}> 
             <View>
                 <QuoteProgress curStep={2} status={[true,false,false]} />
-                <CheckboxGroup options={data?data.services:emptyServiceList} />
+                <CheckboxGroup selections={selections} options={data?data.services:emptyServiceList} handleSelections={handleSelections}/>
             </View>
             
-            <NavGroup navigation={navigation} options={navOption}/>
+            <NavGroup 
+            navigation={navigation} 
+            options={navOption} 
+            data={{
+                ...route.params,
+                services: selections,
+            }}
+            />
         </View>
     );
 } 
