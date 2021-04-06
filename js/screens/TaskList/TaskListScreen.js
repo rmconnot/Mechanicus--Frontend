@@ -25,7 +25,6 @@ const quoteQuery = `query ($customerID: Int!) {
         }
 	}}`;
 
-
 const sampleQuotes = [
 	{
 		scheduleDate: "03/04/2021",

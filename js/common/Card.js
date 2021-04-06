@@ -44,6 +44,7 @@ export class TaskCard extends React.Component {
         super(props)
     }
     
+    //to avoid warning
     static defaultProps={
         item: Object,
         navigation: Object,
