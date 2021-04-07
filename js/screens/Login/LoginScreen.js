@@ -11,7 +11,6 @@ import styles from './Styles';
 import { useQuery } from "urql";
 
 <<<<<<< HEAD
-const userQuery = `query ()
 =======
 >>>>>>> c58cbe282b67b1d8af61d8111faabf63b3d9df25
 >>>>>>> 1b36ba2cc43ddbc9e35f05160faea4ebead0ec73
