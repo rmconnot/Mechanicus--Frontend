@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { State } from "react-native-gesture-handler";
 import styles from "./Styles";
 import { gql, useLazyQuery } from "@apollo/client";
-=======
-import React, { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
-import styles from './Styles';
-
->>>>>>> c58cbe282b67b1d8af61d8111faabf63b3d9df25
 
 /* <LoginScreen> */
 
@@ -22,7 +15,6 @@ const CUSTOMER_QUERY = gql`
 `;
 
 export default function Login({ navigation }) {
-<<<<<<< HEAD
 	const [input, setInput] = useState({
 		email: "",
 		password: "",
@@ -97,4 +89,3 @@ export default function Login({ navigation }) {
 		</View>
 	);
 }
-
