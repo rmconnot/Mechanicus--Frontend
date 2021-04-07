@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import styles from "./Styles";
-import { useMutation } from "urql";
+import { gql, useMutation } from "@apollo/client";
 
-const createCustomerMutation = `mutation ($email: String!, $phone: String!, $password: String!) {
-	createCustomer(
-	  email: $email
-	  phone: $phone
-	  password: $password
-	) {
-	  id
-
-	}}`;
+const CUSTOMER_MUTATION = gql`
+	mutation($email: String!, $phone: String!, $password: String!) {
+		createCustomer(email: $email, phone: $phone, password: $password) {
+			id
+		}
+	}
+`;
 
 export const SignUpScreen = ({ navigation }) => {
 	const [input, setInput] = useState({
@@ -20,7 +18,9 @@ export const SignUpScreen = ({ navigation }) => {
 		password: "",
 		confirmPassword: "",
 	});
-	const [request, makeRequest] = useMutation(createCustomerMutation);
+	const [makeRequest, { data }, error] = useMutation(CUSTOMER_MUTATION, {
+		onError: (error) => console.error(`Error! ${error}`),
+	});
 
 	const passwordValidation = () => {
 		if (input.password != input.confirmPassword) {
@@ -54,16 +54,13 @@ export const SignUpScreen = ({ navigation }) => {
 		let validPhone = await phoneValidation();
 		if (validPassword && validPhone) {
 			makeRequest({
-				email: input.email,
-				phone: input.phone,
-				password: input.password,
+				variables: {
+					email: input.email,
+					phone: input.phone,
+					password: input.password,
+				},
 			}).then((result) => {
-				if (result.error) {
-					Alert.alert("Email already in use", result.error.message, [
-						{ text: "OK", style: "OK" },
-					]);
-				} else {
-					console.log(result);
+				if (result != undefined) {
 					navigation.navigate("TaskList", {
 						currentUser: {
 							id: result.data.createCustomer.id,
@@ -83,6 +80,7 @@ export const SignUpScreen = ({ navigation }) => {
 					style={styles.inputText}
 					placeholder="Enter your Email"
 					placeholderTextColor="#003f5c"
+					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, email: text.trim() }))
 					}
@@ -93,6 +91,7 @@ export const SignUpScreen = ({ navigation }) => {
 					style={styles.inputText}
 					placeholder="Enter your phone number"
 					placeholderTextColor="#003f5c"
+					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, phone: text.trim() }))
 					}
@@ -104,6 +103,7 @@ export const SignUpScreen = ({ navigation }) => {
 					style={styles.inputText}
 					placeholder="Enter your Password"
 					placeholderTextColor="#003f5c"
+					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, password: text.trim() }))
 					}
@@ -115,6 +115,7 @@ export const SignUpScreen = ({ navigation }) => {
 					style={styles.inputText}
 					placeholder="Confirm your Password"
 					placeholderTextColor="#003f5c"
+					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({
 							...prevState,

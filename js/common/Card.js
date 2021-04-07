@@ -1,5 +1,15 @@
-import React from 'react';
-import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, Image, Button, StyleSheet } from 'react-native';
+import React from "react";
+import {
+	TextInput,
+	Text,
+	View,
+	FlatList,
+	TouchableOpacity,
+	Alert,
+	Image,
+	Button,
+	StyleSheet,
+} from "react-native";
 
 export class VehicleCard extends React.Component {
     constructor(props) {
@@ -112,23 +122,24 @@ export class TaskCard extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    },
-    row:{
-        flexDirection: "row",
-        marginVertical: 6,
-        marginHorizontal: 8,
-    },
-    col2: {//half of the row
-        flex: 0.5,
-        paddingHorizontal: 4,
-    },
-    cardShape:{
-        elevation: 3,
-        backgroundColor: "white",
-        padding: 8
-    },
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "flex-start",
+	},
+	row: {
+		flexDirection: "row",
+		marginVertical: 6,
+		marginHorizontal: 8,
+	},
+	col2: {
+		//half of the row
+		flex: 0.5,
+		paddingHorizontal: 4,
+	},
+	cardShape: {
+		elevation: 3,
+		backgroundColor: "white",
+		padding: 8,
+	},
 });
