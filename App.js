@@ -33,7 +33,7 @@ const Stack = createStackNavigator();
 
 // connect to backend
 const client = createClient({
-	url: "http://localhost:5000/graphql",
+	url: "http://10.20.1.148:5000/graphql",
 });
 
 // const getData = `
@@ -102,7 +102,7 @@ export default function App() {
 	return (
 		<Provider value={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="QuoteService">
+				<Stack.Navigator initialRouteName="LogIn">
 					<Stack.Screen name="LogIn" component={LoginScreen} />
 					<Stack.Screen name="SignUp" component={SignUpScreen} />
 

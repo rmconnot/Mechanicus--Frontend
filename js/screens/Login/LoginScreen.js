@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import styles from './Styles';
+import { useQuery } from "urql";
 
+const userQuery = `query ()
 
 /* <LoginScreen> */
 export default function Login({ navigation }) {

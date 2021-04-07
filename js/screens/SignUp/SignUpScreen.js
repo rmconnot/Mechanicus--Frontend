@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import styles from "./Styles";
 import { useMutation } from "urql";
+import * as SMS from 'expo-sms';
 
 const createCustomerMutation = `mutation ($email: String!, $phone: String!, $password: String!) {
 	createCustomer(
@@ -40,7 +41,7 @@ export const SignUpScreen = ({ navigation }) => {
 	};
 
 	const phoneValidation = () => {
-		if (input.phone.length != 12) {
+		if (input.phone.length != 10) {
 			Alert.alert("Phone number error", "Invalid phone number", [
 				{ text: "OK", style: "OK" },
 			]);
@@ -53,6 +54,12 @@ export const SignUpScreen = ({ navigation }) => {
 		let validPassword = await passwordValidation();
 		let validPhone = await phoneValidation();
 		if (validPassword && validPhone) {
+			/*
+			const { result } = await SMS.sendSMSAsync(
+				input.phone,
+				'My sample HelloWorld message'
+			);*/
+			
 			makeRequest({
 				email: input.email,
 				phone: input.phone,
@@ -64,7 +71,7 @@ export const SignUpScreen = ({ navigation }) => {
 					]);
 				} else {
 					console.log(result);
-					navigation.navigate("TaskList", {
+					navigation.navigate("LogIn", {
 						currentUser: {
 							id: result.data.createCustomer.id,
 						},
