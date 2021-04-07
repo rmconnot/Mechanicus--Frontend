@@ -55,6 +55,7 @@ const renderItemPresent = ({ item, navigation, route }) => {
 };
 
 /* <TaskListScreen> */
+<<<<<<< HEAD
 export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
 	// console.log(currentUser);
@@ -65,6 +66,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 			variables: { customerID: currentUser.id },
 			onError: (error) => console.log(JSON.stringify(error, null, 2)),
 		}
+
 	);
 
 	if (loading) console.log("Loading...");

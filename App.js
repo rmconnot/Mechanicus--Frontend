@@ -9,10 +9,9 @@ import {
 import { getMainDefinition } from "@apollo/client/utilities";
 import { WebSocketLink } from "@apollo/client/link/ws";
 
-// SCREENS-LOG IN, REGISTER
+// SCREENS-LOG IN, Sign up
 import LoginScreen from "./js/screens/Login/LoginScreen";
 import { SignUpScreen } from "./js/screens/SignUp/SignUpScreen";
-import RegisterScreen from "./js/screens/Register/RegisterScreen";
 
 // SCREENS-GET A QUOTE
 import QuoteVehicleScreen from "./js/screens/QuoteVehicle/QuoteVehicleScreen";
@@ -20,7 +19,7 @@ import QuoteServiceScreen from "./js/screens/QuoteService/QuoteServiceScreen";
 import QuoteReviewScreen from "./js/screens/QuoteReview/QuoteReviewScreen";
 
 // SCREENS-TASK
-import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
+import TaskListScreen from "./js/screens/TaskList/TaskListScreen";
 import { TaskDetailPastScreen } from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
 import { TaskDetailPresentScreen } from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
