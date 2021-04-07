@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import styles from "./Styles";
-<<<<<<< HEAD
-import { useMutation } from "urql";
-import * as SMS from 'expo-sms';
-=======
 import { gql, useMutation } from "@apollo/client";
->>>>>>> 1b36ba2cc43ddbc9e35f05160faea4ebead0ec73
 
 const CUSTOMER_MUTATION = gql`
 	mutation($email: String!, $phone: String!, $password: String!) {
@@ -71,18 +66,8 @@ export const SignUpScreen = ({ navigation }) => {
 					password: input.password,
 				},
 			}).then((result) => {
-<<<<<<< HEAD
-				if (result.error) {
-					Alert.alert("Email already in use", result.error.message, [
-						{ text: "OK", style: "OK" },
-					]);
-				} else {
-					console.log(result);
-					navigation.navigate("LogIn", {
-=======
 				if (result != undefined) {
 					navigation.navigate("TaskList", {
->>>>>>> 1b36ba2cc43ddbc9e35f05160faea4ebead0ec73
 						currentUser: {
 							id: result.data.createCustomer.id,
 						},
