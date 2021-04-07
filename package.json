@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.13",
     "@react-native-community/datetimepicker": "^3.0.4",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.9.3",
@@ -25,7 +26,7 @@
     "react-native-picker": "^4.3.7",
     "react-native-screens": "^2.18.1",
     "react-native-web": "~0.13.12",
-    "urql": "^2.0.1"
+    "subscriptions-transport-ws": "^0.9.18"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6"

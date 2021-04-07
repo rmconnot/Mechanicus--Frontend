@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import styles from "./Styles";
+<<<<<<< HEAD
 import { useMutation } from "urql";
 import * as SMS from 'expo-sms';
+=======
+import { gql, useMutation } from "@apollo/client";
+>>>>>>> 1b36ba2cc43ddbc9e35f05160faea4ebead0ec73
 
-const createCustomerMutation = `mutation ($email: String!, $phone: String!, $password: String!) {
-	createCustomer(
-	  email: $email
-	  phone: $phone
-	  password: $password
-	) {
-	  id
-
-	}}`;
+const CUSTOMER_MUTATION = gql`
+	mutation($email: String!, $phone: String!, $password: String!) {
+		createCustomer(email: $email, phone: $phone, password: $password) {
+			id
+		}
+	}
+`;
 
 export const SignUpScreen = ({ navigation }) => {
 	const [input, setInput] = useState({
@@ -21,7 +23,9 @@ export const SignUpScreen = ({ navigation }) => {
 		password: "",
 		confirmPassword: "",
 	});
-	const [request, makeRequest] = useMutation(createCustomerMutation);
+	const [makeRequest, { data }, error] = useMutation(CUSTOMER_MUTATION, {
+		onError: (error) => console.error(`Error! ${error}`),
+	});
 
 	const passwordValidation = () => {
 		if (input.password != input.confirmPassword) {
@@ -61,10 +65,13 @@ export const SignUpScreen = ({ navigation }) => {
 			);*/
 			
 			makeRequest({
-				email: input.email,
-				phone: input.phone,
-				password: input.password,
+				variables: {
+					email: input.email,
+					phone: input.phone,
+					password: input.password,
+				},
 			}).then((result) => {
+<<<<<<< HEAD
 				if (result.error) {
 					Alert.alert("Email already in use", result.error.message, [
 						{ text: "OK", style: "OK" },
@@ -72,6 +79,10 @@ export const SignUpScreen = ({ navigation }) => {
 				} else {
 					console.log(result);
 					navigation.navigate("LogIn", {
+=======
+				if (result != undefined) {
+					navigation.navigate("TaskList", {
+>>>>>>> 1b36ba2cc43ddbc9e35f05160faea4ebead0ec73
 						currentUser: {
 							id: result.data.createCustomer.id,
 						},
@@ -90,6 +101,7 @@ export const SignUpScreen = ({ navigation }) => {
 					style={styles.inputText}
 					placeholder="Enter your Email"
 					placeholderTextColor="#003f5c"
+					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, email: text.trim() }))
 					}
@@ -100,6 +112,7 @@ export const SignUpScreen = ({ navigation }) => {
 					style={styles.inputText}
 					placeholder="Enter your phone number"
 					placeholderTextColor="#003f5c"
+					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, phone: text.trim() }))
 					}
@@ -111,6 +124,7 @@ export const SignUpScreen = ({ navigation }) => {
 					style={styles.inputText}
 					placeholder="Enter your Password"
 					placeholderTextColor="#003f5c"
+					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, password: text.trim() }))
 					}
@@ -122,6 +136,7 @@ export const SignUpScreen = ({ navigation }) => {
 					style={styles.inputText}
 					placeholder="Confirm your Password"
 					placeholderTextColor="#003f5c"
+					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({
 							...prevState,
