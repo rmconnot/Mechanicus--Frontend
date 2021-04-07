@@ -12,6 +12,66 @@ import { gql, useQuery } from "@apollo/client";
 import { TaskCard } from "../../common/Card";
 import { styles } from "./Styles";
 
+const sampleQuotes = [
+	{
+		scheduleDate: "03/04/2021",
+		status: "confirm",
+		services: [
+			{
+				price: 100,
+				type: "Vehicle Inspection",
+			},
+			{
+				price: 110,
+				type: "Oil change",
+			},
+		],
+		mechanician: {
+			firstName: "Michael",
+			lastName: "Williams",
+			phone: "123-456-7890",
+		},
+		vehicle: {
+			vin: "0987654321",
+			vehicleType: "SUV",
+			year: 2010,
+			make: "Chevrolet",
+			model: "Trailblazer",
+			imgUrl:
+				"https://www.gannett-cdn.com/presto/2020/07/10/PDTF/76f14475-53f5-4abe-ae0f-a4f4911c8be3-IMG_2481.JPG",
+		},
+	},
+
+	{
+		scheduleDate: "05/04/2021",
+		status: "confirm",
+		services: [
+			{
+				price: 100,
+				type: "Vehicle Inspection",
+			},
+			{
+				price: 110,
+				type: "Oil change",
+			},
+		],
+		mechanicianID: {
+			firstName: "Bill",
+			lastName: "Davis",
+			phone: "123-456-7890",
+		},
+		vehicleID: {
+			vin: "1122334455",
+			vehicleType: "Truck",
+			year: 2005,
+			make: "Toyota",
+			model: "Tundra",
+			imgUrl:
+				"https://www.toyota.com/imgix/responsive/images/mlp/colorizer/2021/tundra/8W2/1.png",
+		},
+	},
+];
+
 const APPOINTMENTS_SUBSCRIPTION = gql`
 	subscription($customerID: Int!) {
 		newAppointment(customerID: $customerID) {
@@ -50,6 +110,15 @@ const APPOINTMENTS_QUERY = gql`
 export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
 	// console.log(currentUser);
+
+	const renderItemPast = ({ item }) => {
+		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
+	};
+	const renderItemPresent = ({ item }) => {
+		return (
+			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent" />
+		);
+	};
 
 	const renderItemPast = ({ item }) => {
 		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
