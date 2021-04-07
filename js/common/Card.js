@@ -1,104 +1,119 @@
-import React from 'react';
-import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, Image, Button, StyleSheet } from 'react-native';
+import React from "react";
+import {
+	TextInput,
+	Text,
+	View,
+	FlatList,
+	TouchableOpacity,
+	Alert,
+	Image,
+	Button,
+	StyleSheet,
+} from "react-native";
 
 export class VehicleCard extends React.Component {
-    props: {
-        item : Object,
-    }
+	props: {
+		item: Object,
+	};
 
-    static defaultProps = {
-        item: {
-            id:1,
-            make:'Honda', 
-            model:'CR-V', 
-            year:"2019", 
-            imageURL:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
-        }
-    }
+	static defaultProps = {
+		item: {
+			id: 1,
+			make: "Honda",
+			model: "CR-V",
+			year: "2019",
+			imageURL:
+				"https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg",
+		},
+	};
 
-    render(){
-        const item = this.props.item;
-        return (
-            <View style={styles.row}> 
-                <View style={styles.col2}>
-                    <Image
-                    style={{width: "100%", height: 100}}
-                    source={{ uri: item.imageURL }} />
-                </View>
-                <View style={styles.col2}>
-                    <Text>{item.make}, {item.year}</Text>
-                    <Text>{item.model}</Text>
-                </View>
-            </View>
-        );
-    }
+	render() {
+		const item = this.props.item;
+		return (
+			<View style={styles.row}>
+				<View style={styles.col2}>
+					<Image
+						style={{ width: "100%", height: 100 }}
+						source={{ uri: item.imageURL }}
+					/>
+				</View>
+				<View style={styles.col2}>
+					<Text>
+						{item.make}, {item.year}
+					</Text>
+					<Text>{item.model}</Text>
+				</View>
+			</View>
+		);
+	}
 }
 
 export class TaskCard extends React.Component {
-    props={
-        item: Object,
-        navigation: Object,
-        to: String,
-    }
+	props = {
+		item: Object,
+		navigation: Object,
+		to: String,
+	};
 
-    static defaultProps = {
-        item: {
-            id:"1",
-            make:'Honda', 
-            model:'CR-V', 
-            year:"2019", 
-            imageURL:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
-        },
-        to: "TaskDetailPast"
-    }
+	static defaultProps = {
+		item: {
+			id: "1",
+			make: "Honda",
+			model: "CR-V",
+			year: "2019",
+			imageURL:
+				"https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg",
+		},
+		to: "TaskDetailPast",
+	};
 
-    render(){
-        const { item, to } = this.props;
-        return (
-            <TouchableOpacity 
-            style={[styles.row, styles.cardShape]}
-            onPress={ (e) => this.props.navigation.navigate(to)}
-            > 
-                <View style={styles.col2}>
-                    <Image
-                    style={{width: "100%", height: 100}}
-                    source={{ uri: item.imageURL }} />
-                </View>
-                <View style={styles.col2}>
-                    <Text>
-                    {item.make}, {item.year}
-                    </Text>
-                    <Text>
-                        {item.model}
-                    </Text>
-                    <Text>{item.scheduleDate}</Text>
-                    <Text>Service: {item.service.serviceOne}, {item.service.serviceTwo}</Text>
-                    <Text>Mechanician: {item.mechanician}</Text>
-                </View>
-                
-            </TouchableOpacity>
-        );
-    }
+	render() {
+		const { item, to } = this.props;
+		console.log("item: ", item);
+		return (
+			<TouchableOpacity
+				style={[styles.row, styles.cardShape]}
+				onPress={(e) => this.props.navigation.navigate(to)}
+			>
+				<View style={styles.col2}>
+					<Image
+						style={{ width: "100%", height: 100 }}
+						// source={{ uri: item.imageURL }}
+					/>
+				</View>
+				<View style={styles.col2}>
+					<Text>
+						{item.vehicle.make}, {item.vehicle.year}
+					</Text>
+					<Text>{item.vehicle.model}</Text>
+					{/* <Text>{item.dateTime}</Text> */}
+					{/* <Text>Service: {item.service.serviceOne}, {item.service.serviceTwo}</Text>
+                    <Text>Mechanician: {item.mechanician}</Text> */}
+				</View>
+			</TouchableOpacity>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    },
-    row:{
-        flexDirection: "row",
-        marginVertical: 6,
-        marginHorizontal: 8,
-    },
-    col2: {//half of the row
-        flex: 0.5,
-        paddingHorizontal: 4,
-    },
-    cardShape:{
-        elevation: 3,
-        backgroundColor: "white",
-        padding: 8
-    },
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "flex-start",
+	},
+	row: {
+		flexDirection: "row",
+		marginVertical: 6,
+		marginHorizontal: 8,
+	},
+	col2: {
+		//half of the row
+		flex: 0.5,
+		paddingHorizontal: 4,
+	},
+	cardShape: {
+		elevation: 3,
+		backgroundColor: "white",
+		padding: 8,
+	},
 });
