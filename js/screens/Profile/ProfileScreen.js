@@ -9,7 +9,23 @@ export default function ProfileScreen({ navigation }) {
     return (
         <View style={styles.container}> 
             <View>
-                <Text>user's account info</Text>
+                <View>
+                    <Text>info</Text>
+                </View>
+                <View>
+                    <Text>Zipcode</Text>
+                    <Text>Addresses</Text>
+                </View>
+            </View>
+
+            <View>
+                <View>
+                    <Text>Settings</Text>
+                </View>
+                <View>
+                    <Text>Notification</Text>
+                    <Text>About us</Text>
+                </View>
             </View>
             <BottomNav navigation={ navigation }/>
         </View>
