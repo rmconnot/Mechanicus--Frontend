@@ -17,6 +17,7 @@ import { SignUpScreen } from "./js/screens/SignUp/SignUpScreen";
 import QuoteVehicleScreen from "./js/screens/QuoteVehicle/QuoteVehicleScreen";
 // import QuoteServiceScreen from "./js/screens/QuoteService/QuoteServiceScreen";
 import QuoteReviewScreen from "./js/screens/QuoteReview/QuoteReviewScreen";
+import QuoteCompleteScreen from "./js/screens/QuoteComplete/QuoteCompleteScreen";
 
 // SCREENS-TASK
 
@@ -103,6 +104,7 @@ export default function App() {
 					<Stack.Screen name="QuoteVehicle" component={QuoteVehicleScreen} />
 					{/* <Stack.Screen name="QuoteService" component={QuoteServiceScreen} /> */}
 					<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
+					<Stack.Screen name="QuoteComplete" component={QuoteCompleteScreen} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</ApolloProvider>

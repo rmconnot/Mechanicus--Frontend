@@ -38,11 +38,11 @@ export class VehicleCard extends React.Component {
                 <View style={styles.col2}>
                     <Image
                     style={{width: "100%", height: 100}}
-                    source={{ uri: item.vehicle.imgUrl }} />
+                    source={{ uri: item.imgUrl }} />
                 </View>
                 <View style={styles.col2}>
-                    <Text>{item.vehicle.make}, {item.vehicle.year}</Text>
-                    <Text>{item.vehicle.model}</Text>
+                    <Text>{item.make}, {item.year}</Text>
+                    <Text>{item.model}</Text>
                 </View>
             </View>
         );

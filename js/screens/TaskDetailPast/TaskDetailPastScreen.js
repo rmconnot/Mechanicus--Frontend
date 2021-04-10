@@ -167,7 +167,7 @@ export default function TaskDetailPastScreen({ navigation, route }) {
 			</View>
 			<View>
 				<Text style={commonStyles.sectionTitle}>Vehicle</Text>
-				<VehicleCard item={data?data.quote[0]:sampleQuotes}/>
+				<VehicleCard item={data?data.quote[0].vehicle:sampleQuotes}/>
 			</View>
 
 			<View>
