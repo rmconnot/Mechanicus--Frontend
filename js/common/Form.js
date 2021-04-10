@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { VehicleCard } from './Card';
 
 /* consts */
 const sampleOptions = [
@@ -70,7 +71,7 @@ export function CheckboxGroup({
     options = sampleOptions,
     handleSelections,
 }) {    
-    console.log(selections);
+
     const renderItem = ({item}) => {
         return (
             <ServiceCheckbox 
@@ -80,6 +81,36 @@ export function CheckboxGroup({
             checked={selections.includes(item.id)} 
             handleStatus={handleSelections}
             />
+        );
+    };
+    return (
+        <View>
+            <FlatList 
+            data={options}
+            renderItem={renderItem}
+            keyExtractor={item => String(item.id) }
+            />
+        </View>
+    );
+}
+
+/* <Radio> */
+//radio selections
+export function VehicleRadio({
+    options = [],
+    selected = "",
+    handleSelection = () => {}
+}){
+    const renderItem = ({item}) => {
+        return (
+            <TouchableOpacity
+            style={
+                item.id == selected? styles.radioSelected: ""
+            }
+            activeOpacity={0.6}
+            onPress={ e => handleSelection(item.id) }>
+                <VehicleCard item={item} />
+            </TouchableOpacity>
         );
     };
     return (
@@ -113,6 +144,10 @@ const styles = StyleSheet.create({
     },
     checkboxMarkActive: {
         backgroundColor: "#666"
+    },
+    radioSelected: {
+        borderWidth: 2,
+        borderColor: "black",
     }
     
 });

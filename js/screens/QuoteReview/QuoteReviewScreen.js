@@ -17,6 +17,19 @@ query($services: [Int!]! ) {
 	}
 }
 `;
+const getSelectedVehicle = `
+query($id: Int! ) {
+	vehicle(id: $id ) {
+        id
+        vin
+	    vehicleType
+        make
+        model
+        year
+        imgUrl
+	}
+}
+`;
 
 const navOption = [
     {
@@ -56,7 +69,7 @@ function ServiceEntry({
 /* <QuoteReviewScreen> */
 export default function QuoteReviewScreen({ route, navigation }) {
 
-    //get service options from database
+    /* get SERVICES options from database */
     //==========
     const [result, reexecuteQuery] = useQuery({
         query: getSelectedServices,
@@ -75,13 +88,32 @@ export default function QuoteReviewScreen({ route, navigation }) {
     // }
     //===========
 
+    /* get VEHICLE from database */
+    //==========
+    const [result_v, reexecuteQuery_v] = useQuery({
+        query: getSelectedVehicle,
+        variables: {
+            id: route.params.vehicle,
+        }
+    });
+    const { data_v, fetching_v, error_v } = result_v;
+    if (result_v.error) {
+        Alert.alert("Error!",result_v.error.message,[
+            { text: "OK", style: "OK" },
+        ]);
+    }
+    // if (result_v.data) {
+    //     console.log(result_v.data.vehicle);
+    // }
+    //===========
+
     const { vehicle, services } = route.params;
     const renderItem = ({item}) => {
         return (
             <ServiceEntry text={item.type} price={item.price} />
         );
     };
-    
+    console.log(result_v.data);
     //get total price of services
     const getTotalPrice = () => {
         let sum = 0;
@@ -103,7 +135,7 @@ export default function QuoteReviewScreen({ route, navigation }) {
                 <QuoteProgress curStep={3} status={[true,true,false]} />
                 <View>
                     <Text>Vehicle</Text>
-                    <VehicleCard item={vehicle} />
+                    <VehicleCard item={result_v.data?result_v.data.vehicle:""} />
                 </View>
                 <View>
                     <Text>Service</Text>

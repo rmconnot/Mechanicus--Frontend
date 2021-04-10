@@ -21,10 +21,11 @@ export class VehicleCard extends React.Component {
         const item = this.props.item;
         return (
             <View style={styles.row}> 
-                <View style={styles.col2}>
+                <View style={[styles.col2, styles.imgContainer]}>
                     <Image
-                    style={{width: "100%", height: 100}}
-                    source={{ uri: item.imgUrl }} />
+                    style={{width: "100%",height:100}}
+                    source={{ uri: item.imgUrl }}
+                    resizeMode="contain" />
                 </View>
                 <View style={styles.col2}>
                     <Text>{item.vin}</Text>
@@ -49,7 +50,7 @@ export class TaskCard extends React.Component {
             make:'Honda', 
             model:'CR-V', 
             year:"2019", 
-            imageURL:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
+            imgUrl:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
         },
         to: "TaskDetailPast"
     }
@@ -63,8 +64,8 @@ export class TaskCard extends React.Component {
             > 
                 <View style={styles.col2}>
                     <Image
-                    style={{width: "100%", height: 100}}
-                    source={{ uri: item.imageURL }} />
+                    style={{alignSelf: 'flex-start',}}
+                    source={{ uri: item.imgUrl }} />
                 </View>
                 <View style={styles.col2}>
                     <Text>
@@ -102,5 +103,9 @@ const styles = StyleSheet.create({
         elevation: 3,
         backgroundColor: "white",
         padding: 8
+    },
+    imgContainer:{
+        justifyContent:'center',
+        alignItems: 'center',
     },
 });

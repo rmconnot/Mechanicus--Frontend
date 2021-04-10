@@ -91,8 +91,6 @@ export default function QuoteServiceScreen({ route, navigation }) {
 
     // console.log("####service");
     // console.log(route.params);
-
-    // console.log(selections);
     
     return (
         <View style={styles.container}> 

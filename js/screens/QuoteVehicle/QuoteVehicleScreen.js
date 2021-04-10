@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet, Alert, FlatList } from 'react-native';
 import { NavGroup } from '../../common/BottomNav';
 import { QuoteProgress } from '../../common/Progress';
 import { VehicleCard } from '../../common/Card';
+import { VehicleRadio } from '../../common/Form';
 import { useQuery } from "urql";
 
 const getVehicles = `
@@ -53,12 +54,11 @@ export default function QuoteVehicleScreen({
     // }
     //==========
 
-    const renderItem = ({item}) => {
-        return (
-            <VehicleCard item={item} />
-        );
+    const [selection, setSelection] = useState("");
+    const handleSelection = id => {
+        setSelection(id);
     };
-    
+
     // console.log("####vehicle");
     // console.log(route.params);
 
@@ -66,10 +66,10 @@ export default function QuoteVehicleScreen({
         <View style={styles.container}> 
             <View>
                 <QuoteProgress curStep={1} status={[false,false,false]} />
-                <FlatList
-                data={ data?data.vehicles:[]}
-                renderItem={renderItem}
-                keyExtractor={item => String(item.id) }
+                <VehicleRadio 
+                selected = {selection}
+                options = {data?data.vehicles:[]} 
+                handleSelection = {handleSelection}
                 />
             </View>
             <NavGroup 
@@ -77,7 +77,7 @@ export default function QuoteVehicleScreen({
             options={navOption} 
             data={{
                 ...route.params,
-                vehicle: data?data.vehicles[0]:{},
+                vehicle: selection,
             }}
             />
         </View>
