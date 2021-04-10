@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
 	TextInput,
 	Text,
@@ -109,7 +109,7 @@ const sampleQuotes = [
 	},
 ];
 
-export default function TaskDetailPastScreen({ navigation, route }) {
+export default function TaskDetailPresentScreen({ navigation, route }) {
 	const { currentUser } = route.params;
 	console.log(currentUser);
 
@@ -154,6 +154,12 @@ export default function TaskDetailPastScreen({ navigation, route }) {
 					</Text>
 					<Text>{data.quote[0].vehicle.vin}</Text>
 					<Text>{data.quote[0].scheduleDate}</Text>
+				</View>
+				<View>
+					<Button
+						title="Cancel"
+						onPress={() => Alert.alert("jump to the cancel page")}
+					/>
 				</View>
 				<TaskProgress />
 			</View>
