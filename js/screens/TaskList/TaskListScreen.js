@@ -76,7 +76,7 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 	subscription($customerID: Int!) {
 		newAppointment(customerID: $customerID) {
 			id
-			dateTime
+			scheduleDate
 			vehicle {
 				id
 				make
@@ -91,7 +91,7 @@ const APPOINTMENTS_QUERY = gql`
 	query($customerID: Int!) {
 		appointments(customerID: $customerID) {
 			id
-			dateTime
+			scheduleDate
 			vehicle {
 				id
 				make
@@ -99,7 +99,7 @@ const APPOINTMENTS_QUERY = gql`
 				year
 			}
 			#mechanicID
-			#dateTime
+			#scheduleDate
 			#service?
 		}
 	}
@@ -111,23 +111,26 @@ export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
 	// console.log(currentUser);
 
-	const renderItemPast = ({ item }) => {
-		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
-	};
-	const renderItemPresent = ({ item }) => {
-		return (
-			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent" />
-		);
-	};
-
-	const renderItemPast = ({ item }) => {
-		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
-	};
-	const renderItemPresent = ({ item }) => {
-		return (
-			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent" />
-		);
-	};
+	// const renderItemPast = ({ item }) => {
+	// 	return (
+	// 		<TaskCard
+	// 			item={item}
+	// 			navigation={navigation}
+	// 			to="TaskDetailPast"
+	// 			currentUser={currentUser}
+	// 		/>
+	// 	);
+	// };
+	// const renderItemPresent = ({ item }) => {
+	// 	return (
+	// 		<TaskCard
+	// 			item={item}
+	// 			navigation={navigation}
+	// 			to="TaskDetailPresent"
+	// 			currentUser={currentUser}
+	// 		/>
+	// 	);
+	// };
 
 	const { subscribeToMore, data, error, loading } = useQuery(
 		APPOINTMENTS_QUERY,
@@ -168,9 +171,11 @@ export const TaskListScreen = ({ navigation, route }) => {
 				</View>
 				<Button
 					title={"Get a Quote"}
-					onPress={() => navigation.navigate("QuoteVehicle")}
+					onPress={() =>
+						navigation.navigate("QuoteVehicle", { currentUser: currentUser })
+					}
 				/>
-				<View>
+				{/* <View>
 					<Text>Upcoming appointments</Text>
 					{data ? (
 						<FlatList data={data.appointments} renderItem={renderItemPresent} />
@@ -180,13 +185,13 @@ export const TaskListScreen = ({ navigation, route }) => {
 				</View>
 				<View>
 					<Text>Past appointments</Text>
-					{/* <Text>March</Text> */}
+					<Text>March</Text>
 					{data ? (
 						<FlatList data={data.appointments} renderItem={renderItemPast} />
 					) : (
 						<Text>No upcoming appointments</Text>
 					)}
-				</View>
+				</View> */}
 			</View>
 			<BottomNav navigation={navigation} />
 		</SafeAreaView>

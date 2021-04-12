@@ -15,18 +15,18 @@ import { SignUpScreen } from "./js/screens/SignUp/SignUpScreen";
 
 // SCREENS-GET A QUOTE
 import QuoteVehicleScreen from "./js/screens/QuoteVehicle/QuoteVehicleScreen";
-// import QuoteServiceScreen from "./js/screens/QuoteService/QuoteServiceScreen";
+import QuoteServiceScreen from "./js/screens/QuoteService/QuoteServiceScreen";
 import QuoteReviewScreen from "./js/screens/QuoteReview/QuoteReviewScreen";
 
 // SCREENS-TASK
 
 import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
-import { TaskDetailPastScreen } from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
-import { TaskDetailPresentScreen } from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
+import TaskDetailPastScreen from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
+import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
 import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
 import AddVehicleManualScreen from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
-import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
+// import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
 import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
@@ -90,7 +90,7 @@ export default function App() {
 						component={TaskDetailPresentScreen}
 					/>
 
-					<Stack.Screen name="VehicleList" component={VehicleListScreen} />
+					{/* <Stack.Screen name="VehicleList" component={VehicleListScreen} /> */}
 					<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
 					<Stack.Screen
 						name="AddVehicleManual"
@@ -101,7 +101,7 @@ export default function App() {
 					<Stack.Screen name="Profile" component={ProfileScreen} />
 
 					<Stack.Screen name="QuoteVehicle" component={QuoteVehicleScreen} />
-					{/* <Stack.Screen name="QuoteService" component={QuoteServiceScreen} /> */}
+					<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />
 					<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
 				</Stack.Navigator>
 			</NavigationContainer>

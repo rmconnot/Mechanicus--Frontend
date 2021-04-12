@@ -7,16 +7,23 @@ class TabNav extends React.Component {
 		title: String,
 		navigate: () => mixed,
 		active: string, //check if tab is activated
+		routeProps: Object,
 	};
 
 	render() {
 		let to = this.props.to;
+		console.log("TabNav routeProps: ", this.props.routeProps);
 		return (
 			<View style={styles.bottomNav}>
 				<Button
 					style={styles.navBtn}
 					title={this.props.title}
-					onPress={() => this.props.navigate(to)}
+					onPress={() =>
+						this.props.navigate(
+							to,
+							this.props.routeProps ? this.props.routeProps : null
+						)
+					}
 				/>
 			</View>
 		);
@@ -29,6 +36,7 @@ export function NavGroup({
 		{ title: "Task", to: "TaskList" },
 		{ title: "Garage", to: "VehicleList" },
 	],
+	routeProps,
 }) {
 	const navigate = navigation.navigate;
 	return (
@@ -38,12 +46,14 @@ export function NavGroup({
 				title={options[0].title}
 				to={options[0].to}
 				navigate={navigate}
+				routeProps={routeProps}
 			/>
 			<TabNav
 				style={styles.navGroupItem}
 				title={options[1].title}
 				to={options[1].to}
 				navigate={navigate}
+				routeProps={routeProps}
 			/>
 		</View>
 	);

@@ -28,7 +28,7 @@ export default function Login({ navigation }) {
 	if (error) console.error(`Error! ${error.message}`);
 
 	if (!error && data != undefined) {
-		console.log("data: ", data);
+		// console.log("data: ", data);
 		// navigation.navigate("TaskList", {
 		// 	currentUser: {
 		// 		id: data.customer.id,
@@ -37,7 +37,10 @@ export default function Login({ navigation }) {
 		navigation.reset({
 			index: 0,
 			routes: [
-				{ name: "TaskList", params: { currentUser: { id: data.customer.id } } },
+				{
+					name: "TaskList",
+					params: { currentUser: { id: data.customer.id } },
+				},
 			],
 		});
 	}
