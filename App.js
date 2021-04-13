@@ -31,7 +31,7 @@ import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
 import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
-import ProfileScreen from "./js/screens/Profile/ProfileScreen";
+import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
 
 // =====
 // nav dependencies
@@ -45,11 +45,11 @@ const Stack = createStackNavigator();
 
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
-	uri: "http://192.168.1.126:4000/graphql",
+	uri: "http://192.168.0.106:4000/graphql",
 });
 
 const wsLink = new WebSocketLink({
-	uri: "ws://192.168.1.126:4000/subscriptions",
+	uri: "ws://192.168.0.106:4000/subscriptions",
 	options: {
 		reconnect: true,
 	},

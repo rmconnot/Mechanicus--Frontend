@@ -120,15 +120,6 @@ export const TaskListScreen = ({ navigation, route }) => {
 		);
 	};
 
-	const renderItemPast = ({ item }) => {
-		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
-	};
-	const renderItemPresent = ({ item }) => {
-		return (
-			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent" />
-		);
-	};
-
 	const { subscribeToMore, data, error, loading } = useQuery(
 		APPOINTMENTS_QUERY,
 		{

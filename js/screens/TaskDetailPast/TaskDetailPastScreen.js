@@ -13,14 +13,14 @@ import { TaskProgress } from '../../common/Progress';
 import { VehicleCard } from '../../common/Card';
 import { commonStyles } from '../../common/commonStyles';
 import { styles } from './Styles';
-import { useQuery } from "urql";
+import { gql, useQuery } from "@apollo/client";
 
 const imageURL = {
 	circle: "./images/circle.png",
 	line: "./images/line.png",
 };
 
-const quoteQuery = `query ($customerID: Int!) {
+const quoteQuery = gql`query ($customerID: Int!) {
 	quote (customerID: $customerID) {
         scheduleDate
 		status
@@ -102,19 +102,18 @@ const sampleQuotes = [
 	},
 ];
 
-export default function TaskDetailPastScreen({ navigation, route }) {
+export function TaskDetailPastScreen({ navigation, route }) {
 	// const { currentUser } = route.params;
 	// console.log(currentUser);
 
-	const [result, reexecuteQuery] = useQuery({
-        query: quoteQuery,
+	const {data, loading, error} = useQuery(quoteQuery,{
+        
         variables: {
             customerID: 1
         },
     });
-    const { data, fetching, error } = result;
 
-    if (fetching) return (<Text>Loading...</Text>);
+    if (loading) return (<Text>Loading...</Text>);
     if (error) return (<Text>Oh no... {error.message}</Text>);
 
 	// console.log(data.quote[0]);

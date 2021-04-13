@@ -102,7 +102,7 @@ const sampleQuotes = [
 	},
 ];
 
-export default function TaskDetailPresentScreen({ navigation, route }) {
+export function TaskDetailPresentScreen({ navigation, route }) {
 	// const { currentUser } = route.params;
 	// console.log(currentUser);
 
