@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, Alert, StyleSheet, FlatList } from 'react-native';
 import { NavGroup } from '../../common/BottomNav';
 import { QuoteProgress } from '../../common/Progress';
 import { VehicleCard } from '../../common/Card';
-import { FlatList } from 'react-native-gesture-handler';
 import { render } from 'react-dom';
 import { styles } from './Styles';
 import { gql, useMutation } from "@apollo/client";
@@ -44,35 +43,92 @@ function ServiceEntry({
     );
 }
 /* <QuoteReviewScreen> */
-export default function QuoteReviewScreen({ navigation }) {
-    const renderItem = (item) => {
+export default function QuoteReviewScreen({ route, navigation }) {
+
+    /* get SERVICES options from database */
+    //==========
+    const [result, reexecuteQuery] = useQuery({
+        query: getSelectedServices,
+        variables: {
+            services: route.params.services,
+        }
+    });
+    const { data, fetching, error } = result;
+    if (error) {
+        Alert.alert("Error!",result.error.message,[
+            { text: "OK", style: "OK" },
+        ]);
+    }
+    // if (data) {
+    //     console.log(data.services);
+    // }
+    //===========
+
+    /* get VEHICLE from database */
+    //==========
+    const [result_v, reexecuteQuery_v] = useQuery({
+        query: getSelectedVehicle,
+        variables: {
+            id: route.params.vehicle,
+        }
+    });
+    const { data_v, fetching_v, error_v } = result_v;
+    if (result_v.error) {
+        Alert.alert("Error!",result_v.error.message,[
+            { text: "OK", style: "OK" },
+        ]);
+    }
+    // if (result_v.data) {
+    //     console.log(result_v.data.vehicle);
+    // }
+    //===========
+
+    const { vehicle, services } = route.params;
+    const renderItem = ({item}) => {
         return (
-            <ServiceEntry text={item.text} price={item.price} />
+            <ServiceEntry text={item.type} price={item.price} />
         );
     };
-    let sum = 0;//total price
+    console.log(result_v.data);
+    //get total price of services
+    const getTotalPrice = () => {
+        let sum = 0;
+        if(data){
+            let list = data.selectedServices;
+            list.forEach(item=>{
+                sum += item.price;
+            });
+        }
+        return sum;
+    };
+
+    // console.log("####review");
+    // console.log(route.params);
+    
     return (
         <View style={styles.container}> 
             <View>
                 <QuoteProgress curStep={3} status={[true,true,false]} />
                 <View>
                     <Text>Vehicle</Text>
-                    <VehicleCard />
+                    <VehicleCard item={result_v.data?result_v.data.vehicle:""} />
                 </View>
                 <View>
                     <Text>Service</Text>
                     <FlatList 
-                        data={sampleServiceList}
+                        data={data?data.selectedServices:[]}
                         renderItem={renderItem}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => String(item.id)}
                     />
                     <View>
-                        <Text>Total price:{sum}</Text>
+                        <Text>Total price:{getTotalPrice()}</Text>
                     </View>
                 </View>
 
             </View>
-            <NavGroup navigation={navigation} options={navOption}/>
+            <NavGroup navigation={navigation} options={navOption} data={{
+                ...route.params,
+            }}/>
         </View>
     );
 } 

@@ -23,6 +23,7 @@ export class VehicleCard extends React.Component {
     static defaultProps = {
         item: {
             id:1,
+            vin: '123456789012',
             make:'Honda', 
             model:'CR-V', 
             year:"2019", 
@@ -34,7 +35,7 @@ export class VehicleCard extends React.Component {
         const item = this.props.item;
         return (
             <View style={styles.row}> 
-                <View style={styles.col2}>
+                <View style={[styles.col2, styles.imgContainer]}>
                     <Image
                     style={{width: "100%", height: 100}}
                     source={{ uri: item.vehicle.imgUrl }} />

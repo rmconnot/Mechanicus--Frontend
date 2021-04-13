@@ -41,12 +41,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
 // connect to backend
+<<<<<<< HEAD
 
 
 const IP = "192.168.0.5";
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
 	uri: `http://${IP}:4000/graphql`,
+=======
+const client = createClient({
+	url: `http://192.168.0.8:5000/graphql`,
+>>>>>>> 3abfaad3944b94b40d01a4d0d3d64ad35169357c
 });
 
 const wsLink = new WebSocketLink({
@@ -77,7 +82,7 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="QuoteService">
+				<Stack.Navigator initialRouteName="QuoteVehicle">
 					<Stack.Screen name="LogIn" component={LoginScreen} />
 					<Stack.Screen name="SignUp" component={SignUpScreen} />
 					{/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
