@@ -77,11 +77,13 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 		newAppointment(customerID: $customerID) {
 			id
 			dateTime
-			vehicle {
-				id
-				make
-				model
-				year
+			quote{
+				vehicle {
+					id
+					make
+					model
+					year
+				}
 			}
 		}
 	}
@@ -110,15 +112,6 @@ const APPOINTMENTS_QUERY = gql`
 export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
 	// console.log(currentUser);
-
-	const renderItemPast = ({ item }) => {
-		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
-	};
-	const renderItemPresent = ({ item }) => {
-		return (
-			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent" />
-		);
-	};
 
 	const renderItemPast = ({ item }) => {
 		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;

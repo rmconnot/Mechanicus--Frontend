@@ -18,7 +18,6 @@ export class VehicleCard extends React.Component {
 
     props: {
         item : Object,
-        
     }
 
     static defaultProps = {

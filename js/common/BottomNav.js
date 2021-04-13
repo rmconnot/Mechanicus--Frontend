@@ -55,7 +55,7 @@ export default function BottomNav({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<TabNav title="Task" to="TaskList" navigate={navigate} />
-			<TabNav title="Garage" to="VehicleList" navigate={navigate} />
+			<TabNav title="My Vehicles" to="VehicleList" navigate={navigate} />
 			<TabNav title="Profile" to="Profile" navigate={navigate} />
 		</View>
 	);

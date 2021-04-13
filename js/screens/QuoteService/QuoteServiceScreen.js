@@ -3,16 +3,17 @@ import { View, Text, Button, StyleSheet, Alert } from 'react-native';
 import { CheckboxGroup } from '../../common/Form';
 import { NavGroup } from '../../common/BottomNav';
 import { QuoteProgress } from '../../common/Progress';
-import { useQuery } from "urql";
+import { gql, useQuery } from "@apollo/client";
+import { TabRouter } from '@react-navigation/routers';
 
-const retrieveServices = `
-query {
-	services {
-        id
-	    type
-        price
-	}
-}
+const SERVICES_QUERY = gql`
+    query {
+        services {
+            id
+            type
+            price
+        }
+    }
 `;
 
 const navOption = [
@@ -54,30 +55,62 @@ const sampleServiceList = [
 ];
 
 /* <QuoteServiceScreen> */
-export default function QuoteServiceScreen({ navigation }) {
-    let navigate = navigation.navigate;
+export default function QuoteServiceScreen({ route, navigation }) {
 
-    const [result, reexecuteQuery] = useQuery({
-        query: retrieveServices,
-    });
-    const { data, fetching, error } = result;
+    //get service options from database
+    //==========
+    const {data, loading, error} = useQuery(SERVICES_QUERY);
     if (error) {
         Alert.alert("Error!",result.error.message,[
             { text: "OK", style: "OK" },
         ]);
     }
-    if (data) {
-        console.log(data.services);
-    }
+    // if (data) {
+    //     console.log(data.services);
+    // }
+    //===========
 
+    const [selections, onChangeSelections] = useState([]);
+    // useEffect( () => {
+    //     onChangeSelections(route.params.services);
+    // }, [route.params.services] );
+    //item {checked: Boolean, id: Int}
+    const handleSelections = item => {
+        let temp = selections.slice();
+        let index = selections.indexOf(item.id);
+        //if item is not checked and exist in selections, remove it from selections
+        if(!item.checked && index != -1){
+            temp.splice(index,1);
+            onChangeSelections(temp);
+        }//if item is checked and not in selections, add it in
+        else if(item.checked && index == -1){
+            temp.push(item.id);
+            onChangeSelections(temp);
+        }
+    };
+
+    // console.log("####service");
+    // console.log(route.params);
+    
     return (
         <View style={styles.container}> 
             <View>
                 <QuoteProgress curStep={2} status={[true,false,false]} />
-                <CheckboxGroup options={data?data.services:emptyServiceList} />
+                <CheckboxGroup 
+                selections={selections} 
+                options={data?data.services:emptyServiceList} 
+                handleSelections={handleSelections}
+                />
             </View>
             
-            <NavGroup navigation={navigation} options={navOption}/>
+            <NavGroup 
+            navigation={navigation} 
+            options={navOption} 
+            data={{
+                ...route.params,
+                services: selections,
+            }}
+            />
         </View>
     );
 } 

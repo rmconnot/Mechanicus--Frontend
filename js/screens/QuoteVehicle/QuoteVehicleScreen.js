@@ -1,7 +1,24 @@
-import * as React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, StyleSheet, Alert, FlatList } from 'react-native';
 import { NavGroup } from '../../common/BottomNav';
 import { QuoteProgress } from '../../common/Progress';
+import { VehicleCard } from '../../common/Card';
+import { VehicleRadio } from '../../common/Form';
+import { gql, useQuery } from "@apollo/client";
+
+const VEHICLES_QUERY = gql`
+query ($customerID: Int!){
+	vehicles(customerID: $customerID){
+        id
+        vin
+	    vehicleType
+        make
+        model
+        year
+        imgUrl
+	}
+}
+`;
 
 const navOption = [
     {
@@ -12,14 +29,55 @@ const navOption = [
 ];
 
 /* <QuoteVehicleScreen> */
-export default function QuoteVehicleScreen({ navigation }) {
+export default function QuoteVehicleScreen({ 
+    route,
+    navigation,
+    customerID = 1,
+ }) {
+    const [vehicle,setVehicle] = useState({});
+    //get vehicle list from database
+    //==========
+    const {data, loading, error} = useQuery(VEHICLES_QUERY,{
+        variables: { 
+            customerID: customerID 
+        },
+    });
+    if (error) {
+        Alert.alert("Error!",result.error.message,[
+            { text: "OK", style: "OK" },
+        ]);
+    }
+    // if (data) {
+    //     console.log(data.vehicles);
+    // }
+    //==========
+
+    const [selection, setSelection] = useState("");
+    const handleSelection = id => {
+        setSelection(id);
+    };
+
+    // console.log("####vehicle");
+    // console.log(route.params);
+
     return (
         <View style={styles.container}> 
             <View>
                 <QuoteProgress curStep={1} status={[false,false,false]} />
-                <Text>quote: select vehicle</Text>
+                <VehicleRadio 
+                selected = {selection}
+                options = {data?data.vehicles:[]} 
+                handleSelection = {handleSelection}
+                />
             </View>
-            <NavGroup navigation={navigation} options={navOption}/>
+            <NavGroup 
+            navigation={navigation} 
+            options={navOption} 
+            data={{
+                ...route.params,
+                vehicle: selection,
+            }}
+            />
         </View>
     );
 } 

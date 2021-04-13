@@ -6,6 +6,7 @@ import { VehicleCard } from '../../common/Card';
 import { FlatList } from 'react-native-gesture-handler';
 import { render } from 'react-dom';
 import { styles } from './Styles';
+import { gql, useMutation } from "@apollo/client";
 
 const navOption = [
     {
