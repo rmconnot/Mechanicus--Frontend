@@ -8,6 +8,10 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+IP.js
 
 # macOS
 .DS_Store
+
+# frontend style test
+moduleTest.js
