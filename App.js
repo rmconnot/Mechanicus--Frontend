@@ -45,13 +45,16 @@ const Stack = createStackNavigator();
 
 // connect to backend
 
+
+const IP = "192.168.0.5";
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
-	uri: "http://192.168.0.5:4000/graphql",
+
+	uri: `http://${IP}:4000/graphql`,
 });
 
 const wsLink = new WebSocketLink({
-	uri: "ws://192.168.0.5:4000/subscriptions",
+	uri: `ws://${IP}:4000/subscriptions`,
 	options: {
 		reconnect: true,
 	},
@@ -78,7 +81,7 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="test">
+				<Stack.Navigator initialRouteName="QuoteVehicle">
 					<Stack.Screen name="LogIn" component={LoginScreen} />
 					<Stack.Screen name="SignUp" component={SignUpScreen} />
 					{/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
@@ -103,7 +106,7 @@ export default function App() {
 
 					<Stack.Screen name="Profile" component={ProfileScreen} />
 
-					<Stack.Screen name="QuoteVehicle" component={QuoteVehicleScreen} />
+					<Stack.Screen name="QuoteVehicle" component={ QuoteVehicleScreen } />
 					<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />
 					<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
 

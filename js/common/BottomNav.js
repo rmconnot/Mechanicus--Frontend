@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, Text, Button, StyleSheet, FlatList } from "react-native";
 
+<<<<<<< HEAD
 class TabNav extends React.Component {
 	props: {
 		to: string,
@@ -28,15 +29,39 @@ class TabNav extends React.Component {
 			</View>
 		);
 	}
+=======
+
+function TabNav({
+	navigation,
+	to,
+	title = "next",
+	active = true,
+	data = {},
+}){
+
+	return (
+		<View style={styles.bottomNav}>
+			<Button
+				style={styles.navBtn}
+				title={title}
+				onPress={() => navigation.navigate(to, data)}
+			/>
+		</View>
+	);
+>>>>>>> 45a3593e9a5317e669eece5071dc8c3753092d3d
 }
 
 export function NavGroup({
 	navigation,
 	options = [
-		{ title: "Task", to: "TaskList" },
-		{ title: "Garage", to: "VehicleList" },
+		{ title: "Task", to: "TaskList", data: {} },
+		{ title: "Garage", to: "VehicleList", data: {} },
 	],
+<<<<<<< HEAD
 	routeProps,
+=======
+	data,
+>>>>>>> 45a3593e9a5317e669eece5071dc8c3753092d3d
 }) {
 	const navigate = navigation.navigate;
 	return (
@@ -45,21 +70,32 @@ export function NavGroup({
 				style={styles.navGroupItem}
 				title={options[0].title}
 				to={options[0].to}
+<<<<<<< HEAD
 				navigate={navigate}
 				routeProps={routeProps}
+=======
+				navigation={navigation}
+				data={data}
+>>>>>>> 45a3593e9a5317e669eece5071dc8c3753092d3d
 			/>
 			<TabNav
 				style={styles.navGroupItem}
 				title={options[1].title}
 				to={options[1].to}
+<<<<<<< HEAD
 				navigate={navigate}
 				routeProps={routeProps}
+=======
+				navigation={navigation}
+				data={data}
+>>>>>>> 45a3593e9a5317e669eece5071dc8c3753092d3d
 			/>
 		</View>
 	);
 }
 
 /* <BottomNav> */
+<<<<<<< HEAD
 export default function BottomNav({ 
 	navigation, 
 	activated = "Task"
@@ -70,6 +106,14 @@ export default function BottomNav({
 			<TabNav title="Task" to="TaskList" navigate={navigate} active={activated=="Tasks"}/>
 			<TabNav title="My Vehicles" to="VehicleList" navigate={navigate}  active={activated=="Vehicles"}/>
 			<TabNav title="Profile" to="Profile" navigate={navigate}  active={activated=="Profile"}/>
+=======
+export default function BottomNav({ navigation }) {
+	return (
+		<View style={styles.container}>
+			<TabNav title="Task" to="TaskList" navigate={navigate} />
+			<TabNav title="My Vehicles" to="VehicleList" navigate={navigate} />
+			<TabNav title="Profile" to="Profile" navigate={navigate} />
+>>>>>>> 45a3593e9a5317e669eece5071dc8c3753092d3d
 		</View>
 	);
 }

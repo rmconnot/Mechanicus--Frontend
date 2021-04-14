@@ -23,44 +23,41 @@ export const Tag = ({
 };
 
 export class VehicleCard extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+    constructor(props) {
+        super(props)
+    }
 
-	props: {
-		item: Object,
-	};
+    props: {
+        item : Object,
+    }
 
-	static defaultProps = {
-		item: {
-			id: 1,
-			make: "Honda",
-			model: "CR-V",
-			year: "2019",
-			imgUrl: "https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg",
-		},
-	};
+    static defaultProps = {
+        item: {
+            id:1,
+            vin: '123456789012',
+            make:'Honda', 
+            model:'CR-V', 
+            year:"2019", 
+            imgUrl:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
+        }
+    }
 
-	render() {
-		const item = this.props.item;
-		return (
-			<View style={styles.row}>
-				
-				<View style={styles.col2}>
-					{/* <Image
-						style={{ width: "100%", height: 100 }}
-						source={{ uri: item.vehicle.imgUrl }}
-					/> */}
-				</View>
-				<View style={styles.col2}>
-					<Text>
-						{item.vehicle.make}, {item.vehicle.year}
-					</Text>
-					<Text>{item.vehicle.model}</Text>
-				</View>
-			</View>
-		);
-	}
+    render(){
+        const item = this.props.item;
+        return (
+            <View style={styles.row}> 
+                <View style={[styles.col2, styles.imgContainer]}>
+                    <Image
+                    style={{width: "100%", height: 100}}
+                    source={{ uri: item.vehicle.imgUrl }} />
+                </View>
+                <View style={styles.col2}>
+                    <Text>{item.vehicle.make}, {item.vehicle.year}</Text>
+                    <Text>{item.vehicle.model}</Text>
+                </View>
+            </View>
+        );
+    }
 }
 
 //appointments
