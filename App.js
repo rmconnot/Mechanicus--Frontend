@@ -81,7 +81,7 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="QuoteVehicle">
+				<Stack.Navigator initialRouteName="test">
 					<Stack.Screen name="LogIn" component={LoginScreen} />
 					<Stack.Screen name="SignUp" component={SignUpScreen} />
 					{/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
