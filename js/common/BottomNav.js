@@ -6,17 +6,24 @@ class TabNav extends React.Component {
 		to: string,
 		title: String,
 		navigate: () => mixed,
-		active: string, //check if tab is activated
+		active: Boolean, //check if tab is activated
+		routeProps: Object,
 	};
 
 	render() {
 		let to = this.props.to;
+		console.log("TabNav routeProps: ", this.props.routeProps);
 		return (
 			<View style={styles.bottomNav}>
 				<Button
-					style={styles.navBtn}
+					style={[styles.navBtn, this.props.active?styles.activeBtn:""]}
 					title={this.props.title}
-					onPress={() => this.props.navigate(to)}
+					onPress={() =>
+						this.props.navigate(
+							to,
+							this.props.routeProps ? this.props.routeProps : null
+						)
+					}
 				/>
 			</View>
 		);
@@ -26,9 +33,10 @@ class TabNav extends React.Component {
 export function NavGroup({
 	navigation,
 	options = [
-		{ title: "Task", to: "TaskList" },
-		{ title: "Garage", to: "VehicleList" },
+		{ title: "Task", to: "TaskList", data: {} },
+		{ title: "Garage", to: "VehicleList", data: {} },
 	],
+	routeProps,
 }) {
 	const navigate = navigation.navigate;
 	return (
@@ -38,25 +46,30 @@ export function NavGroup({
 				title={options[0].title}
 				to={options[0].to}
 				navigate={navigate}
+				routeProps={routeProps}
 			/>
 			<TabNav
 				style={styles.navGroupItem}
 				title={options[1].title}
 				to={options[1].to}
 				navigate={navigate}
+				routeProps={routeProps}
 			/>
 		</View>
 	);
 }
 
 /* <BottomNav> */
-export default function BottomNav({ navigation }) {
+export default function BottomNav({ 
+	navigation, 
+	activated = "Task"
+}) {
 	let navigate = navigation.navigate;
 	return (
 		<View style={styles.container}>
-			<TabNav title="Task" to="TaskList" navigate={navigate} />
-			<TabNav title="Garage" to="VehicleList" navigate={navigate} />
-			<TabNav title="Profile" to="Profile" navigate={navigate} />
+			<TabNav title="Task" to="TaskList" navigate={navigate} active={activated=="Tasks"}/>
+			<TabNav title="My Vehicles" to="VehicleList" navigate={navigate}  active={activated=="Vehicles"}/>
+			<TabNav title="Profile" to="Profile" navigate={navigate}  active={activated=="Profile"}/>
 		</View>
 	);
 }

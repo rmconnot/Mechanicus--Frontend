@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { VehicleCard } from './Card';
 
 /* consts */
 const sampleOptions = [
-    {
-        id: "1",
-        text: "first option",
-        checked: false,
-        value: "01",
-    },{
-        id: "2",
-        text: "second option",
-        checked: true,
-        value: "02",
-    },
+	{
+		id: "1",
+		text: "first option",
+		checked: false,
+		value: "01",
+	},
+	{
+		id: "2",
+		text: "second option",
+		checked: true,
+		value: "02",
+	},
 ];
 /*=============================*/
 
 /* <Checkbox> */
 export function Checkbox({
-    id = "test",
-    text = "option displayed",
-    checked = false,
-    handleStatus = ()=>{}, //handle status change in checkboxes
+	id = "test",
+	text = "option displayed",
+	checked = false,
+	handleStatus = () => {}, //handle status change in checkboxes
 }) {
-    const [status, onChangeStatus] = React.useState(checked);
+    const [status, onChangeStatus] = useState(checked);
     const changeStatus = () => {
         handleStatus({checked: !status, id: id});
         onChangeStatus(!status);
@@ -42,13 +44,13 @@ export function Checkbox({
 } 
 
 export function ServiceCheckbox({
-    id = "test",
-    text = "option displayed",
-    price = 100,
-    checked = false,
-    handleStatus = ()=>{}, //handle status change in checkboxes
+	id = "test",
+	text = "option displayed",
+	price = 100,
+	checked = false,
+	handleStatus = () => {}, //handle status change in checkboxes
 }) {
-    const [status, onChangeStatus] = React.useState(checked);
+    const [status, onChangeStatus] = useState(checked);
     const changeStatus = () => {
         handleStatus({checked: !status, id: id});
         onChangeStatus(!status);
@@ -124,7 +126,24 @@ export function VehicleRadio({
 }
 
 const styles = StyleSheet.create({
-	container: {
+	container: {},
+	checkboxContainer: {
+		width: "100%",
+		flexDirection: "row",
+		margin: 4,
+		padding: 8,
+		justifyContent: "space-between",
+		alignItems: "center",
+	},
+	checkboxMark: {
+		width: 24,
+		height: 24,
+		borderColor: "#666",
+		borderWidth: 1,
+		margin: 4,
+	},
+	checkboxMarkActive: {
+		backgroundColor: "#666",
 	},
     checkboxContainer: {
         width: "100%",

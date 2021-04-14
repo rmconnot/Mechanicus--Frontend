@@ -19,18 +19,21 @@ import QuoteServiceScreen from "./js/screens/QuoteService/QuoteServiceScreen";
 import QuoteReviewScreen from "./js/screens/QuoteReview/QuoteReviewScreen";
 
 // SCREENS-TASK
-import  { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
-import  TaskDetailPastScreen from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
-import  TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
+import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
+import TaskDetailPastScreen from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
+import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
 import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
 import AddVehicleManualScreen from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
-import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
+// import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
 import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
 import ProfileScreen from "./js/screens/Profile/ProfileScreen";
+
+// TEST MODULE
+import TEST from "./moduleTest";
 
 // =====
 // nav dependencies
@@ -42,12 +45,15 @@ const Stack = createStackNavigator();
 
 // connect to backend
 
+
+const IP = "192.168.0.5";
+// You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
 	uri: "http://10.20.1.148:4000/graphql",
 });
 
 const wsLink = new WebSocketLink({
-	uri: "ws://192.168.1.126:4000/subscriptions",
+	uri: `ws://${IP}:4000/subscriptions`,
 	options: {
 		reconnect: true,
 	},
@@ -74,9 +80,10 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="LogIn">
+				<Stack.Navigator initialRouteName="test">
 					<Stack.Screen name="LogIn" component={LoginScreen} />
 					<Stack.Screen name="SignUp" component={SignUpScreen} />
+					{/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
 
 					<Stack.Screen name="TaskList" component={TaskListScreen} />
 					<Stack.Screen
@@ -88,7 +95,7 @@ export default function App() {
 						component={TaskDetailPresentScreen}
 					/>
 
-					<Stack.Screen name="VehicleList" component={VehicleListScreen} />
+					{/* <Stack.Screen name="VehicleList" component={VehicleListScreen} /> */}
 					<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
 					<Stack.Screen
 						name="AddVehicleManual"
@@ -98,74 +105,14 @@ export default function App() {
 
 					<Stack.Screen name="Profile" component={ProfileScreen} />
 
-					<Stack.Screen name="QuoteVehicle" component={QuoteVehicleScreen} />
+					<Stack.Screen name="QuoteVehicle" component={ QuoteVehicleScreen } />
 					<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />
 					<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
+
+					{/* for test */}
+					<Stack.Screen name="test" component={TEST} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</ApolloProvider>
 	);
 }
-
-// const getData = `
-// query {
-// 	messages {
-// 		id
-// 		content
-// 	}
-// }
-// `;
-
-// const Input = () => {
-// 	const updateMessage = `mutation ($input: String!) {
-// 		post(
-// 			content: $input
-// 		) {
-// 			id
-// 			content
-// 		}}`;
-// 	const [input, setInput] = useState("");
-// 	const [request, makeRequest] = useMutation(updateMessage);
-
-// 	const handleSubmission = () => {
-// 		makeRequest({ input }).then((result) => {
-// 			if (result.error) {
-// 				console.error("Oh no!", result.error);
-// 			}
-// 		});
-// 	};
-
-// 	return (
-// 		<View style={styles.requestView}>
-// 			<TextInput
-// 				style={styles.inputBox}
-// 				onChangeText={(text) => setInput(text)}
-// 			></TextInput>
-// 			<TouchableOpacity style={styles.button} onPress={handleSubmission}>
-// 				<Text>Submit content</Text>
-// 			</TouchableOpacity>
-// 		</View>
-// 	);
-// };
-
-// const Messages = () => {
-// 	const [result, reexecuteQuery] = useQuery({
-// 		query: getData,
-// 	});
-
-// 	const { data, fetching, error } = result;
-
-// 	if (fetching) return <Text>Loading...</Text>;
-// 	if (error) return <Text>Oh no... {error.message}</Text>;
-
-// 	return (
-// 		<FlatList
-// 			data={data.messages}
-// 			renderItem={({ item }) => (
-// 				<Text key={String(item.id)}>{item.content}</Text>
-// 			)}
-// 			style={styles.list}
-// 		/>
-// 	);
-// };
-
