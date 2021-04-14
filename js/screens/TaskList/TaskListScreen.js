@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState, useRef } from "react";
 import {
 	View,
 	Text,
@@ -75,12 +75,19 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 	subscription($customerID: Int!) {
 		newAppointment(customerID: $customerID) {
 			id
-			dateTime
-			vehicle {
-				id
-				make
-				model
-				year
+			scheduleDate
+			quote{
+				vehicle {
+					id
+					make
+					model
+					year
+					imgUrl
+				},
+				services{
+					type,
+					price,
+				}
 			}
 		}
 	}
@@ -90,16 +97,62 @@ const APPOINTMENTS_QUERY = gql`
 	query($customerID: Int!) {
 		appointments(customerID: $customerID) {
 			id
-			dateTime
+			scheduleDate
+			quote{
+				vehicle {
+					id
+					make
+					model
+					year
+					imgUrl
+				}
+				services{
+					type,
+					price,
+				}
+			}
+		}
+	}
+`;
+
+const QUOTES_SUBSCRIPTION = gql`
+	subscription($customerID: Int!) {
+		newQuote(customerID: $customerID) {
+			id
+			createdAt
+			status
+			services {
+				type,
+				price,
+			}
 			vehicle {
 				id
 				make
 				model
 				year
+				imgUrl
 			}
-			#mechanicID
-			#dateTime
-			#service?
+		}
+	}
+`;
+
+const QUOTES_QUERY = gql`
+	query($customerID: Int!) {
+		quotes(customerID: $customerID) {
+			id
+			createdAt
+			status
+			services {
+				type,
+				price,
+			}
+			vehicle {
+				id
+				make
+				model
+				year
+				imgUrl
+			}
 		}
 	}
 `;
@@ -110,6 +163,7 @@ const APPOINTMENTS_QUERY = gql`
 export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
 	// console.log(currentUser);
+	const [displayType, setDisplayType] = useState("task");
   
   	const renderItemPast = ({item}) => {
 		return (
@@ -130,6 +184,14 @@ export const TaskListScreen = ({ navigation, route }) => {
 		}
 
 	);
+
+	const switchToTask = () => {
+
+	};
+
+	const switchToQuote = () => {
+		
+	};
 
 	if (loading) console.log("Loading...");
 	if (error) console.error(`Error! ${error.message}`);
@@ -157,8 +219,12 @@ export const TaskListScreen = ({ navigation, route }) => {
 		<SafeAreaView style={styles.container}>
 			<View style={styles.main}>
 				<View style={styles.tabContainer}>
-					<Text style={styles.tab}>Tasks</Text>
-					<Text style={styles.tab}>Quotes</Text>
+					<TouchableOpacity style={displayType == "task" ? styles.switchBtnActive : styles.switchBtn} onPress={switchToTask}>
+						<Text style={displayType == "task" ? styles.tabActive : styles.tab}>Tasks</Text>
+					</TouchableOpacity>
+					<TouchableOpacity style={displayType == "quote" ? styles.switchBtnActive : styles.switchBtn} onPress={switchToQuote}>
+					    <Text style={displayType == "quote" ? styles.tabActive : styles.tab}>Quotes</Text>
+					</TouchableOpacity>
 				</View>
 				<Button
 					title={"Get a Quote"}
@@ -178,7 +244,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 					{data ? (
 						<FlatList data={data.appointments} renderItem={renderItemPast} />
 					) : (
-						<Text>No upcoming appointments</Text>
+						<Text>No past appointments</Text>
 					)}
 				</View>
 			</View>

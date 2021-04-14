@@ -26,7 +26,8 @@
     "react-native-picker": "^4.3.7",
     "react-native-screens": "^2.18.1",
     "react-native-web": "~0.13.12",
-    "subscriptions-transport-ws": "^0.9.18"
+    "subscriptions-transport-ws": "^0.9.18",
+    "urql": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6"

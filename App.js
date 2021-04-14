@@ -19,7 +19,7 @@ import QuoteServiceScreen from "./js/screens/QuoteService/QuoteServiceScreen";
 import QuoteReviewScreen from "./js/screens/QuoteReview/QuoteReviewScreen";
 
 // SCREENS-TASK
-import  TaskListScreen from "./js/screens/TaskList/TaskListScreen";
+import  { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
 import  TaskDetailPastScreen from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
 import  TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
@@ -43,7 +43,7 @@ const Stack = createStackNavigator();
 // connect to backend
 
 const httpLink = new HttpLink({
-	uri: "http://192.168.1.126:4000/graphql",
+	uri: "http://10.20.1.148:4000/graphql",
 });
 
 const wsLink = new WebSocketLink({
@@ -77,7 +77,6 @@ export default function App() {
 				<Stack.Navigator initialRouteName="LogIn">
 					<Stack.Screen name="LogIn" component={LoginScreen} />
 					<Stack.Screen name="SignUp" component={SignUpScreen} />
-					<Stack.Screen name="Register" component={RegisterScreen} />
 
 					<Stack.Screen name="TaskList" component={TaskListScreen} />
 					<Stack.Screen

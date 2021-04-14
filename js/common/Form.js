@@ -66,34 +66,20 @@ export function ServiceCheckbox({
 } 
 
 export function CheckboxGroup({
+    selections = [],//stored ids of checked item
     options = sampleOptions,
-}) {
-    const initSelections = () => {
-        let result = [];
-        options.forEach( item => {
-            if(item.checked) result.push(item.id);
-        } );
-        return result;
-    };
+    handleSelections,
+}) {    
 
-    //selections: stored ids of checked options
-    const [selections, onChangeSelections] = React.useState(initSelections(options));
-    const handleStatus = item => {
-        let temp = selections.slice();
-        let index = selections.indexOf(item.id);
-        //if item is not checked and exist in selections, remove it from selections
-        if(!item.checked && index!=-1){
-            temp.splice(index,1);
-            onChangeSelections(temp);
-        }//if item is checked and not in selections, add it in
-        else if(item.checked && index == -1){
-            temp.push(item.id);
-            onChangeSelections(temp);
-        }
-    };
     const renderItem = ({item}) => {
         return (
-            <ServiceCheckbox id={item.id} text={item.type} price={item.price} checked={item.checked} handleStatus={handleStatus}/>
+            <ServiceCheckbox 
+            id={item.id} 
+            text={item.type} 
+            price={item.price} 
+            checked={selections.includes(item.id)} 
+            handleStatus={handleSelections}
+            />
         );
     };
     return (
@@ -101,9 +87,38 @@ export function CheckboxGroup({
             <FlatList 
             data={options}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
+            keyExtractor={item => String(item.id) }
             />
-            {/* <Text>{selections}</Text> */}
+        </View>
+    );
+}
+
+/* <Radio> */
+//radio selections
+export function VehicleRadio({
+    options = [],
+    selected = "",
+    handleSelection = () => {}
+}){
+    const renderItem = ({item}) => {
+        return (
+            <TouchableOpacity
+            style={
+                item.id == selected? styles.radioSelected: ""
+            }
+            activeOpacity={0.6}
+            onPress={ e => handleSelection(item.id) }>
+                <VehicleCard item={item} />
+            </TouchableOpacity>
+        );
+    };
+    return (
+        <View>
+            <FlatList 
+            data={options}
+            renderItem={renderItem}
+            keyExtractor={item => String(item.id) }
+            />
         </View>
     );
 }
@@ -128,6 +143,10 @@ const styles = StyleSheet.create({
     },
     checkboxMarkActive: {
         backgroundColor: "#666"
+    },
+    radioSelected: {
+        borderWidth: 2,
+        borderColor: "black",
     }
     
 });

@@ -16,14 +16,14 @@ export class VehicleCard extends React.Component {
         super(props)
     }
 
-    props: {
+    props={
         item : Object,
-        
     }
 
     static defaultProps = {
         item: {
             id:1,
+            vin: '123456789012',
             make:'Honda', 
             model:'CR-V', 
             year:"2019", 
@@ -35,14 +35,16 @@ export class VehicleCard extends React.Component {
         const item = this.props.item;
         return (
             <View style={styles.row}> 
-                <View style={styles.col2}>
+                <View style={[styles.col2, styles.imgContainer]}>
                     <Image
-                    style={{width: "100%", height: 100}}
-                    source={{ uri: item.vehicle.imgUrl }} />
+                    style={{width: "100%",height:100}}
+                    source={{ uri: item.imgUrl }}
+                    resizeMode="contain" />
                 </View>
                 <View style={styles.col2}>
-                    <Text>{item.vehicle.make}, {item.vehicle.year}</Text>
-                    <Text>{item.vehicle.model}</Text>
+                    <Text>{item.vin}</Text>
+                    <Text>{item.make}, {item.year}</Text>
+                    <Text>{item.model}</Text>
                 </View>
             </View>
         );
@@ -50,12 +52,13 @@ export class VehicleCard extends React.Component {
 }
 
 export class TaskCard extends React.Component {
+    
     constructor(props) {
         super(props)
     }
     
     //to avoid warning
-    static defaultProps={
+    props={
         item: Object,
         navigation: Object,
         to: String,
@@ -76,14 +79,16 @@ export class TaskCard extends React.Component {
     render(){
         const { item, to } = this.props;
 
+
+        console.log(item);
         var serviceTypeList = [];
         var servicePriceList = [];
         var renderList = [];
 
         // extract service type and price from the object
-        for(let i = 0;i < item.services.length; i++) {
-            serviceTypeList.push(item.services[i].service.type);
-            servicePriceList.push(item.services[i].service.price); 
+        for(let i = 0;i < item.quote.services.length; i++) {
+            serviceTypeList.push(item.quote.services[i].type);
+            servicePriceList.push(item.quote.services[i].price); 
         }
 
         for(let i = 0;i < serviceTypeList.length; i++) {
@@ -102,18 +107,18 @@ export class TaskCard extends React.Component {
                 <View style={styles.col2}>
                     <Image
                     style={{width: "100%", height: 100}}
-                    source={{ uri: item.vehicle.imgUrl }} />
+                    source={{ uri: item.quote.vehicle.imgUrl }} />
                 </View>
                 <View style={styles.col2}>
                     <Text>
-                    {item.vehicle.make}, {item.vehicle.year}
+                    {item.quote.vehicle.make}, {item.quote.vehicle.year}
                     </Text>
                     <Text>
-                        {item.vehicle.model}
+                        {item.quote.vehicle.model}
                     </Text>
                     <Text>{item.scheduleDate}</Text>
                     <Text>Service: {renderList}</Text>
-                    <Text>Mechanician: {item.mechanician.firstName} {item.mechanician.lastName}</Text>
+                    <Text>Mechanic:  Not Assigned</Text>
                 </View>
                 
             </TouchableOpacity>
