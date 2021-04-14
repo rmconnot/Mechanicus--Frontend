@@ -6,7 +6,7 @@ class TabNav extends React.Component {
 		to: string,
 		title: String,
 		navigate: () => mixed,
-		active: string, //check if tab is activated
+		active: Boolean, //check if tab is activated
 		routeProps: Object,
 	};
 
@@ -16,7 +16,7 @@ class TabNav extends React.Component {
 		return (
 			<View style={styles.bottomNav}>
 				<Button
-					style={styles.navBtn}
+					style={[styles.navBtn, this.props.active?styles.activeBtn:""]}
 					title={this.props.title}
 					onPress={() =>
 						this.props.navigate(
@@ -60,13 +60,16 @@ export function NavGroup({
 }
 
 /* <BottomNav> */
-export default function BottomNav({ navigation }) {
+export default function BottomNav({ 
+	navigation, 
+	activated = "Task"
+}) {
 	let navigate = navigation.navigate;
 	return (
 		<View style={styles.container}>
-			<TabNav title="Task" to="TaskList" navigate={navigate} />
-			<TabNav title="Garage" to="VehicleList" navigate={navigate} />
-			<TabNav title="Profile" to="Profile" navigate={navigate} />
+			<TabNav title="Task" to="TaskList" navigate={navigate} active={activated=="Tasks"}/>
+			<TabNav title="My Vehicles" to="VehicleList" navigate={navigate}  active={activated=="Vehicles"}/>
+			<TabNav title="Profile" to="Profile" navigate={navigate}  active={activated=="Profile"}/>
 		</View>
 	);
 }
