@@ -33,7 +33,7 @@ import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 import ProfileScreen from "./js/screens/Profile/ProfileScreen";
 
 // TEST MODULE
-import TEST from "./moduleTest";
+import { TEST } from "./moduleTest";
 
 // =====
 // nav dependencies
