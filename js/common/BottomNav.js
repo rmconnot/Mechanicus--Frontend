@@ -62,14 +62,33 @@ export function NavGroup({
 /* <BottomNav> */
 export default function BottomNav({ 
 	navigation, 
-	activated = "Task"
+	activated = "Task",
+	routeProps
 }) {
-	let navigate = navigation.navigate;
+	const navigate = navigation.navigate;
 	return (
 		<View style={styles.container}>
-			<TabNav title="Task" to="TaskList" navigate={navigate} active={activated=="Tasks"}/>
-			<TabNav title="My Vehicles" to="VehicleList" navigate={navigate}  active={activated=="Vehicles"}/>
-			<TabNav title="Profile" to="Profile" navigate={navigate}  active={activated=="Profile"}/>
+			<TabNav 
+			title="Task" 
+			to="TaskList" 
+			navigate={navigate} 
+			active={activated=="Tasks"}
+			routeProps={routeProps}
+			/>
+			<TabNav 
+			title="My Vehicles" 
+			to="VehicleList" 
+			navigate={navigate}  
+			active={activated=="Vehicles"}
+			routeProps={routeProps}
+			/>
+			<TabNav 
+			title="Profile" 
+			to="Profile" 
+			navigate={navigate}  
+			active={activated=="Profile"}
+			routeProps={routeProps}
+			/>
 		</View>
 	);
 }

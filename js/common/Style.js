@@ -24,11 +24,32 @@ export const colors = {
     gray6: "#F5F5F5",
 };
 
+export const spacings = {
+    XS: 4,
+    S: 12,
+    M: 24,
+    L: 48,
+};
+
 export const commonStyles = StyleSheet.create({
     card: {
         padding: 16,
         backgroundColor: "white",
         borderRadius: 8,
+        marginHorizontal: 24,
+        marginVertical: 6,
+    },
+    cardHeader: {
+        flexDirection: "row",
+        borderBottomWidth: 1,
+        borderBottomColor: colors.gray6,
+        paddingBottom: 12,
+        marginBottom: 12,
+    },
+    cardBody: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     tag: {
         backgroundColor: colors.gray5,
@@ -36,7 +57,27 @@ export const commonStyles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 2,
         fontSize: fonts.note,
+        marginRight: 8,
     },
+    btn_sm: {
+        backgroundColor: colors.primary,
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 4,
+    },
+    btn_display: {
+        backgroundColor: colors.primary,
+        paddingHorizontal: 24,
+        paddingVertical: 8,
+        borderRadius: 100,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "50%",
+        marginHorizontal: "25%",
+        marginVertical: 24,
+    },
+    // shadows
     shadowDefault: {
         shadowColor: "black",
         shadowOpacity: 0.09,
@@ -64,15 +105,30 @@ export const commonStyles = StyleSheet.create({
         },
         shadowRadius: 12,
     },
+    // font
     h3: {
         color: colors.text,
         fontSize: fonts.h3,
-        fontWeight: "400",
+        fontWeight: "600",
     },
     body: {
         color: colors.text,
         fontSize: fonts.body,
+        fontWeight: "400",
+    },
+    note: {
+        color: colors.text,
+        fontSize: fonts.note,
+        fontWeight: "400",
+    },
+    cap2: {
+        color: colors.text,
+        fontSize: fonts.caption2,
         fontWeight: "300",
+    },
+    // spacing
+    m_b_s: {
+        marginBottom: spacings.S,
     },
 });
 
