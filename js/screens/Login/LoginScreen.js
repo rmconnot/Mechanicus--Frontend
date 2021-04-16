@@ -3,6 +3,7 @@ import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { State } from "react-native-gesture-handler";
 import styles from "./Styles";
 import { gql, useLazyQuery } from "@apollo/client";
+import {colors, fonts, commonStyles} from '../../common/Style';
 
 /* <LoginScreen> */
 
@@ -52,25 +53,25 @@ export default function Login({ navigation }) {
 	};
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.logo}>Mechanicus</Text>
-			<View style={styles.inputView}>
+		<View>
+			<Text style={styles.title}>Log In</Text>
+			<View>
+				<Text style={styles.inputText}>Email</Text>
 				<TextInput
-					style={styles.inputText}
-					placeholder="Email..."
-					placeholderTextColor="#003f5c"
+					style={styles.inputBox}
+					placeholder="    username@email.address"
+					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, email: text.trim() }))
 					}
 				/>
-			</View>
-			<View style={styles.inputView}>
+				<Text style={styles.inputText}>Password</Text>
 				<TextInput
 					// secureTextEntry
-					style={styles.inputText}
-					placeholder="Password..."
-					placeholderTextColor="#003f5c"
+					style={styles.inputBox}
+					placeholder="    8 digit numbers numbers"
+					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, password: text.trim() }))

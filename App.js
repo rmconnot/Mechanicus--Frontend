@@ -32,11 +32,15 @@ import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
 import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
+import { test1Screen } from "./test1Screen";
+import { test2Screen } from "./test2Screen";
 
 // =====
 // nav dependencies
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
+
 
 // navigation
 const Stack = createStackNavigator();
@@ -72,13 +76,31 @@ const client = new ApolloClient({
 	cache: new InMemoryCache(),
 });
 
+
+
 export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="LogIn">
-					<Stack.Screen name="LogIn" component={LoginScreen} />
-					<Stack.Screen name="SignUp" component={SignUpScreen} />
+				<Stack.Navigator initialRouteName="test1">
+					<Stack.Screen name="test1" component={test1Screen} 						options={{
+							headerShown: false
+					  }}/>
+					<Stack.Screen name="test2" component={test2Screen} 						options={{
+							headerShown: false
+					  }}/>
+					<Stack.Screen 
+						name="LogIn" 
+						component={LoginScreen} 
+						options={{
+							headerShown: false
+					  }}/>
+					<Stack.Screen 
+						name="SignUp" 
+						component={SignUpScreen} 
+					  	options={{
+							headerShown: false
+					  }}/>
 					{/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
 
 					<Stack.Screen name="TaskList" component={TaskListScreen} />

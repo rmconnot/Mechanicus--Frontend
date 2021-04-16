@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import {fonts, colors, commonStyles} from "../../common/Style"
 
 const styles = StyleSheet.create({
   container: {
@@ -7,11 +8,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  logo:{
-    fontSize: 40,
-    color: "#ffffff",
-    marginBottom: 40
+  title:{
+    fontSize: fonts.h1,
+    color: colors.text,
+    marginTop: 80,
+    marginBottom: 20,
+    textAlign: 'center'
   },
+
+  inputBox: {
+		borderStyle: "solid",
+		backgroundColor: 'white',
+		paddingVertical: 12,
+		marginHorizontal: 60,
+		marginBottom: 40,
+		borderRadius: 4,
+	},
   inputView:{
     width:"80%",
     backgroundColor:"#fff",
@@ -21,11 +33,11 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     padding:20
   },
-  inputText:{
-    height:50,
-    color:"black",
-    fontSize:14
-  },
+	inputText: {
+		paddingLeft: 60,
+		fontSize: fonts.body,
+		color: colors.text
+	},
   forgot:{
     color:"white",
     fontSize:12

@@ -6,7 +6,9 @@ import {
 	StyleSheet,
 	FlatList,
 	TouchableOpacity,
+	TextInput
 } from "react-native";
+import {colors, fonts, commonStyles} from './Style';
 
 /* consts */
 const sampleOptions = [
@@ -24,6 +26,67 @@ const sampleOptions = [
 	},
 ];
 /*=============================*/
+
+/* <Input box> */
+class FormInputBox extends React.Component {
+	props: {
+		placeholder: String,
+		name: String,
+		title: String
+	};
+
+	state: {
+		email: "",
+		phone: "",
+		password: "",
+		confirmPassword: "",
+		verification:"",
+		address1:"",
+		address2:""
+	}
+
+	render() {
+		// console.log("TabNav active: ", this.props.title.toLowerCase());
+		let name = this.props.name
+		return (
+			<View>
+				<Text style={styles.inputText}>{this.props.title}</Text>
+				<TextInput
+					style={styles.inputBox}
+					placeholder={this.props.placeholder}
+					placeholderTextColor={colors.gray4}
+					autoCapitalize="none"
+					onChangeText={(text) =>
+						this.setState((prevState) => ({ ...prevState, name: text.trim() }))
+					}
+				/>
+			</View>
+		);
+	}
+}
+
+export function SignUpInput() {
+	
+	return (
+		<View style={styles.formGroup}>
+			<FormInputBox placeholder="    username@email.address" name="email" title="Email"/>
+			<FormInputBox placeholder="    123-456-7890" name="phone" title="Phone"/>
+			<FormInputBox placeholder="    8 digit numbers" name="password" title="Password"/>
+			<FormInputBox placeholder="    8 digit numbers" name="confirmPassword" title="Confirm password"/>
+		</View>
+	);
+}
+
+export function LogInInput() {
+	
+	return (
+		<View style={styles.formGroup}>
+			<FormInputBox placeholder="    username@email.address" name="email" title="Email"/>
+			<FormInputBox placeholder="    8 digit numbers" name="password" title="password"/>
+		</View>
+	);
+}
+
 
 /* <Checkbox> */
 export function Checkbox({
@@ -159,4 +222,22 @@ const styles = StyleSheet.create({
 	checkboxMarkActive: {
 		backgroundColor: "#666",
 	},
+	inputBox: {
+		borderStyle: "solid",
+		backgroundColor: 'white',
+		paddingVertical: 12,
+		marginHorizontal: 60,
+		marginBottom: 40,
+		borderRadius: 4,
+	},
+	inputText: {
+		paddingLeft: 60,
+		fontSize: fonts.body,
+		color: colors.text
+	},
+	formGroup: {
+		display:"flex",
+	},
+
+
 });

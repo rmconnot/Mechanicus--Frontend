@@ -50,7 +50,7 @@ export function ProfileScreen({ navigation, route }) {
                     <Text>About us</Text>
                 </View>
             </View>
-            <BottomNav navigation={ navigation }/>
+            <BottomNav navigation={ navigation } activated = "Profile"/>
         </View>
     );
 } 

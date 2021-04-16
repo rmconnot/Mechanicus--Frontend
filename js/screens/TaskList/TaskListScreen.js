@@ -193,7 +193,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 					)}
 				</View> */}
 			</View>
-			<BottomNav navigation={navigation} />
+			<BottomNav navigation={navigation} activated = "Task" />
 		</SafeAreaView>
 	);
 };
