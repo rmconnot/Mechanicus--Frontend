@@ -51,6 +51,8 @@ export class VehicleCard extends React.Component {
 	}
 }
 
+//////////     NEEDS TO BE MODIFIED TO USE FLATLIST CORRECTLY    ////////
+
 export class TaskCard extends React.Component {
 	constructor(props) {
 		super(props);
@@ -82,9 +84,9 @@ export class TaskCard extends React.Component {
 		var renderList = [];
 
 		// extract service type and price from the object
-		for (let i = 0; i < item.services.length; i++) {
-			serviceTypeList.push(item.services[i].service.type);
-			servicePriceList.push(item.services[i].service.price);
+		for (let i = 0; i < item.quote.services.length; i++) {
+			serviceTypeList.push(item.quote.services[i].type);
+			// servicePriceList.push(item.quote.services[i].service.price);
 		}
 
 		for (let i = 0; i < serviceTypeList.length; i++) {
@@ -102,22 +104,22 @@ export class TaskCard extends React.Component {
 				}
 			>
 				<View style={styles.col2}>
-					<Image
+					{/* <Image
 						style={{ width: "100%", height: 100 }}
-						source={{ uri: item.vehicle.imgUrl }}
-					/>
+						source={{ uri: item.quotevehicle.imgUrl }}
+					/> */}
 				</View>
 				<View style={styles.col2}>
 					<Text>
-						{item.vehicle.make}, {item.vehicle.year}
+						{item.quote.vehicle.make}, {item.quote.vehicle.year}
 					</Text>
-					<Text>{item.vehicle.model}</Text>
+					<Text>{item.quote.vehicle.model}</Text>
 					<Text>{item.scheduleDate}</Text>
 					<Text>Service: {renderList}</Text>
-					<Text>
+					{/* <Text>
 						Mechanician: {item.mechanician.firstName}{" "}
 						{item.mechanician.lastName}
-					</Text>
+					</Text> */}
 				</View>
 			</TouchableOpacity>
 		);

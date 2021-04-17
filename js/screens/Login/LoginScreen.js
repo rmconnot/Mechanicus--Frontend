@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { State } from "react-native-gesture-handler";
 import styles from "./Styles";
@@ -27,23 +27,25 @@ export default function Login({ navigation }) {
 	if (loading) console.log("Loading...");
 	if (error) console.error(`Error! ${error.message}`);
 
-	if (!error && data != undefined) {
-		// console.log("data: ", data);
-		// navigation.navigate("TaskList", {
-		// 	currentUser: {
-		// 		id: data.customer.id,
-		// 	},
-		// });
-		navigation.reset({
-			index: 0,
-			routes: [
-				{
-					name: "TaskList",
-					params: { currentUser: { id: data.customer.id } },
-				},
-			],
-		});
-	}
+	useEffect(() => {
+		if (!error && data != undefined) {
+			// console.log("data: ", data);
+			// navigation.navigate("TaskList", {
+			// 	currentUser: {
+			// 		id: data.customer.id,
+			// 	},
+			// });
+			navigation.reset({
+				index: 0,
+				routes: [
+					{
+						name: "TaskList",
+						params: { currentUser: { id: data.customer.id } },
+					},
+				],
+			});
+		}
+	});
 
 	const handleLogin = async () => {
 		getCustomer({

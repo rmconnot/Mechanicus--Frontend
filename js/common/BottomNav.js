@@ -8,22 +8,28 @@ class TabNav extends React.Component {
 		navigate: () => mixed,
 		active: string, //check if tab is activated
 		routeProps: Object,
+		callbackFunction: any,
 	};
 
 	render() {
 		let to = this.props.to;
-		console.log("TabNav routeProps: ", this.props.routeProps);
+		if (this.props.callbackFunction) {
+			console.log(this.props.callbackFunction);
+		}
 		return (
 			<View style={styles.bottomNav}>
 				<Button
 					style={styles.navBtn}
 					title={this.props.title}
-					onPress={() =>
+					onPress={async () => {
+						if (this.props.callbackFunction) {
+							await this.props.callbackFunction();
+						}
 						this.props.navigate(
 							to,
 							this.props.routeProps ? this.props.routeProps : null
-						)
-					}
+						);
+					}}
 				/>
 			</View>
 		);
@@ -37,8 +43,11 @@ export function NavGroup({
 		{ title: "Garage", to: "VehicleList" },
 	],
 	routeProps,
+	callbackFunction,
 }) {
 	const navigate = navigation.navigate;
+
+	console.log("callbackFunction: ", callbackFunction);
 	return (
 		<View style={styles.navGroupContainer}>
 			<TabNav
@@ -47,6 +56,7 @@ export function NavGroup({
 				to={options[0].to}
 				navigate={navigate}
 				routeProps={routeProps}
+				callbackFunction={callbackFunction}
 			/>
 			<TabNav
 				style={styles.navGroupItem}
@@ -54,6 +64,7 @@ export function NavGroup({
 				to={options[1].to}
 				navigate={navigate}
 				routeProps={routeProps}
+				callbackFunction={callbackFunction}
 			/>
 		</View>
 	);

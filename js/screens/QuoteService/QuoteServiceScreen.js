@@ -79,16 +79,10 @@ export default function QuoteServiceScreen({ navigation, route }) {
 	if (error) {
 		Alert.alert("Error!", error.message, [{ text: "OK", style: "OK" }]);
 	}
-	// if (data) {
-	// 	console.log(data.services);
-	// }
 
 	const handleCheckedServices = (servicesList) => {
-		console.log("servicesList: ", servicesList);
 		setServicesListProp(servicesList);
 	};
-
-	console.log("servicesListProp: ", servicesListProp);
 
 	return (
 		<View style={styles.container}>
