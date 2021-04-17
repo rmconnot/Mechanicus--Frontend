@@ -111,26 +111,14 @@ export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
 	// console.log(currentUser);
 
-	// const renderItemPast = ({ item }) => {
-	// 	return (
-	// 		<TaskCard
-	// 			item={item}
-	// 			navigation={navigation}
-	// 			to="TaskDetailPast"
-	// 			currentUser={currentUser}
-	// 		/>
-	// 	);
-	// };
-	// const renderItemPresent = ({ item }) => {
-	// 	return (
-	// 		<TaskCard
-	// 			item={item}
-	// 			navigation={navigation}
-	// 			to="TaskDetailPresent"
-	// 			currentUser={currentUser}
-	// 		/>
-	// 	);
-	// };
+	const renderItemPast = ({ item }) => {
+		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
+	};
+	const renderItemPresent = ({ item }) => {
+		return (
+			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent" />
+		);
+	};
 
 	const { subscribeToMore, data, error, loading } = useQuery(
 		APPOINTMENTS_QUERY,

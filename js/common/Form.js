@@ -208,12 +208,12 @@ export function SubOptions({
 	item = sampleServiceList[1],
 	handleStatus = () => {}, //handle status change in checkboxes
 }) {
+
 	const [status, onChangeStatus] = React.useState(checked);
 	const changeStatus = () => {
-		handleStatus({ checked: !status, id: id });
 		onChangeStatus(!status);
 	};
-
+	
 	const renderSubItem = ({ item }) => {
 		return (
 			<View>
@@ -230,17 +230,30 @@ export function SubOptions({
 	};
 	return (
 		<View>
-		<ServiceCheckbox
-			id={item.id}
-			text={item.type}
-			price={item.price}
-			checked={item.checked}
-			handleStatus={handleStatus}
-		/>
+		<TouchableOpacity
+			style={[commonStyles.shadowDefault, status? styles.checkboxContainerActive: styles.checkboxContainer]}
+			activeOpacity={0.6}
+			onPress={(e) => changeStatus()}
+		>
+			<Text style={styles.serviceText}>
+				{item.type}
+			</Text>
+			<View style={styles.leftPart}> 
+			<View style={styles.leftPart1}>
+				<Icon name='money' color = {colors.primaryDark} size={24}/>
+				<Text style={styles.servicePrice}>{item.price}</Text>
+			</View>
+
+			<View style={styles.checkboxMark}/>
+			</View>
+			
+		</TouchableOpacity>
 		<FlatList
 			data={item.options}
 			renderItem={renderSubItem}
 			keyExtractor={(item) => item.id.toString()}
+			style={status?styles.showFlatList:styles.hideFlatList}
+			extraData={status}
 			/>
 		</View>
 	);
@@ -252,6 +265,7 @@ export function SubOptions({
 export function CheckboxGroup({
 	options = sampleServiceList,
 	handleCheckedServices,
+	Menuchecked = false
 }) {
 	const initSelections = () => {
 		let result = [];
@@ -259,6 +273,11 @@ export function CheckboxGroup({
 			if (item.checked) result.push(item.id);
 		});
 		return result;
+	};
+
+	const [Menustatus, onChangeMenuStatus] = React.useState(Menuchecked);
+	const changeMenuStatus = () => {
+		onChangeMenuStatus(!Menustatus);
 	};
 
 	//selections: stored ids of checked options
@@ -270,10 +289,22 @@ export function CheckboxGroup({
 		let index = selections.indexOf(item.id);
 		//if item is not checked and exist in selections, remove it from selections
 		if (!item.checked && index != -1) {
+			if (item.id == "02") {
+				changeMenuStatus();
+				console.log("menu status not checked", Menustatus);
+				temp.splice(index, 1);
+				onChangeSelections(temp);
+			}
 			temp.splice(index, 1);
 			onChangeSelections(temp);
 		} //if item is checked and not in selections, add it in
 		else if (item.checked && index == -1) {
+			if (item.id == "02") {
+				changeMenuStatus();
+				console.log("menu status checked", Menustatus);
+				temp.push(item.id);
+				onChangeSelections(temp);
+			}
 			temp.push(item.id);
 			onChangeSelections(temp);
 		}
@@ -281,8 +312,7 @@ export function CheckboxGroup({
 
 	
 	const renderItem = ({ item }) => {
-		console.log("sub", item);
-		if (item.options) {
+		if (item.options && Menustatus) {
 			return (
 			<View>
 				<SubOptions options={item}/> 
@@ -315,6 +345,7 @@ export function CheckboxGroup({
 				data={options}
 				renderItem={renderItem}
 				keyExtractor={(item) => item.id.toString()}
+				style={styles.flatListContainer}
 			/>
 
 		</View>
@@ -348,6 +379,18 @@ const styles = StyleSheet.create({
 		borderColor: colors.primaryDark,
 		borderWidth: 1
 
+	},
+	hideFlatList: {
+		opacity: 0, 
+		height: 0
+	},
+	showFlatList: {
+		width: "90%",
+		marginLeft: 35
+	},
+	flatListContainer: {
+		width: "95%",
+		paddingLeft: 20
 	},
 	checkboxMark: {
 		width: 16,

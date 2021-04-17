@@ -62,7 +62,7 @@ export function test1Screen({navigation}) {
     const [servicesListProp, setServicesListProp] = useState();
 
     const handleCheckedServices = (servicesList) => {
-		console.log("servicesList: ", servicesList);
+		
 		setServicesListProp(servicesList);
 	};
 

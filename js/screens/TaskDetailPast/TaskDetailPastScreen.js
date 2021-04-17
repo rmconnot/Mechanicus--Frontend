@@ -109,18 +109,19 @@ const sampleQuotes = [
 	},
 ];
 
-export default function TaskDetailPresentScreen({ navigation, route }) {
-	const { currentUser } = route.params;
-	console.log(currentUser);
+export function TaskDetailPastScreen({ navigation, route }) {
+	// const { currentUser } = route.params;
+	// console.log(currentUser);
 
-	const { loading, data, error } = useQuery(QUOTE_QUERY, {
-		variables: {
-			customerID: 1,
-		},
-	});
+	const {data, loading, error} = useQuery(quoteQuery,{
+        
+        variables: {
+            customerID: 1
+        },
+    });
 
-	if (loading) return <Text>Loading...</Text>;
-	if (error) return <Text>Oh no... {error.message}</Text>;
+    if (loading) return (<Text>Loading...</Text>);
+    if (error) return (<Text>Oh no... {error.message}</Text>);
 
 	// console.log(data.quote[0]);
 

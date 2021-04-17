@@ -30,25 +30,22 @@ export class VehicleCard extends React.Component {
 		},
 	};
 
-	render() {
-		const item = this.props.item;
-		return (
-			<View style={styles.row}>
-				<View style={styles.col2}>
-					{/* <Image
-						style={{ width: "100%", height: 100 }}
-						source={{ uri: item.vehicle.imgUrl }}
-					/> */}
-				</View>
-				<View style={styles.col2}>
-					<Text>
-						{item.vehicle.make}, {item.vehicle.year}
-					</Text>
-					<Text>{item.vehicle.model}</Text>
-				</View>
-			</View>
-		);
-	}
+    render(){
+        const item = this.props.item;
+        return (
+            <View style={styles.row}> 
+                <View style={styles.col2}>
+                    <Image
+                    style={{width: "100%", height: 100}}
+                    source={{ uri: item.imgUrl }} />
+                </View>
+                <View style={styles.col2}>
+                    <Text>{item.make}, {item.year}</Text>
+                    <Text>{item.model}</Text>
+                </View>
+            </View>
+        );
+    }
 }
 
 export class TaskCard extends React.Component {
