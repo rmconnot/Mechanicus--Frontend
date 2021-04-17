@@ -1,92 +1,111 @@
 import * as React from "react";
-import { View, Text, Button, StyleSheet, FlatList } from "react-native";
+import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { colors, commonStyles } from './Style';
+import { Icon } from './Svg';
+import { BtnLarge } from './Buttons';
 
-class TabNav extends React.Component {
-	props: {
-		to: string,
-		title: String,
-		navigate: () => mixed,
-		active: Boolean, //check if tab is activated
-		routeProps: Object,
-	};
+const BtmNavOptions = [
+	{	title: "Home", screen: "TaskList", icon: "home" },
+	{	title: "My Vehicles", screen: "VehicleList", icon: "vehicle" },
+	{	title: "Account", screen: "Profile", icon: "account" },
+];
 
-	render() {
-		let to = this.props.to;
-		console.log("TabNav routeProps: ", this.props.routeProps);
-		return (
-			<View style={styles.bottomNav}>
-				<Button
-					style={[styles.navBtn, this.props.active?styles.activeBtn:""]}
-					title={this.props.title}
-					onPress={() =>
-						this.props.navigate(
-							to,
-							this.props.routeProps ? this.props.routeProps : null
-						)
-					}
-				/>
-			</View>
-		);
-	}
-}
-
+/* < NavItem /> */
+//used for quote pages navigation
 export function NavGroup({
 	navigation,
 	options = [
-		{ title: "Task", to: "TaskList", data: {} },
-		{ title: "Garage", to: "VehicleList", data: {} },
+		{ title: "Back", to: "TaskList", data: {}, disabled: false },
+		{ title: "Next", to: "VehicleList", data: {}, disabled: false },
 	],
 	routeProps,
 }) {
-	const navigate = navigation.navigate;
 	return (
 		<View style={styles.navGroupContainer}>
-			<TabNav
-				style={styles.navGroupItem}
-				title={options[0].title}
-				to={options[0].to}
-				navigate={navigate}
-				routeProps={routeProps}
-			/>
-			<TabNav
-				style={styles.navGroupItem}
-				title={options[1].title}
-				to={options[1].to}
-				navigate={navigate}
-				routeProps={routeProps}
-			/>
+			<View style={styles.navGroupItem}>
+				<BtnLarge
+					title = {options[0].title}
+					sub = {options[0].title == "Back"}
+					onPress = {() =>
+						navigation.navigate(
+							options[0].to,
+							routeProps ? routeProps : null
+						)}
+				/>
+			</View>
+			<View style={styles.navGroupItem}>
+				<BtnLarge
+					style={styles.navGroupItem}
+					title={options[1].title}
+					onPress={() =>
+						navigation.navigate(
+							options[1].to,
+							routeProps ? routeProps : null
+						)}
+					disabled={options[1].disabled}
+				/>
+			</View>
 		</View>
 	);
 }
 
+/* < NavItem /> */
+//BottomNav's Child Component
+const NavItem = ({
+	active,
+	title,
+	icon,//name of icon
+	to, //screen name
+	navigation,
+	routeProps
+}) => {
+	let statusColor = active? colors.primaryDark: colors.gray3;
+	return (
+		<TouchableOpacity
+			style={styles.navItemContainer}
+			onPress={() =>
+				navigation.navigate(
+					to,
+					routeProps ? routeProps : null
+				)
+			}>
+				<Icon name={icon} size={24} color={statusColor} />
+				<Text style={[commonStyles.note,{
+					marginTop: 4, color: statusColor,
+				}]}>{title}</Text>
+		</TouchableOpacity>
+	);
+};
 /* <BottomNav> */
 export default function BottomNav({ 
+	activated = BtmNavOptions[0].title,//which page the user is on
 	navigation, 
-	activated = "Task",
-	routeProps
+	routeProps,
 }) {
-	const navigate = navigation.navigate;
 	return (
-		<View style={styles.container}>
-			<TabNav 
-			title="Task" 
-			to="TaskList" 
-			navigate={navigate} 
-			active={activated=="Tasks"}
+		<View style={[styles.BtmNavContainer, commonStyles.shadowUp]}>
+			<NavItem 
+			title={BtmNavOptions[0].title}
+			to={BtmNavOptions[0].screen} 
+			icon={BtmNavOptions[0].icon} 
+			navigation={navigation} 
+			active={activated==BtmNavOptions[0].title}
 			routeProps={routeProps}
 			/>
-			<TabNav 
-			title="My Vehicles" 
-			to="VehicleList" 
-			navigate={navigate}  
-			active={activated=="Vehicles"}
+			<NavItem 
+			title={BtmNavOptions[1].title}
+			to={BtmNavOptions[1].screen} 
+			icon={BtmNavOptions[1].icon} 
+			navigation={navigation} 
+			active={activated==BtmNavOptions[1].title}
 			routeProps={routeProps}
 			/>
-			<TabNav 
-			title="Profile" 
-			to="Profile" 
-			navigate={navigate}  
-			active={activated=="Profile"}
+			<NavItem 
+			title={BtmNavOptions[2].title}
+			to={BtmNavOptions[2].screen} 
+			icon={BtmNavOptions[2].icon} 
+			navigation={navigation} 
+			active={activated==BtmNavOptions[2].title}
 			routeProps={routeProps}
 			/>
 		</View>
@@ -94,26 +113,28 @@ export default function BottomNav({
 }
 
 const styles = StyleSheet.create({
-	container: {
-		width: "100%",
+	BtmNavContainer: {
 		flexDirection: "row",
-		elevation: 8,
+		justifyContent: "space-around",
+		backgroundColor: "white",
+		paddingTop: 24,
+		paddingBottom: 32,
+		borderTopLeftRadius: 24,
+		borderTopRightRadius: 24,
 	},
-	spaceBetween: {
-		justifyContent: "space-between",
-	},
-	bottomNav: {
-		flex: 1 / 3,
-	},
-	navBtn: {
-		alignSelf: "stretch",
-		backgroundColor: "#E0E0E0",
+	navItemContainer: {
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	navGroupContainer: {
-		width: "100%",
+		backgroundColor: "white",
 		flexDirection: "row",
-		padding: 16,
+		paddingHorizontal: 16,
+		paddingBottom: 32,
+		paddingTop: 12,
 		justifyContent: "space-between",
+		borderTopColor: colors.gray6,
+		borderTopWidth: 1,
 	},
 	navGroupItem: {
 		width: "30%",

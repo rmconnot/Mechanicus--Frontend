@@ -32,6 +32,10 @@ export const spacings = {
 };
 
 export const commonStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "space-between",
+    },
     card: {
         padding: 16,
         backgroundColor: "white",
@@ -59,20 +63,34 @@ export const commonStyles = StyleSheet.create({
         fontSize: fonts.note,
         marginRight: 8,
     },
-    btn_sm: {
+    btn: {
         backgroundColor: colors.primary,
-        paddingHorizontal: 12,
-        paddingVertical: 4,
+        justifyContent: "center",
+        alignItems: "center",
         borderRadius: 4,
     },
+    btn_sub: {
+        borderWidth: 1,
+        borderColor: colors.primaryDark,
+        backgroundColor: "transparent",
+    },
+    btn_disabled: {
+        backgroundColor: colors.gray5,
+        borderWidth: 0,
+    },
+    btn_sm: {
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+    },
+    btn_lg: {
+        paddingVertical: 16,
+        paddingHorizontal: 24,
+    },
     btn_display: {
-        backgroundColor: colors.primary,
         paddingHorizontal: 24,
         paddingVertical: 8,
         borderRadius: 100,
         flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
         width: "50%",
         marginHorizontal: "25%",
         marginVertical: 24,
