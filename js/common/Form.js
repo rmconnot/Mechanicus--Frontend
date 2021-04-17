@@ -6,9 +6,12 @@ import {
 	StyleSheet,
 	FlatList,
 	TouchableOpacity,
-	TextInput
+	TextInput,
+	Checkbox,
+	Image
 } from "react-native";
 import {colors, fonts, commonStyles} from './Style';
+import {Icon} from './Svg';
 
 /* consts */
 const sampleOptions = [
@@ -25,6 +28,58 @@ const sampleOptions = [
 		value: "02",
 	},
 ];
+
+const sampleServiceList = [
+	{
+		id: "01",
+		type: "Vehicle Inspection",
+		price: 120,
+	},
+	{
+		id: "02",
+		type: "Oil change",
+		price: 100,
+		options: [
+			{
+				id: "02-1",
+				type: "synthetic oil",
+				price: 65,
+			},
+			{
+				id: "02-2",
+				type: "synthetic blends",
+				price: 70,
+			},
+			{
+				id: "02-3",
+				type: "high mileage oil",
+				price: 100,
+			},
+			{
+				id: "02-4",
+				type: "conventional oil",
+				price: 120,
+			},
+			
+		]
+	},
+	{
+		id: "03",
+		type: "Brake repair",
+		price: 90,
+	},
+	{
+		id: "04",
+		type: "Battery replacement",
+		price: 70,
+	},
+	{
+		id: "05",
+		type: "Battery Jump Service",
+		price: 20,
+	},
+];
+
 /*=============================*/
 
 /* <Input box> */
@@ -89,7 +144,7 @@ export function LogInInput() {
 
 
 /* <Checkbox> */
-export function Checkbox({
+export function CheckboxItem({
 	id = "test",
 	text = "option displayed",
 	checked = false,
@@ -128,22 +183,74 @@ export function ServiceCheckbox({
 	};
 	return (
 		<TouchableOpacity
-			style={styles.checkboxContainer}
+			style={[commonStyles.shadowDefault, status? styles.checkboxContainerActive: styles.checkboxContainer]}
 			activeOpacity={0.6}
 			onPress={(e) => changeStatus()}
 		>
-			<Text>
-				{text},{price}
+			<Text style={styles.serviceText}>
+				{text}
 			</Text>
-			<View
-				style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}
-			></View>
+			<View style={styles.leftPart}> 
+			<View style={styles.leftPart1}>
+				<Icon name='money' color = {colors.primaryDark} size={24}/>
+				<Text style={styles.servicePrice}>{price}</Text>
+			</View>
+
+			<View style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}/>
+			</View>
+			
 		</TouchableOpacity>
 	);
 }
 
+export function SubOptions({
+	checked = false,
+	item = sampleServiceList[1],
+	handleStatus = () => {}, //handle status change in checkboxes
+}) {
+	const [status, onChangeStatus] = React.useState(checked);
+	const changeStatus = () => {
+		handleStatus({ checked: !status, id: id });
+		onChangeStatus(!status);
+	};
+
+	const renderSubItem = ({ item }) => {
+		return (
+			<View>
+				<ServiceCheckbox
+					id={item.id}
+					text={item.type}
+					price={item.price}
+					checked={item.checked}
+					handleStatus={handleStatus}
+				/>
+			</View>
+
+		);
+	};
+	return (
+		<View>
+		<ServiceCheckbox
+			id={item.id}
+			text={item.type}
+			price={item.price}
+			checked={item.checked}
+			handleStatus={handleStatus}
+		/>
+		<FlatList
+			data={item.options}
+			renderItem={renderSubItem}
+			keyExtractor={(item) => item.id.toString()}
+			/>
+		</View>
+	);
+
+}
+
+
+
 export function CheckboxGroup({
-	options = sampleOptions,
+	options = sampleServiceList,
 	handleCheckedServices,
 }) {
 	const initSelections = () => {
@@ -171,7 +278,17 @@ export function CheckboxGroup({
 			onChangeSelections(temp);
 		}
 	};
+
+	
 	const renderItem = ({ item }) => {
+		console.log("sub", item);
+		if (item.options) {
+			return (
+			<View>
+				<SubOptions options={item}/> 
+			</View>
+			);
+		}
 		return (
 			<ServiceCheckbox
 				id={item.id}
@@ -179,9 +296,11 @@ export function CheckboxGroup({
 				price={item.price}
 				checked={item.checked}
 				handleStatus={handleStatus}
+	
 			/>
 		);
 	};
+
 
 	useEffect(() => {
 		console.log("selections: ", selections);
@@ -197,7 +316,7 @@ export function CheckboxGroup({
 				renderItem={renderItem}
 				keyExtractor={(item) => item.id.toString()}
 			/>
-			{/* <Text>{selections}</Text> */}
+
 		</View>
 	);
 }
@@ -207,20 +326,54 @@ const styles = StyleSheet.create({
 	checkboxContainer: {
 		width: "100%",
 		flexDirection: "row",
-		margin: 4,
+		marginBottom: 20,
 		padding: 8,
 		justifyContent: "space-between",
 		alignItems: "center",
+		backgroundColor: 'white',
+		padding: 20, 
+		borderRadius: 8,
+
+	},
+	checkboxContainerActive: {
+		width: "100%",
+		flexDirection: "row",
+		marginBottom: 20,
+		padding: 8,
+		justifyContent: "space-between",
+		alignItems: "center",
+		backgroundColor: 'white',
+		padding: 20, 
+		borderRadius: 8,
+		borderColor: colors.primaryDark,
+		borderWidth: 1
+
 	},
 	checkboxMark: {
-		width: 24,
-		height: 24,
-		borderColor: "#666",
-		borderWidth: 1,
+		width: 16,
+		height: 16,
+		borderColor: colors.primaryDark,
+		borderWidth: 2,
+		borderRadius: 2,
 		margin: 4,
 	},
 	checkboxMarkActive: {
-		backgroundColor: "#666",
+		backgroundColor: colors.primaryDark,
+	},
+	serviceText:{
+		fontSize:fonts.body,
+		color: colors.text,
+	},
+	servicePrice:{
+		fontSize: fonts.h3,
+		color: colors.text,
+	},
+	leftPart:{
+		flexDirection:'row'
+	},
+	leftPart1:{
+		flexDirection:'row',
+		paddingRight: 14
 	},
 	inputBox: {
 		borderStyle: "solid",
