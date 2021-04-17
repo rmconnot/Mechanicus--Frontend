@@ -1,25 +1,19 @@
-import React, { useState, useEffect } from "react";
-import {
-	View,
-	Text,
-	Button,
-	StyleSheet,
-	Alert,
-	BackHandler,
-} from "react-native";
-import { CheckboxGroup } from "../../common/Form";
-import { NavGroup } from "../../common/BottomNav";
-import { QuoteProgress } from "../../common/Progress";
+import React, { useState, useEffect } from 'react';
+import { View, Text, Button, StyleSheet, Alert } from 'react-native';
+import { CheckboxGroup } from '../../common/Form';
+import { NavGroup } from '../../common/BottomNav';
+import { QuoteProgress } from '../../common/Progress';
 import { gql, useQuery } from "@apollo/client";
+import { TabRouter } from '@react-navigation/routers';
 
 const SERVICES_QUERY = gql`
-	query {
-		services {
-			id
-			type
-			price
-		}
-	}
+    query {
+        services {
+            id
+            type
+            price
+        }
+    }
 `;
 
 const navOption = [

@@ -1,5 +1,15 @@
 import * as React from "react";
-import { View, Text, Button, StyleSheet, FlatList } from "react-native";
+import {
+	View,
+	Text,
+	Button,
+	StyleSheet,
+	FlatList,
+	TouchableOpacity,
+} from "react-native";
+import { colors, commonStyles } from "./Style";
+import { Icon } from "./Svg";
+import { BtnLarge } from "./Buttons";
 
 class TabNav extends React.Component {
 	props: {
@@ -35,12 +45,19 @@ class TabNav extends React.Component {
 		);
 	}
 }
+const BtmNavOptions = [
+	{ title: "Home", screen: "TaskList", icon: "home" },
+	{ title: "My Vehicles", screen: "VehicleList", icon: "vehicle" },
+	{ title: "Account", screen: "Profile", icon: "account" },
+];
 
+/* < NavItem /> */
+//used for quote pages navigation
 export function NavGroup({
 	navigation,
 	options = [
-		{ title: "Task", to: "TaskList" },
-		{ title: "Garage", to: "VehicleList" },
+		{ title: "Back", to: "TaskList", data: {}, disabled: false },
+		{ title: "Next", to: "VehicleList", data: {}, disabled: false },
 	],
 	routeProps,
 	callbackFunction,
@@ -66,43 +83,127 @@ export function NavGroup({
 				routeProps={routeProps}
 				callbackFunction={callbackFunction}
 			/>
+			{/* !!!!----------    BtnLarge will need to be modified to accept the callabckFunction used in the TabNavs above   ---------------!!!
+
+	return (
+		<View style={styles.navGroupContainer}>
+			<View style={styles.navGroupItem}>
+				<BtnLarge
+					title = {options[0].title}
+					sub = {options[0].title == "Back"}
+					onPress = {() =>
+						navigation.navigate(
+							options[0].to,
+							routeProps ? routeProps : null
+						)}
+				/>
+			</View>
+			<View style={styles.navGroupItem}>
+				<BtnLarge
+					style={styles.navGroupItem}
+					title={options[1].title}
+					onPress={() =>
+						navigation.navigate(
+							options[1].to,
+							routeProps ? routeProps : null
+						)}
+					disabled={options[1].disabled}
+				/>
+			</View> */}
 		</View>
 	);
 }
 
-/* <BottomNav> */
-export default function BottomNav({ navigation }) {
-	let navigate = navigation.navigate;
+/* < NavItem /> */
+//BottomNav's Child Component
+const NavItem = ({
+	active,
+	title,
+	icon, //name of icon
+	to, //screen name
+	navigation,
+	routeProps,
+}) => {
+	let statusColor = active ? colors.primaryDark : colors.gray3;
 	return (
-		<View style={styles.container}>
-			<TabNav title="Task" to="TaskList" navigate={navigate} />
-			<TabNav title="Garage" to="VehicleList" navigate={navigate} />
-			<TabNav title="Profile" to="Profile" navigate={navigate} />
+		<TouchableOpacity
+			style={styles.navItemContainer}
+			onPress={() => navigation.navigate(to, routeProps ? routeProps : null)}
+		>
+			<Icon name={icon} size={24} color={statusColor} />
+			<Text
+				style={[
+					commonStyles.note,
+					{
+						marginTop: 4,
+						color: statusColor,
+					},
+				]}
+			>
+				{title}
+			</Text>
+		</TouchableOpacity>
+	);
+};
+/* <BottomNav> */
+export default function BottomNav({
+	activated = BtmNavOptions[0].title, //which page the user is on
+	navigation,
+	routeProps,
+}) {
+	return (
+		<View style={[styles.BtmNavContainer, commonStyles.shadowUp]}>
+			<NavItem
+				title={BtmNavOptions[0].title}
+				to={BtmNavOptions[0].screen}
+				icon={BtmNavOptions[0].icon}
+				navigation={navigation}
+				active={activated == BtmNavOptions[0].title}
+				routeProps={routeProps}
+			/>
+			<NavItem
+				title={BtmNavOptions[1].title}
+				to={BtmNavOptions[1].screen}
+				icon={BtmNavOptions[1].icon}
+				navigation={navigation}
+				active={activated == BtmNavOptions[1].title}
+				routeProps={routeProps}
+			/>
+			<NavItem
+				title={BtmNavOptions[2].title}
+				to={BtmNavOptions[2].screen}
+				icon={BtmNavOptions[2].icon}
+				navigation={navigation}
+				active={activated == BtmNavOptions[2].title}
+				routeProps={routeProps}
+			/>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		width: "100%",
+	BtmNavContainer: {
 		flexDirection: "row",
-		elevation: 8,
+		justifyContent: "space-around",
+		backgroundColor: "white",
+		paddingTop: 24,
+		paddingBottom: 32,
+		borderTopLeftRadius: 24,
+		borderTopRightRadius: 24,
 	},
-	spaceBetween: {
-		justifyContent: "space-between",
-	},
-	bottomNav: {
-		flex: 1 / 3,
-	},
-	navBtn: {
-		alignSelf: "stretch",
-		backgroundColor: "#E0E0E0",
+	navItemContainer: {
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	navGroupContainer: {
-		width: "100%",
+		backgroundColor: "white",
 		flexDirection: "row",
-		padding: 16,
+		paddingHorizontal: 16,
+		paddingBottom: 32,
+		paddingTop: 12,
 		justifyContent: "space-between",
+		borderTopColor: colors.gray6,
+		borderTopWidth: 1,
 	},
 	navGroupItem: {
 		width: "30%",

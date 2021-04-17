@@ -32,6 +32,9 @@ import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 // SCREENS-PROFILE
 import ProfileScreen from "./js/screens/Profile/ProfileScreen";
 
+// TEST MODULE
+import { TEST } from "./moduleTest";
+
 // =====
 // nav dependencies
 import { NavigationContainer } from "@react-navigation/native";
@@ -42,13 +45,16 @@ const Stack = createStackNavigator();
 
 // connect to backend
 
+
+const IP = "192.168.0.5";
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
-	uri: "http://192.168.1.126:4000/graphql",
+
+	uri: `http://${IP}:4000/graphql`,
 });
 
 const wsLink = new WebSocketLink({
-	uri: "ws://192.168.1.126:4000/subscriptions",
+	uri: `ws://${IP}:4000/subscriptions`,
 	options: {
 		reconnect: true,
 	},
@@ -75,7 +81,7 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="LogIn">
+				<Stack.Navigator initialRouteName="test">
 					<Stack.Screen name="LogIn" component={LoginScreen} />
 					<Stack.Screen name="SignUp" component={SignUpScreen} />
 					{/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
@@ -100,9 +106,12 @@ export default function App() {
 
 					<Stack.Screen name="Profile" component={ProfileScreen} />
 
-					<Stack.Screen name="QuoteVehicle" component={QuoteVehicleScreen} />
+					<Stack.Screen name="QuoteVehicle" component={ QuoteVehicleScreen } />
 					<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />
 					<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
+
+					{/* for test */}
+					<Stack.Screen name="test" component={TEST} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</ApolloProvider>
