@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { commonStyles, colors } from "./Style";
 import { BtnSmall } from "./Buttons";
+import { Icon } from "./Svg";
 import { resultKeyNameFromField } from "@apollo/client/utilities";
 
 const sampleAppointment = {
@@ -106,11 +107,8 @@ export const MechanicInfoCard = ({
 				{item.firstName} {item.lastName}
 			</Text>
 			<View style={styles.row} >
-				<Image 
-				style={{marginRight: 4}}
-				source={ require("../../assets/phone_android.png") }
-				/>
-				<Text style={commonStyles.body}>{item.phone}</Text>
+				<Icon name={"phone"} size={18} color={colors.primaryDark} />
+				<Text style={[commonStyles.body, {marginLeft: 8}]}>{item.phone}</Text>
 			</View>
 		</View>
 	);
@@ -210,7 +208,7 @@ export const QuoteCard = ({
 		>
 			<View style={[ commonStyles.cardHeader, styles.spaceBetween ]}>
 				<View style={styles.row}>
-					<Image source={ require("../../assets/money.png") }/>
+					<Icon name="money" size={24} color={colors.primaryDark}/>
 					<Text style={commonStyles.h3}>{ item.costEstimate }</Text>
 				</View>
 				<BtnSmall 
