@@ -187,6 +187,26 @@ export const VehicleCard = ({
 		</View>
 	);
 };
+// It's unclear which component this render statement is supposed to be attached to.... I've left the original code in place and commented it out for now. However, it should be implemented.
+
+
+//     render(){
+//         const item = this.props.item;
+//         return (
+//             <View style={styles.row}> 
+//                 <View style={styles.col2}>
+//                     <Image
+//                     style={{width: "100%", height: 100}}
+//                     source={{ uri: item.imgUrl }} />
+//                 </View>
+//                 <View style={styles.col2}>
+//                     <Text>{item.make}, {item.year}</Text>
+//                     <Text>{item.model}</Text>
+//                 </View>
+//             </View>
+//         );
+//     }
+// }
 
 // QUOTE, cards displayed in quote list
 export const QuoteCard = ({

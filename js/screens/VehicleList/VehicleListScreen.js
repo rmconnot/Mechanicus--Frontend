@@ -45,17 +45,6 @@ export const VehicleListScreen = ({ navigation }) => {
     if (error) return (<Text>Oh no... {error.message}</Text>);
 
     
-    // console.log(data.vehicle[0]);
-
-    // return (
-    //     <View>
-    //       <Text>
-    //        {data.vehicle[0].model}
-    //         </Text>  
-    //     </View>
-        
-    // );
-
 
     const renderItem = ({item}) => {
         return (
@@ -64,7 +53,7 @@ export const VehicleListScreen = ({ navigation }) => {
                 <View style={styles.listButtonsContainer}>
                     <Button
                         title="Get a quote"
-                        onPress={() => this.props.navigation.navigate("QuoteVehicle") }
+                        onPress={() => navigation.navigate("QuoteVehicle") }
                     />
                 </View>
             </View>

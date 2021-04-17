@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import styles from "./Styles";
 import { gql, useMutation } from "@apollo/client";
+import {colors, fonts, commonStyles} from '../../common/Style';
 
 const CUSTOMER_MUTATION = gql`
 	mutation($email: String!, $phone: String!, $password: String!) {
@@ -73,48 +74,52 @@ export const SignUpScreen = ({ navigation }) => {
 	};
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.logo}>Create Account</Text>
-			<View style={styles.inputView}>
+		<View>
+			<Text style={styles.title}>Sign Up</Text>
+			<View>
+				<Text style={styles.inputText}>Email</Text>
 				<TextInput
-					style={styles.inputText}
-					placeholder="Enter your Email"
-					placeholderTextColor="#003f5c"
+					style={styles.inputBox}
+					placeholder="    username@email.address"
+					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, email: text.trim() }))
 					}
 				/>
 			</View>
-			<View style={styles.inputView}>
+			<View>
+				<Text style={styles.inputText}>Phone</Text>
 				<TextInput
-					style={styles.inputText}
-					placeholder="Enter your phone number"
-					placeholderTextColor="#003f5c"
+					style={styles.inputBox}
+					placeholder="    123-456-7890"
+					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, phone: text.trim() }))
 					}
 				/>
 			</View>
-			<View style={styles.inputView}>
+			<View>
+				<Text style={styles.inputText}>Password</Text>
 				<TextInput
 					// secureTextEntry
-					style={styles.inputText}
-					placeholder="Enter your Password"
-					placeholderTextColor="#003f5c"
+					style={styles.inputBox}
+					placeholder="    8 digit numbers"
+					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, password: text.trim() }))
 					}
 				/>
 			</View>
-			<View style={styles.inputView}>
+			<View>
+				<Text style={styles.inputText}>Confirm password</Text>
 				<TextInput
 					// secureTextEntry
-					style={styles.inputText}
-					placeholder="Confirm your Password"
-					placeholderTextColor="#003f5c"
+					style={styles.inputBox}
+					placeholder="    8 digit numbers"
+					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({
