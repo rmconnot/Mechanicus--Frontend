@@ -165,24 +165,14 @@ export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
 	// console.log(currentUser);
 
+	/////  !!!------------ I think we will need to pass the current user's ID as a route param for the taskCards  -----------------!!! //////////
+
 	const renderItemPast = ({ item }) => {
-		return (
-			<TaskCard
-				item={item}
-				navigation={navigation}
-				to="TaskDetailPast"
-				currentUser={currentUser}
-			/>
-		);
+		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
 	};
 	const renderItemPresent = ({ item }) => {
 		return (
-			<TaskCard
-				item={item}
-				navigation={navigation}
-				to="TaskDetailPresent"
-				currentUser={currentUser}
-			/>
+			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent" />
 		);
 	};
 
@@ -279,7 +269,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 					)}
 				</View>
 			</View>
-			<BottomNav navigation={navigation} />
+			<BottomNav navigation={navigation} activated = "Task" />
 		</SafeAreaView>
 	);
 };

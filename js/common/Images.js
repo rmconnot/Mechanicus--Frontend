@@ -6,6 +6,8 @@ const imageSrcs = {
       vehicleInactive: require('../../assets/vehicle_inactive.png'),
       profileActive: require('../../assets/profile_active.png'),
       profileInactive: require('../../assets/profile_inactive.png'),
+      underlineActive: require('../../assets/underline_active.png'),
+      underlineInactive: require('../../assets/underline_inactive.png'),
     }
   };
   

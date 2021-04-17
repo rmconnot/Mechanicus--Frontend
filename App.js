@@ -17,11 +17,12 @@ import { SignUpScreen } from "./js/screens/SignUp/SignUpScreen";
 import QuoteVehicleScreen from "./js/screens/QuoteVehicle/QuoteVehicleScreen";
 import QuoteServiceScreen from "./js/screens/QuoteService/QuoteServiceScreen";
 import QuoteReviewScreen from "./js/screens/QuoteReview/QuoteReviewScreen";
+import QuoteCompleteScreen from "./js/screens/QuoteComplete/QuoteCompleteScreen";
 
 // SCREENS-TASK
 
 import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
-import TaskDetailPastScreen from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
+import { TaskDetailPastScreen }from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
 import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
 import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
@@ -30,7 +31,9 @@ import AddVehicleManualScreen from "./js/screens/AddVehicleManual/AddVehicleManu
 import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
-import ProfileScreen from "./js/screens/Profile/ProfileScreen";
+import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
+import { test1Screen } from "./test1Screen";
+import { test2Screen } from "./test2Screen";
 
 // TEST MODULE
 import { TEST } from "./moduleTest";
@@ -39,6 +42,8 @@ import { TEST } from "./moduleTest";
 // nav dependencies
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
+
 
 // navigation
 const Stack = createStackNavigator();
@@ -77,13 +82,31 @@ const client = new ApolloClient({
 	cache: new InMemoryCache(),
 });
 
+
+
 export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="test">
-					<Stack.Screen name="LogIn" component={LoginScreen} />
-					<Stack.Screen name="SignUp" component={SignUpScreen} />
+				<Stack.Navigator initialRouteName="test1">
+					<Stack.Screen name="test1" component={test1Screen} 						options={{
+							headerShown: false
+					  }}/>
+					<Stack.Screen name="test2" component={test2Screen} 						options={{
+							headerShown: false
+					  }}/>
+					<Stack.Screen 
+						name="LogIn" 
+						component={LoginScreen} 
+						options={{
+							headerShown: false
+					  }}/>
+					<Stack.Screen 
+						name="SignUp" 
+						component={SignUpScreen} 
+					  	options={{
+							headerShown: false
+					  }}/>
 					{/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
 
 					<Stack.Screen name="TaskList" component={TaskListScreen} />
@@ -109,9 +132,7 @@ export default function App() {
 					<Stack.Screen name="QuoteVehicle" component={ QuoteVehicleScreen } />
 					<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />
 					<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
-
-					{/* for test */}
-					<Stack.Screen name="test" component={TEST} />
+					<Stack.Screen name="QuoteComplete" component={QuoteCompleteScreen} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</ApolloProvider>

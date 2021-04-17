@@ -1,25 +1,35 @@
 import * as React from "react";
-import {
-	View,
-	Text,
-	Button,
-	StyleSheet,
-	FlatList,
-	TouchableOpacity,
-} from "react-native";
-import { colors, commonStyles } from "./Style";
-import { Icon } from "./Svg";
-import { BtnLarge } from "./Buttons";
+import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
+import {colors, fonts, commonStyles} from './Style';
+import ImageSrcs from './Images';
+
+
 
 class TabNav extends React.Component {
 	props: {
 		to: string,
 		title: String,
 		navigate: () => mixed,
-		active: string, //check if tab is activated
+		active: Boolean, //check if tab is activated
 		routeProps: Object,
 		callbackFunction: any,
 	};
+
+	imageSelect = (title, active) => {
+
+		const networkArray = {
+		  'Task': active?ImageSrcs.icons.taskActive:ImageSrcs.icons.taskInactive,
+		  'My Vehicles':active?ImageSrcs.icons.vehicleActive:ImageSrcs.icons.vehicleInactive,
+		  'Profile':active?ImageSrcs.icons.profileActive:ImageSrcs.icons.profileInactive,
+		};
+	  
+		return networkArray[title];
+	  }; 
+	
+	// imageSrc1 = "../../assets/" + this.props.title.toLowerCase()
+	// imageSrc2 = this.props.active?"_active.png":"_inactive.png"
+	// imageSrc = imageSrc1 + imageSrc2
+
 
 	render() {
 		let to = this.props.to;
@@ -41,6 +51,34 @@ class TabNav extends React.Component {
 						);
 					}}
 				/>
+
+		{/* !!!--------------    Needs to be modified to utilize callbackFunction like above. Please change then delete code above   --------------------!!!
+		
+
+		
+		console.log(this.props.routeProps);
+		console.log(this.props.routeProps);
+		
+		// console.log("TabNav active: ", this.props.title.toLowerCase());
+		return (
+			<View style={[styles.bottomNav, commonStyles.shadowUp]}>
+				<Image
+					style={{ width: "15%" }}
+					source={this.imageSelect(this.props.title, this.props.active)}/>
+				<TouchableOpacity
+					style={this.props.active?styles.activeBtn:styles.inactiveBtn}
+					onPress={() =>
+						this.props.navigate(
+							to,
+							this.props.routeProps ? this.props.routeProps : null
+						)
+					}
+				>
+					<Text
+						style={this.props.active?styles.activeBtn:styles.inactiveBtn}>
+							{this.props.title}
+					</Text>
+				</TouchableOpacity> */}
 			</View>
 		);
 	}
@@ -51,8 +89,6 @@ const BtmNavOptions = [
 	{ title: "Account", screen: "Profile", icon: "account" },
 ];
 
-/* < NavItem /> */
-//used for quote pages navigation
 export function NavGroup({
 	navigation,
 	options = [
@@ -146,37 +182,17 @@ const NavItem = ({
 	);
 };
 /* <BottomNav> */
-export default function BottomNav({
-	activated = BtmNavOptions[0].title, //which page the user is on
-	navigation,
-	routeProps,
+export default function BottomNav({ 
+	navigation, 
+	activated = "Task",
+	routeProps
 }) {
+	const navigate = navigation.navigate;
 	return (
-		<View style={[styles.BtmNavContainer, commonStyles.shadowUp]}>
-			<NavItem
-				title={BtmNavOptions[0].title}
-				to={BtmNavOptions[0].screen}
-				icon={BtmNavOptions[0].icon}
-				navigation={navigation}
-				active={activated == BtmNavOptions[0].title}
-				routeProps={routeProps}
-			/>
-			<NavItem
-				title={BtmNavOptions[1].title}
-				to={BtmNavOptions[1].screen}
-				icon={BtmNavOptions[1].icon}
-				navigation={navigation}
-				active={activated == BtmNavOptions[1].title}
-				routeProps={routeProps}
-			/>
-			<NavItem
-				title={BtmNavOptions[2].title}
-				to={BtmNavOptions[2].screen}
-				icon={BtmNavOptions[2].icon}
-				navigation={navigation}
-				active={activated == BtmNavOptions[2].title}
-				routeProps={routeProps}
-			/>
+		<View style={styles.container}>
+			<TabNav title="Task" to="TaskList" navigate={navigate} active={activated=="Task"} routeProps={routeProps}/>
+			<TabNav title="My Vehicles" to="VehicleList" navigate={navigate}  active={activated=="Vehicles"} routeProps={routeProps}/>
+			<TabNav title="Profile" to="Profile" navigate={navigate}  active={activated=="Profile"} routeProps={routeProps}/>
 		</View>
 	);
 }
@@ -184,16 +200,26 @@ export default function BottomNav({
 const styles = StyleSheet.create({
 	BtmNavContainer: {
 		flexDirection: "row",
-		justifyContent: "space-around",
 		backgroundColor: "white",
-		paddingTop: 24,
-		paddingBottom: 32,
-		borderTopLeftRadius: 24,
-		borderTopRightRadius: 24,
+		borderTopLeftRadius: 20,
+		borderTopRightRadius: 20,
+		marginBottom: -30
 	},
-	navItemContainer: {
-		justifyContent: "center",
-		alignItems: "center",
+	spaceBetween: {
+		justifyContent: "space-between",
+	},
+	bottomNav: {
+		flex: 1 / 3,
+		alignItems: 'center',
+		paddingVertical: 30,
+	},
+	activeBtn: {
+		color: colors.primaryDark,
+		fontSize: fonts.note
+	},
+	inactiveBtn: {
+		color: colors.gray3,
+		fontSize: fonts.note
 	},
 	navGroupContainer: {
 		backgroundColor: "white",
