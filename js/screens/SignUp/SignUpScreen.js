@@ -81,51 +81,50 @@ export const SignUpScreen = ({ navigation }) => {
 	};
 
 	return (
-		<View>
-			<Text style={styles.title}>Sign Up</Text>
-			<View>
-				<Text style={styles.inputText}>Email</Text>
+		<View style={commonStyles.pageContainer}>
+			<View style={[styles.row, styles.title]}>
+				<Text style={commonStyles.h1}>Sign Up</Text>
+			</View>
+			<View style={styles.content}>
+				<Text style={[commonStyles.body, styles.label]}>Email</Text>
 				<TextInput
 					style={styles.inputBox}
-					placeholder="    username@email.address"
+					placeholder="username@email.address"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, email: text.trim() }))
 					}
 				/>
-			</View>
-			<View>
-				<Text style={styles.inputText}>Phone</Text>
+			
+				<Text style={[commonStyles.body, styles.label]}>Phone</Text>
 				<TextInput
 					style={styles.inputBox}
-					placeholder="    123-456-7890"
+					placeholder="123-456-7890"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, phone: text.trim() }))
 					}
 				/>
-			</View>
-			<View>
-				<Text style={styles.inputText}>Password</Text>
+			
+				<Text style={[commonStyles.body, styles.label]}>Password</Text>
 				<TextInput
-					// secureTextEntry
+					secureTextEntry={true}
 					style={styles.inputBox}
-					placeholder="    8 digit numbers"
+					placeholder="8 digit numbers"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, password: text.trim() }))
 					}
 				/>
-			</View>
-			<View>
-				<Text style={styles.inputText}>Confirm password</Text>
+			
+				<Text style={[commonStyles.body, styles.label]}>Confirm password</Text>
 				<TextInput
-					// secureTextEntry
+					secureTextEntry={true}
 					style={styles.inputBox}
-					placeholder="    8 digit numbers"
+					placeholder="8 digit numbers"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
@@ -135,7 +134,7 @@ export const SignUpScreen = ({ navigation }) => {
 						}))
 					}
 				/>
-			</View>
+			
 
 			<View style={styles.policyContainer}>
 				
@@ -150,20 +149,21 @@ export const SignUpScreen = ({ navigation }) => {
 					</View>
 
 				</TouchableOpacity>
-				<Text>
-					Click here to agree our terms and policies
+				<Text style={[commonStyles.note, {marginLeft:8}]} >
+					I agree with Mechanicus's terms and policies
 				</Text>
 			</View>
-			<BtnLarge   title = "Sign Up" onPress={handleSubmission}/>
+			</View>
+
+			<BtnLarge title="Sign Up" onPress={handleSubmission}/>
 			
-			{/* <TouchableOpacity
-				style={styles.cancelBtn}
-				onPress={() => {
-					this.props.navigation.goBack();
-				}}
+			<TouchableOpacity 
+			style={[styles.row, styles.optionRow]}
+			onPress={() => navigation.navigate("LogIn")}
 			>
-				<Text style={styles.cancelText}>Cancel</Text>
-			</TouchableOpacity> */}
+				<Text style={commonStyles.note}>Already have an account?  </Text>
+				<Text style={[commonStyles.note, {color: colors.primaryDark}]}>Log in</Text>
+			</TouchableOpacity>
 		</View>
 	);
 };

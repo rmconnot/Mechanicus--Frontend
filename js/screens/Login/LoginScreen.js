@@ -3,8 +3,9 @@ import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import { State } from "react-native-gesture-handler";
 import styles from "./Styles";
 import { gql, useLazyQuery } from "@apollo/client";
-import {colors, fonts, commonStyles} from '../../common/Style';
-import {BtnLarge} from '../../common/Buttons'
+import { colors, commonStyles} from '../../common/Style';
+import { BtnLarge } from '../../common/Buttons';
+import { Icon } from '../../common/Svg';
 
 /* <LoginScreen> */
 
@@ -21,6 +22,7 @@ export default function Login({ navigation }) {
 		email: "",
 		password: "",
 	});
+	const [pswVisibility, setPswVisibility] = useState(false);
 
 	const [getCustomer, { data, error, loading }] = useLazyQuery(CUSTOMER_QUERY, {
 		onError: (error) => console.log(JSON.stringify(error, null, 2)),
@@ -56,41 +58,59 @@ export default function Login({ navigation }) {
 	};
 
 	return (
-		<View>
-			<Text style={styles.title}>Log In</Text>
-			<View>
-				<Text style={styles.inputText}>Email</Text>
+		<View style={commonStyles.pageContainer}>
+			<View style={[styles.row, styles.title]}>
+				<Text style={commonStyles.h1}>Log In</Text>
+			</View>
+			<View style={styles.content}>
+				<Text style={[commonStyles.body ,styles.label]}>Email</Text>
 				<TextInput
 					style={styles.inputBox}
-					placeholder="    username@email.address"
+					placeholder="username@email.address"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setInput((prevState) => ({ ...prevState, email: text.trim() }))
 					}
 				/>
-				<Text style={styles.inputText}>Password</Text>
-				<TextInput
-					// secureTextEntry
-					style={styles.inputBox}
-					placeholder="    8 digit numbers numbers"
-					placeholderTextColor={colors.gray4}
-					autoCapitalize="none"
-					onChangeText={(text) =>
-						setInput((prevState) => ({ ...prevState, password: text.trim() }))
-					}
-				/>
+				
+				<Text style={[commonStyles.body, styles.label]}>Password</Text>
+				
+				<View style={styles.pswContainer}>
+					<TextInput
+						style={[styles.inputBox,styles.pswInput]}
+						secureTextEntry={!pswVisibility}
+						placeholder="8 digit numbers"
+						placeholderTextColor={colors.gray4}
+						autoCapitalize="none"
+						onChangeText={(text) =>
+							setInput((prevState) => ({ ...prevState, password: text.trim() }))
+						}
+					/>
+					<TouchableOpacity
+					style={styles.pswBtn}
+					onPress={ ()=>setPswVisibility(!pswVisibility) }
+					>
+						<Icon size={24} name={pswVisibility?"eye_open":"eye_close"}/>
+					</TouchableOpacity>
+				</View>
 			</View>
-			<BtnLarge   title = "Log In" onPress={handleLogin}/>
+			<BtnLarge  title="Log In" onPress={handleLogin}/>
+			
 			<TouchableOpacity 
-				style={styles.signUpBtn}
-				onPress={() => navigation.navigate("SignUp")}>
-				<Text style={styles.notificationText}>Does not have an account?</Text>
-				<Text style={styles.signUpText}>Sign up</Text>
+			style={[styles.row, styles.optionRow]}
+			onPress={() => navigation.navigate("SignUp")}
+			>
+				<Text style={commonStyles.note}>Does not have an account?  </Text>
+				<Text style={[commonStyles.note, styles.signUpText]}>Sign up</Text>
 			</TouchableOpacity>
-			<TouchableOpacity>
-				<Text style={styles.forgot}>Forgot Password?</Text>
+			
+			<TouchableOpacity 
+			style={[styles.row, styles.optionRow]}
+			>
+				<Text style={commonStyles.note}>Forgot Password?</Text>
 			</TouchableOpacity>
+			
 		</View>
 	);
 }

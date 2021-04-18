@@ -2,62 +2,49 @@ import { StyleSheet, Dimensions } from 'react-native';
 import {fonts, colors, commonStyles} from "../../common/Style"
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#7ad7f0',
-    alignItems: 'center',
-    justifyContent: 'center',
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  optionRow: {
+    paddingTop: 12,
+    marginTop: 4,
   },
   title:{
-    fontSize: fonts.h1,
-    color: colors.text,
     marginTop: 80,
-    marginBottom: 20,
-    textAlign: 'center'
+    marginBottom: 24,
   },
-
+  content: {
+    marginBottom: 48,
+  },
   inputBox: {
 		borderStyle: "solid",
 		backgroundColor: 'white',
-		paddingVertical: 12,
-		marginHorizontal: 60,
-		marginBottom: 40,
+		padding: 12,
+		marginBottom: 26,
 		borderRadius: 4,
+    fontSize: fonts.body,
 	},
-	inputText: {
-		paddingLeft: 60,
-		fontSize: fonts.body,
-		color: colors.text
+  pswContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    borderRadius: 4,
+    backgroundColor: "white",
+  },
+  pswInput: {
+    flex: 1,
+    marginBottom: 0,
+  },
+  pswBtn: {
+    padding: 12,
+    marginHorizontal: 8,
+  },
+	label: {
+		marginBottom: 4,
 	},
-
-  inputView:{
-    width:"80%",
-    backgroundColor:"#fff",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"center",
-    padding:20
-  },
-
-  forgot:{
-    color: colors.text,
-    fontSize: fonts.note,
-    textAlign:'center'
-  },
-
-  signUpBtn:{
-    flexDirection:'row',
-    justifyContent:'center',
-    paddingTop:13
-  },
-  notificationText:{
-    color:colors.text,
-    fontSize:fonts.note
-  },
   signUpText:{
     color:colors.primaryDark,
-    fontSize:fonts.note
   },
 });
 

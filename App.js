@@ -27,13 +27,16 @@ import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPr
 
 import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
 import AddVehicleManualScreen from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
-// import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
+import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
 import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
 import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
+
+// FRONT END TESTING
 import { test1Screen } from "./test1Screen";
 import { test2Screen } from "./test2Screen";
+import { TEST } from "./moduleTest";
 
 
 // =====
@@ -86,13 +89,14 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="LogIn">
+				<Stack.Navigator initialRouteName="test">
 					<Stack.Screen name="test1" component={test1Screen} 						options={{
 							headerShown: false
 					  }}/>
 					<Stack.Screen name="test2" component={test2Screen} 						options={{
 							headerShown: false
 					  }}/>
+					<Stack.Screen name="test" component={TEST} />
 					<Stack.Screen 
 						name="LogIn" 
 						component={LoginScreen} 
@@ -117,7 +121,7 @@ export default function App() {
 						component={TaskDetailPresentScreen}
 					/>
 
-					{/* <Stack.Screen name="VehicleList" component={VehicleListScreen} /> */}
+					<Stack.Screen name="VehicleList" component={VehicleListScreen} />
 					<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
 					<Stack.Screen
 						name="AddVehicleManual"

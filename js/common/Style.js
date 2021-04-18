@@ -128,6 +128,11 @@ export const commonStyles = StyleSheet.create({
         shadowRadius: 12,
     },
     // font
+    h1: {
+        color: colors.text,
+        fontSize: fonts.h1,
+        fontWeight: "400",
+    },
     h3: {
         color: colors.text,
         fontSize: fonts.h3,
