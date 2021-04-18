@@ -4,9 +4,9 @@ import { commonStyles } from '../../common/commonStyles';
 import BottomNav from '../../common/BottomNav';
 import { VehicleCard } from '../../common/Card';
 import { styles } from './Styles';
-import { useQuery } from "urql";
+import { gql, useQuery } from "@apollo/client";
 
-const vehicleQuery = `query ($customerID: Int!) {
+const vehicleQuery = gql`query ($customerID: Int!) {
 	vehicle (customerID: $customerID) {
         year
         make
@@ -45,17 +45,6 @@ export const VehicleListScreen = ({ navigation }) => {
     if (error) return (<Text>Oh no... {error.message}</Text>);
 
     
-    // console.log(data.vehicle[0]);
-
-    // return (
-    //     <View>
-    //       <Text>
-    //        {data.vehicle[0].model}
-    //         </Text>  
-    //     </View>
-        
-    // );
-
 
     const renderItem = ({item}) => {
         return (
@@ -64,7 +53,7 @@ export const VehicleListScreen = ({ navigation }) => {
                 <View style={styles.listButtonsContainer}>
                     <Button
                         title="Get a quote"
-                        onPress={() => this.props.navigation.navigate("QuoteVehicle") }
+                        onPress={() => navigation.navigate("QuoteVehicle") }
                     />
                 </View>
             </View>
@@ -77,7 +66,7 @@ export const VehicleListScreen = ({ navigation }) => {
             <View style={styles.main}>
                 <View style={styles.headerSeection}>
                     <View style={styles.titleSection}>
-                        <Text>Garage</Text>
+                        <Text>My Vehicles</Text>
                         <Button
                             title="Edit"
                             onPress={() => Alert.alert('jump to the edit page')}

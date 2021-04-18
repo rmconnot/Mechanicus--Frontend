@@ -1,97 +1,66 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet, FlatList } from 'react-native';
+import { Icon } from './Svg';
+import { commonStyles,colors } from './Style';
 
-class ProgressDot extends React.Component {
-    props: {
-        active: Boolean, //if the user is on this page
-        done: Boolean, //if the step finished
-        label: String, //step label
-        num: Number, //number displayed in circle
-        icon: String, //icon displayed in circle
-    };
 
-    static defaultProps = {
-        done: false,
-        active: false,
-        num: "1",
-        label: "step 1",
-    };
-    
-    render() {
-        let { done, active, num, label } = this.props;
-        return (
-            <View style={styles.dotContainer}>
-                <View style={[styles.dot,active?styles.dotActive:null]}>
-                    <Text style={styles.dotNum}>
-                        { done?"✓":num }
-                    </Text>
-                </View>
-                <Text style={styles.label}>{label}</Text>
-            </View>
-        );
+const ProgressDot = ({
+    active = false,
+    done = false,
+    label = "step",
+}) => {
+    let textStyle = done? {color: colors.primaryDark} : {color: colors.gray3};
+    let dotStyle = done? [styles.dot, styles.dotActive]:[styles.dot];
+    if(active){
+        dotStyle.push(commonStyles.shadowThemeFloat);
     }
-}
-
-export class QuoteProgress extends React.Component {
-    props: {
-        curStep: Number,
-        status: Array, //shows the if each step is done
-    };
-
-    static defaultProps = {
-        curStep: 1,
-        status: [true,false,false],
-    };
-
-    render(){
-        let {curStep,status} = this.props;
-        return (
-            <View style={styles.center}>
-                <View style={styles.container}>
-                    <ProgressDot num={1} label={"vehicle"} active={curStep==1?true:false} done={status[0]}/>
-                    <ProgressDot num={2} label={"service"} active={curStep==2?true:false} done={status[1]} />
-                    <ProgressDot num={3} label={"confirm"} active={curStep==3?true:false} done={status[2]} />
-                </View>
+    return (
+        <View style={styles.dotContainer}>
+            <View style={dotStyle}>
+                <Icon name={label} color={ done? "white" : colors.gray4} />
             </View>
-        );
-    }
-}
+            <Text style={[commonStyles.note,textStyle]}>{label}</Text>
+        </View>
+    );
+};
 
-export class TaskProgress extends React.Component {
-    props: {
-        curStep: Number,
-        status: Array, //shows the if each step is done
-    };
+export const QuoteProgress = ({
+    curStep = 1, //current activated step
+    status = [true,false,false], //shows if each step is done
+}) => {
+    return (
+    <View style={styles.progressContainer}>
+        <ProgressDot label={"vehicle"} active={curStep==1?true:false} done={status[0]}/>
+        <ProgressDot label={"service"} active={curStep==2?true:false} done={status[1]} />
+        <ProgressDot label={"confirm"} active={curStep==3?true:false} done={status[2]} />
+    </View>
+    );
+};
 
-    static defaultProps = {
-        curStep: 1,
-        status: [true,false,false],
-    };
+export const TaskProgress = ({
+    curStep = 1, //current activated step
+    status = [true,false,false], //shows if each step is done
+}) => {
+    return (
+    <View style={styles.progressContainer}>
+        <ProgressDot label={"confirm"} active={curStep==1?true:false} done={status[0]}/>
+        <ProgressDot label={"repair"} active={curStep==2?true:false} done={status[1]} />
+        <ProgressDot label={"complete"} active={curStep==3?true:false} done={status[2]} />
+    </View>
+    );
+};
 
-    render(){
-        let {curStep,status} = this.props;
-        return (
-            <View style={styles.center}>
-                <View style={styles.container}>
-                    <ProgressDot num={1} label={"confirm"} active={curStep==1?true:false} done={status[0]}/>
-                    <ProgressDot num={2} label={"repair"} active={curStep==2?true:false} done={status[1]} />
-                    <ProgressDot num={3} label={"complete"} active={curStep==3?true:false} done={status[2]} />
-                </View>
-            </View>
-        );
-    }
-}
 const styles = StyleSheet.create({
-    center: {
+    progressContainer: {
         flexDirection: "row",
-        justifyContent: "center",
-    },
-    container: {
-        flexDirection: "row",
+        justifyContent: "space-around",
+        paddingVertical: 16,
+        paddingHorizontal: 32,
     },
     dotContainer:{
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "center",
         marginHorizontal: 12,
         marginVertical: 8,
     },
@@ -99,19 +68,15 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         borderRadius: 12,
-        backgroundColor: "#aaa",
+        backgroundColor: "transparent",
         marginRight: 8,
         justifyContent: "center",
         alignItems: "center",
-    },
-    dotNum:{
-        color: "white",
+        borderWidth: 1,
+        borderColor: colors.gray4,
     },
     dotActive: {
-        backgroundColor: "blue",
-        elevation: 8,
+        backgroundColor: colors.primaryDark,
+        borderWidth: 0,
     },
-    label: {
-        fontSize: 12,
-    }
 });

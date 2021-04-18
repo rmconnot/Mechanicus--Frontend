@@ -76,12 +76,19 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 	subscription($customerID: Int!) {
 		newAppointment(customerID: $customerID) {
 			id
-			dateTime
-			vehicle {
-				id
-				make
-				model
-				year
+			scheduleDate
+			quote {
+				services {
+					id
+					type
+				}
+				vehicle {
+					id
+					make
+					model
+					year
+					vehicleType
+				}
 			}
 		}
 	}
@@ -91,16 +98,63 @@ const APPOINTMENTS_QUERY = gql`
 	query($customerID: Int!) {
 		appointments(customerID: $customerID) {
 			id
-			dateTime
+			scheduleDate
+			quote {
+				services {
+					id
+					type
+				}
+				vehicle {
+					id
+					make
+					model
+					year
+					vehicleType
+				}
+			}
+			#mechanicID
+		}
+	}
+`;
+
+const QUOTES_QUERY = gql`
+	query($customerID: Int!) {
+		quotes(customerID: $customerID) {
+			id
+			services {
+				id
+				type
+			}
 			vehicle {
 				id
 				make
 				model
 				year
+				vehicleType
 			}
-			#mechanicID
-			#dateTime
-			#service?
+			costEstimate
+			createdAt
+		}
+	}
+`;
+
+const QUOTES_SUBSCRIPTION = gql`
+	subscription($customerID: Int!) {
+		newQuote(customerID: $customerID) {
+			id
+			services {
+				id
+				type
+			}
+			vehicle {
+				id
+				make
+				model
+				year
+				vehicleType
+			}
+			costEstimate
+			createdAt
 		}
 	}
 `;
@@ -111,14 +165,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
 	// console.log(currentUser);
 
-	const renderItemPast = ({ item }) => {
-		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
-	};
-	const renderItemPresent = ({ item }) => {
-		return (
-			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent" />
-		);
-	};
+	/////  !!!------------ I think we will need to pass the current user's ID as a route param for the taskCards  -----------------!!! //////////
 
 	const renderItemPast = ({ item }) => {
 		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
@@ -137,14 +184,46 @@ export const TaskListScreen = ({ navigation, route }) => {
 		}
 	);
 
+	const {
+		subscribeToMore: subscribeToMoreQuotes,
+		data: quoteData,
+		error: quoteError,
+		loading: quoteLoading,
+	} = useQuery(QUOTES_QUERY, {
+		variables: {
+			customerID: currentUser.id,
+		},
+		onError: (error) => console.log(JSON.stringify(error, null, 2)),
+	});
+
+	if (quoteData) console.log("quoteData: ", quoteData);
+
+	// if (data) console.log("data: ", data);
 	if (loading) console.log("Loading...");
 	if (error) console.error(`Error! ${error.message}`);
+
+	subscribeToMoreQuotes({
+		document: QUOTES_SUBSCRIPTION,
+		variables: { customerID: currentUser.id },
+		updateQuery: (prev, { subscriptionData }) => {
+			const newQuote = subscriptionData.data.newQuote;
+			console.log("newQuote: ", newQuote);
+			if (!prev.quotes.find((quote) => quote.id === newQuote.id))
+				return Object.assign(
+					{},
+					{
+						quotes: [...prev.quotes, newQuote],
+					}
+				);
+		},
+	});
 
 	subscribeToMore({
 		document: APPOINTMENTS_SUBSCRIPTION,
 		variables: { customerID: currentUser.id },
 		updateQuery: (prev, { subscriptionData }) => {
 			const newAppointment = subscriptionData.data.newAppointment;
+			// console.log(newAppointment);
 			if (
 				!prev.appointments.find(
 					(appointment) => appointment.id === newAppointment.id
@@ -168,7 +247,9 @@ export const TaskListScreen = ({ navigation, route }) => {
 				</View>
 				<Button
 					title={"Get a Quote"}
-					onPress={() => navigation.navigate("QuoteVehicle")}
+					onPress={() =>
+						navigation.navigate("QuoteVehicle", { currentUser: currentUser })
+					}
 				/>
 				<View>
 					<Text>Upcoming appointments</Text>
@@ -180,7 +261,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 				</View>
 				<View>
 					<Text>Past appointments</Text>
-					{/* <Text>March</Text> */}
+					<Text>March</Text>
 					{data ? (
 						<FlatList data={data.appointments} renderItem={renderItemPast} />
 					) : (
@@ -188,7 +269,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 					)}
 				</View>
 			</View>
-			<BottomNav navigation={navigation} />
+			<BottomNav navigation={navigation} activated = "Task" />
 		</SafeAreaView>
 	);
 };
