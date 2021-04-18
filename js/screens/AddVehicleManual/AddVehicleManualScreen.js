@@ -14,7 +14,7 @@ const VEHICLE_MUTATION = gql`
 
 export const AddVehicleManualScreen = ({ navigation, route }) => {
     const [input, setInput] = useState({
-        customerID: route.params.currentUser.id,
+        customerID: route.params.id,
         vin: "",
         type:"",
         year:0,
@@ -47,11 +47,7 @@ export const AddVehicleManualScreen = ({ navigation, route }) => {
         }).then((result) => {
             if (result != undefined){
                 console.log(result);
-                navigation.navigate("VehicleList", {
-                    currentUser: {
-                        id: input.customerID,
-                    },
-                });
+                navigation.goBack();
                 return;
             }
         })
@@ -116,7 +112,7 @@ export const AddVehicleManualScreen = ({ navigation, route }) => {
             <TouchableOpacity style={styles.registerBtn} onPress={addVehicle}>
             <Text style={styles.registerText}>Confirm</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelBtn} onPress={() => Alert.alert('jump to the quote page')}>
+            <TouchableOpacity style={styles.cancelBtn} onPress={() => navigation.goBack()}>
             <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>
     
