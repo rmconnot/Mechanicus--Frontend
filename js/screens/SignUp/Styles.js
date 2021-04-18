@@ -33,30 +33,11 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     padding:20
   },
-<<<<<<< HEAD
-  inputView2:{
-    width:"80%",
-    backgroundColor:"#fff",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"space-between",
-    padding:0,
-    paddingLeft: 20,
-    flexDirection:"row",
-  },
-  inputText:{
-    height:50,
-    color:"black",
-    fontSize:14
-  },
-=======
 	inputText: {
 		paddingLeft: 60,
 		fontSize: fonts.body,
 		color: colors.text
 	},
->>>>>>> 64e751344f4f2bc21e29b6e6a8b52cfbb2b52efa
   forgot:{
     color:"white",
     fontSize:12

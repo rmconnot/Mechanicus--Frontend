@@ -22,7 +22,7 @@ import QuoteCompleteScreen from "./js/screens/QuoteComplete/QuoteCompleteScreen"
 // SCREENS-TASK
 
 import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
-import { TaskDetailPastScreen }from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
+import TaskDetailPastScreen from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
 import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
 import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
@@ -51,7 +51,7 @@ const Stack = createStackNavigator();
 // connect to backend
 
 
-const IP = "192.168.0.5";
+const IP = "10.20.1.148";
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
 	uri: "http://10.20.1.148:4000/graphql",
@@ -87,7 +87,7 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="QuoteService">
+				<Stack.Navigator initialRouteName="LogIn">
 					<Stack.Screen name="test1" component={test1Screen} 						options={{
 							headerShown: false
 					  }}/>
