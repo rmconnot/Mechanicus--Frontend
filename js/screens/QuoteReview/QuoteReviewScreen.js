@@ -2,23 +2,14 @@ import React, { useState } from "react";
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import { NavGroup } from "../../common/BottomNav";
 import { QuoteProgress } from "../../common/Progress";
-import { VehicleCard } from "../../common/Card";
+import { ServiceInfoCard, VehicleCard, VehicleInfoCard } from "../../common/Card";
 import { FlatList } from "react-native-gesture-handler";
 import { render } from "react-dom";
 import { styles } from "./Styles";
 import { useQuery, gql, useMutation } from "@apollo/client";
 import { VehicleItem } from "../../common/vehicleCard";
-
-const navOption = [
-	{
-		title: "Cancel",
-		to: "QuoteService",
-	},
-	{
-		title: "Schedule",
-		to: "Schedule",
-	},
-];
+import { colors, commonStyles } from "../../common/Style";
+import {  BtnLarge, BtnBare } from "../../common/Buttons";
 
 const sampleServiceList = [
 	{
@@ -91,6 +82,7 @@ function ServiceEntry({ text, price }) {
 }
 /* <QuoteReviewScreen> */
 export default function QuoteReviewScreen({ navigation, route }) {
+	const sectionTitleStyle = [commonStyles.body, {color: colors.gray3}];
 	// console.log(" QuoteReview route params: ", route.params);
 
 	const [quoteID, setQuoteID] = useState(null);
@@ -121,42 +113,13 @@ export default function QuoteReviewScreen({ navigation, route }) {
 		console.error(error.message);
 	}
 
-	const renderItem = (item) => {
-		return <ServiceEntry text={item.item.type} price={item.item.price} />;
-	};
-
-	let sum = 0; //total price
-
-	if (servicesData) {
-		for (let service of servicesData.services) {
-			sum = sum + service.price;
-		}
-	}
-
-	const renderVehicleItem = () => {
-		if (vehicleData) {
-			return (
-				<VehicleItem
-					make={vehicleData.vehicle.make}
-					model={vehicleData.vehicle.model}
-					year={vehicleData.vehicle.year}
-					vin={vehicleData.vehicle.vin}
-					vehicleType={vehicleData.vehicle.vehicleType}
-					id={vehicleData.vehicle.id}
-				/>
-			);
-		} else {
-			return <Text>No vehicle</Text>;
-		}
-	};
-
 	let servicesArray = [];
 
 	if (servicesData) {
 		for (let service of servicesData.services) {
 			servicesArray.push(service.id);
 		}
-		console.log("servicesArray: ", servicesArray);
+		// console.log("servicesArray: ", servicesArray);
 	}
 
 	const saveQuote = async () => {
@@ -175,43 +138,28 @@ export default function QuoteReviewScreen({ navigation, route }) {
 
 	return (
 		<View style={styles.container}>
-			<View>
-				<QuoteProgress curStep={3} status={[true, true, false]} />
-				<View>
-					<Text>Vehicle</Text>
-					{renderVehicleItem()}
-				</View>
-				<View>
-					<Text>Service</Text>
-					{servicesData ? (
-						<FlatList
-							data={servicesData.services}
-							renderItem={renderItem}
-							keyExtractor={(item) => item.id.toString()}
-						/>
-					) : (
-						<Text>No services selected</Text>
-					)}
-
-					<View>
-						<Text>Total price:{sum}</Text>
+			<View style={commonStyles.pageContainer}>
+				<QuoteProgress curStep={3} status={[true, true, true]} />
+				<View style={styles.content}>
+					<View style={styles.row}>
+						<Text style={sectionTitleStyle}>Vehicle</Text>
+						<BtnBare onPress={() => navigation.navigate(
+							"QuoteVehicle", route
+							)}/>
 					</View>
+					<VehicleInfoCard item={ vehicleData? vehicleData.vehicle : "" }/>
+					
+					<View style={styles.row}>
+						<Text style={sectionTitleStyle}>Service</Text>
+						<BtnBare onPress={() => navigation.navigate(
+							"QuoteService", route
+							)}/>
+					</View>
+					<ServiceInfoCard item={ servicesData? servicesData.services : "" }/>
 				</View>
-				<View>
-					<TouchableOpacity onPress={saveQuote}>
-						<Text>Save Quote</Text>
-					</TouchableOpacity>
-				</View>
+				
+				<BtnLarge title={"confirm & schedule"} onPress={saveQuote} />
 			</View>
-			<NavGroup
-				navigation={navigation}
-				options={navOption}
-				routeProps={Object.assign({}, vehicleData, servicesData, {
-					currentUser: route.params.id,
-					quoteID: quoteID,
-				})}
-				callbackFunction={saveQuote}
-			/>
 		</View>
 	);
 }

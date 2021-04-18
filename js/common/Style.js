@@ -37,11 +37,14 @@ export const commonStyles = StyleSheet.create({
         flex: 1,
         justifyContent: "space-between",
     },
+    pageContainer: {
+        paddingHorizontal: 16,
+    },
     card: {
         padding: 16,
         backgroundColor: "white",
         borderRadius: 8,
-        marginHorizontal: 24,
+        // marginHorizontal: 24,
         marginVertical: 6,
     },
     cardHeader: {
