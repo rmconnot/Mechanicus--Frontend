@@ -269,7 +269,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 					)}
 				</View>
 			</View>
-			<BottomNav navigation={navigation} activated = "Home" />
+			<BottomNav navigation={navigation} routeProps={route} activated = "Home" />
 		</SafeAreaView>
 	);
 };

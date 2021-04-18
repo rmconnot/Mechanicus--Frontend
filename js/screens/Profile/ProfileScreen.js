@@ -20,11 +20,13 @@ const CUSTOMER_QUERY = gql`
 
 /* <ProfileScreen> */
 export function ProfileScreen({ navigation, route }) {
-    // const { currentUser } = route.params;
+    
+    const { currentUser } = route.params.params;
+    // console.log(currentUser)
 
     const {data, loading, error} = useQuery(CUSTOMER_QUERY,{
         variables: {
-            id: 1   //use currentUser.id when get previous route
+            id: currentUser.id   //use currentUser.id when get previous route
         },
     });
 
@@ -64,7 +66,7 @@ export function ProfileScreen({ navigation, route }) {
                 </View>
             </View>
             <View style={styles.bottom}>
-                <BottomNav navigation={ navigation } activated = "Account"/>
+                <BottomNav navigation={ navigation } routeProps={route} activated = "Account"/>
             </View>
             
         </View>
