@@ -52,15 +52,20 @@ const sampleAppointment = {
 };
 const imageHeight = 50;
 const taskStatus = {
+	// pending approved canceled completed
 	pending: {
 		color: colors.secondaryDark,
 		bgColor: colors.secondaryLight,
 	},
-	upcoming: {
+	approved: {
 		color: colors.primaryDark,
 		bgColor: colors.primaryLight,
 	},
 	completed: {
+		color: colors.gray3,
+		bgColor: colors.gray6,
+	},
+	canceled: {
 		color: colors.gray3,
 		bgColor: colors.gray6,
 	},
@@ -202,26 +207,6 @@ export const VehicleCard = ({
 		</View>
 	);
 };
-// It's unclear which component this render statement is supposed to be attached to.... I've left the original code in place and commented it out for now. However, it should be implemented.
-
-
-//     render(){
-//         const item = this.props.item;
-//         return (
-//             <View style={styles.row}> 
-//                 <View style={styles.col2}>
-//                     <Image
-//                     style={{width: "100%", height: 100}}
-//                     source={{ uri: item.imgUrl }} />
-//                 </View>
-//                 <View style={styles.col2}>
-//                     <Text>{item.make}, {item.year}</Text>
-//                     <Text>{item.model}</Text>
-//                 </View>
-//             </View>
-//         );
-//     }
-// }
 
 // QUOTE, cards displayed in quote list
 export const QuoteCard = ({
@@ -277,7 +262,11 @@ export const QuoteCard = ({
 
 // APPOINTMENT, cards displayed in appointment list
 export const TaskCard = ({ navigation, item = sampleAppointment, route }) => {
-	const tagStyle = taskStatus[item.status];
+	console.log(item.status);
+	const tagStyle = taskStatus[item.status] || {
+		color: colors.secondaryDark,
+		bgColor: colors.secondaryLight,
+	};
 	const { services, vehicle } = item.quote;
 
 	let serviceStr = get_service_string(services);

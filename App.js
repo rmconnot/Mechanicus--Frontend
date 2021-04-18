@@ -27,7 +27,7 @@ import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPr
 
 import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
 import AddVehicleManualScreen from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
-// import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
+import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
 import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
@@ -88,7 +88,7 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="test">
+				<Stack.Navigator initialRouteName="LogIn">
 					<Stack.Screen name="test1" component={test1Screen} 						options={{
 							headerShown: false
 					  }}/>
@@ -122,7 +122,7 @@ export default function App() {
 						component={TaskDetailPresentScreen}
 					/>
 
-					{/* <Stack.Screen name="VehicleList" component={VehicleListScreen} /> */}
+					<Stack.Screen name="VehicleList" component={VehicleListScreen} />
 					<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
 					<Stack.Screen
 						name="AddVehicleManual"
