@@ -2,78 +2,39 @@ import { StyleSheet } from 'react-native';
 import {fonts, colors, commonStyles} from "../../common/Style"
 
 const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   container: {
     flex: 1,
     backgroundColor: '#7ad7f0',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title:{
-    fontSize: fonts.h1,
-    color: colors.text,
-    marginTop: 80,
-    marginBottom: 20,
-    textAlign: 'center'
+  optionRow: {
+    paddingTop: 12,
+    marginTop: 4,
   },
-
+  title:{
+    marginTop: 80,
+    marginBottom: 24,
+  },
+  content: {
+    marginBottom: 48,
+  },
+  label: {
+    marginBottom: 4,
+  },
   inputBox: {
 		borderStyle: "solid",
 		backgroundColor: 'white',
-		paddingVertical: 12,
-		marginHorizontal: 60,
-		marginBottom: 40,
+		padding: 12,
+		marginBottom: 26,
 		borderRadius: 4,
+    fontSize: fonts.body,
 	},
-  inputView:{
-    width:"80%",
-    backgroundColor:"#fff",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"center",
-    padding:20
-  },
-	inputText: {
-		paddingLeft: 60,
-		fontSize: fonts.body,
-		color: colors.text
-	},
-  forgot:{
-    color:"white",
-    fontSize:12
-  },
-  registerBtn:{
-    width:"80%",
-    backgroundColor: "#fff",
-    borderRadius:25,
-    borderWidth: 2.5,
-    borderColor: "#fff",
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
-  },
-  registerText:{
-    color:"#7ad7f0",
-    fontSize:16
-  },
-  cancelBtn:{
-    width:"80%",
-    backgroundColor:"#7ad7f0",
-    borderRadius:25,
-    borderWidth: 2.5,
-    borderColor: "#fff",
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:20,
-    marginBottom:10
-  },
-  cancelText:{
-    color:"#fff",
-    fontSize:16
-  },
   checkboxMark: {
 		width: 16,
 		height: 16,
@@ -88,9 +49,8 @@ const styles = StyleSheet.create({
 	},
   policyContainer: {
     flexDirection:'row',
-    paddingBottom:48,
     alignContent:'center',
-    justifyContent:'center',
+    justifyContent:'flex-start',
   },
 });
 

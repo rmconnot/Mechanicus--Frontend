@@ -27,13 +27,16 @@ import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPr
 
 import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
 import AddVehicleManualScreen from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
-// import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
+import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
 import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
 import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
+
+// FRONT END TESTING
 import { test1Screen } from "./test1Screen";
 import { test2Screen } from "./test2Screen";
+import { TEST } from "./moduleTest";
 
 
 // =====
@@ -49,7 +52,7 @@ const Stack = createStackNavigator();
 // connect to backend
 
 
-const IP = "192.168.0.106";
+const IP = "192.168.0.5";
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
 
@@ -93,6 +96,7 @@ export default function App() {
 					<Stack.Screen name="test2" component={test2Screen} 						options={{
 							headerShown: false
 					  }}/>
+					<Stack.Screen name="test" component={TEST} />
 					<Stack.Screen 
 						name="LogIn" 
 						component={LoginScreen} 
@@ -117,7 +121,7 @@ export default function App() {
 						component={TaskDetailPresentScreen}
 					/>
 
-					{/* <Stack.Screen name="VehicleList" component={VehicleListScreen} /> */}
+					<Stack.Screen name="VehicleList" component={VehicleListScreen} />
 					<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
 					<Stack.Screen
 						name="AddVehicleManual"

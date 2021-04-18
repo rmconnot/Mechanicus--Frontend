@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, Image, Button } from 'react-native';
-import { commonStyles } from '../../common/commonStyles';
+import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
+import { commonStyles } from '../../common/Style';
 import BottomNav from '../../common/BottomNav';
 import { VehicleCard } from '../../common/Card';
+import { BtnDisplay } from '../../common/Buttons';
 import { styles } from './Styles';
 import { gql, useQuery } from "@apollo/client";
 
-const vehicleQuery = gql`query ($customerID: Int!) {
-	vehicle (customerID: $customerID) {
+const VEHICLES_QUERY = gql`query ($customerID: Int!) {
+	vehicles (customerID: $customerID) {
+        id
         year
         make
         model
@@ -31,59 +33,34 @@ const sampleVehicle =  [{
 
         
 
-export const VehicleListScreen = ({ navigation }) => {
-
-    const [result, reexecuteQuery] = useQuery({
-        query: vehicleQuery,
-        variables: {
-            customerID: 1
-        },
-    });
-    const { data, fetching, error } = result;
-
-    if (fetching) return (<Text>Loading...</Text>);
-    if (error) return (<Text>Oh no... {error.message}</Text>);
-
-    
+export const VehicleListScreen = ({ navigation, route }) => {
+    const { currentUser } = route.params;
+    const { data, error, loading } = useQuery(
+		VEHICLES_QUERY,
+		{
+			variables: { customerID: currentUser.id },
+			onError: (error) => console.log(JSON.stringify(error, null, 2)),
+		}
+	);
 
     const renderItem = ({item}) => {
-        return (
-            <View style={commonStyles.cardShape}>
-                <VehicleCard item={item} />
-                <View style={styles.listButtonsContainer}>
-                    <Button
-                        title="Get a quote"
-                        onPress={() => navigation.navigate("QuoteVehicle") }
-                    />
-                </View>
-            </View>
-        );
+        return <VehicleCard item={item} />;
     };
 
 
     return (
-        <View style={styles.container}>
-            <View style={styles.main}>
-                <View style={styles.headerSeection}>
-                    <View style={styles.titleSection}>
-                        <Text>My Vehicles</Text>
-                        <Button
-                            title="Edit"
-                            onPress={() => Alert.alert('jump to the edit page')}
-                        />
-                    </View>
-
-                    <Button
-                        title="Add a new vehicle"
-                        onPress={() => Alert.alert('jump to the add page')}
-                    />
-                </View>
+        <SafeAreaView style={commonStyles.container}>
+            <View style={commonStyles.pageContainer}>
+                <BtnDisplay title="New Vechicle" icon="add" left={true} onPress={
+                    () => navigation.navigate("AddVehicleManual",{...route})
+                }/>
                 <FlatList
-                    data={data?data.vehicle:sampleVehicle}
+                    data={data?data.vehicles:[]}
                     renderItem={renderItem}
+                    keyExtractor={(item) => item.id.toString()}
                 />
             </View>
-            <BottomNav navigation={ navigation }/>
-        </View>
+            <BottomNav navigation={ navigation } routeProps={ route } activated="My Vehicles"/>
+        </SafeAreaView>
     )
 }

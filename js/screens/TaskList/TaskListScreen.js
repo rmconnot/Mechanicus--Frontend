@@ -11,6 +11,7 @@ import BottomNav from "../../common/BottomNav";
 import { gql, useQuery } from "@apollo/client";
 import { TaskCard } from "../../common/Card";
 import { styles } from "./Styles";
+import { commonStyles } from "../../common/Style";
 
 const sampleQuotes = [
 	{
@@ -239,8 +240,8 @@ export const TaskListScreen = ({ navigation, route }) => {
 	});
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<View style={styles.main}>
+		<SafeAreaView style={commonStyles.container}>
+			<View style={commonStyles.pageContainer}>
 				<View style={styles.tabContainer}>
 					<Text style={styles.tab}>Tasks</Text>
 					<Text style={styles.tab}>Quotes</Text>
@@ -253,56 +254,14 @@ export const TaskListScreen = ({ navigation, route }) => {
 				/>
 				<View>
 					<Text>Upcoming appointments</Text>
-					{data ? (
-						<FlatList data={data.appointments} renderItem={renderItemPresent} />
-					) : (
-						<Text>No upcoming appointments</Text>
-					)}
-				</View>
-				<View>
-					<Text>Past appointments</Text>
-					<Text>March</Text>
-					{data ? (
-						<FlatList data={data.appointments} renderItem={renderItemPast} />
-					) : (
-						<Text>No upcoming appointments</Text>
-					)}
+					<FlatList 
+					data={data? data.appointments:[]} 
+					renderItem={renderItemPresent}
+					keyExtractor={(item) => item.id.toString()} 
+					/>
 				</View>
 			</View>
 			<BottomNav navigation={navigation} routeProps={route} activated = "Home" />
 		</SafeAreaView>
 	);
 };
-
-// const smapleTasksList = [{
-//     id:'1',
-//     make:'Honda',
-//     model:'CR-V',
-//     year:"2019",
-//     scheduleDate: '3/3/2021 12:30pm',
-//     mechanician:'XXX XXX',
-//     phone: '123-456-7890',
-//     service: {
-//         serviceOne: 'vehicle inspection',
-//         serviceOnePrice: '$$$',
-//         serviceTwo: 'oil Change',
-//         serviceTwoPrice: '$$$'
-//     },
-//     imageURL:'https://cka-dash.s3.amazonaws.com/131-1018-WTS230/mainimage.jpg'
-// },
-// {
-//     id: '2',
-//     make:'Toyota',
-//     model:'Highlander',
-//     year:"2021",
-//     scheduleDate: '4/3/2021 13:20pm',
-//     mechanician:'XXX XXX',
-//     phone: '123-456-7890',
-//     service: {
-//         serviceOne: 'brake repaire',
-//         serviceOnePrice: '$$$',
-//         serviceTwo: 'oil Change',
-//         serviceTwoPrice: '$$$'
-//     },
-//     imageURL: 'https://www.motortrend.com/uploads/sites/5/2020/11/2021-Toyota-Highlander-XSE-30.jpg'
-// }];

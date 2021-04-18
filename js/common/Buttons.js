@@ -58,16 +58,28 @@ export const BtnLarge = ({
 //btn that is large with round sides
 export const BtnDisplay = ({
     title = "Get A Quote",
-    icon = "add",
+    icon = "arrow_right",
+    left = false,
     onPress = ()=>{},
 }) => {
+    if(left){
+        return (
+            <TouchableOpacity
+            style={[commonStyles.btn, commonStyles.btn_display, commonStyles.shadowDefault]}
+            onPress={onPress}
+            >
+                <Icon color={colors.gray2} size={24} name={icon}/>
+                <Text style={[commonStyles.body, styles.capitalize, {marginLeft:8}]}>{title}</Text>
+            </TouchableOpacity>
+        );
+    }
     return (
         <TouchableOpacity
         style={[commonStyles.btn, commonStyles.btn_display, commonStyles.shadowDefault]}
         onPress={onPress}
         >
-            <Text style={[commonStyles.body, styles.capitalize]}>{title}</Text>
-            <Icon color={"white"} size={24} name={icon}/>
+            <Text style={[commonStyles.body, styles.capitalize, {marginRight:8}]}>{title}</Text>
+            <Icon color={colors.gray2} size={24} name={icon}/>
         </TouchableOpacity>
     );
     

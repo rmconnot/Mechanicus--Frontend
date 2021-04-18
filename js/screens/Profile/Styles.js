@@ -2,32 +2,35 @@ import { StyleSheet, Dimensions } from 'react-native';
 import {fonts, colors, commonStyles} from "../../common/Style"
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
-
+  titleRow:{
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 80,
+    marginBottom: 24,
+  },
   userName: {
-    color:colors.text,
-    fontSize: fonts.h2,
-    textAlign:'center',
-    marginVertical:20
+    marginTop:12,
   },
   profileIcon:{
     marginTop:80,
     marginLeft:"43%"
   },
-  title:{
-    fontSize: fonts.body,
-    color: colors.gray3,
-    marginHorizontal: 20,
-    paddingTop: 30
+  label: {
+    color: colors.gray2,
+    marginBottom: 8,
   },
-
+  group: {
+    marginBottom: 32,
+  },
   inputBox: {
 		borderStyle: "solid",
 		backgroundColor: 'white',
-		paddingVertical: 24,
-		marginHorizontal: 20,
+		padding:12,
 		marginBottom: 12,
 		borderRadius: 8,
         flexDirection:'row'

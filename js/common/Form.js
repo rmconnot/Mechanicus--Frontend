@@ -81,7 +81,9 @@ const sampleServiceList = [
 ];
 
 /*=============================*/
+/* <Radio> */
 
+/*=============================*/
 /* <Input box> */
 class FormInputBox extends React.Component {
 	props: {
@@ -141,7 +143,7 @@ export function LogInInput() {
 	);
 }
 
-
+/*=============================*/
 /* <Checkbox> */
 export function ServiceCheckbox({
 	id = "test",
@@ -235,9 +237,7 @@ export function SubOptions({
 		</View>
 	);
 
-}
-
-
+};
 
 export function CheckboxGroup({
 	options = sampleServiceList,
@@ -327,7 +327,7 @@ export function CheckboxGroup({
 
 		</View>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	container: {},

@@ -6,12 +6,16 @@ import {
 	StyleSheet,
 	ScrollView,
 	FlatList,
+	SafeAreaView,
 } from "react-native";
 import { NavGroup } from "../../common/BottomNav";
 import { QuoteProgress } from "../../common/Progress";
+import { VehicleInfoCard } from "../../common/Card";
+import { BtnDisplay } from "../../common/Buttons";
+import { commonStyles } from '../../common/Style';
 import { gql, useQuery } from "@apollo/client";
 import { RadioButton } from "react-native-paper";
-import { VehicleItem } from "../../common/vehicleCard";
+
 
 const navOption = [
 	{
@@ -41,32 +45,29 @@ const VEHICLES_QUERY = gql`
 /* <QuoteVehicleScreen> */
 export default function QuoteVehicleScreen({ navigation, route }) {
 	const { currentUser } = route.params;
-	console.log("currentUser: ", currentUser);
 
 	const [selectedVehicle, setSelectedVehicle] = useState();
 
-	const { data, loading, error } = useQuery(VEHICLES_QUERY, {
-		variables: {
-			customerID: currentUser.id,
-		},
-	});
+	const { data, loading, error } = useQuery(
+		VEHICLES_QUERY, 
+		{	
+			variables: {customerID: currentUser.id,},
+			onError: (error) => console.log(JSON.stringify(error, null, 2)),
+		}
+	);
 
 	const renderVehicleItem = ({ item }) => (
-		<VehicleItem
-			make={item.make}
-			model={item.model}
-			year={item.year}
-			vin={item.vin}
-			vehicleType={item.vehicleType}
-			id={item.id}
-		/>
+		<VehicleInfoCard item={item}/>
 	);
 
 	return (
-		<View style={styles.container}>
-			<View>
-				<QuoteProgress curStep={1} status={[false, false, false]} />
+		<SafeAreaView style={commonStyles.container}>
+			<View style={commonStyles.pageContainer}>
+				<QuoteProgress curStep={1} status={[true, false, false]} />
 				<Text>quote: select vehicle</Text>
+				<BtnDisplay title="New Vechicle" icon="add" left={true} onPress={
+                    () => navigation.navigate("AddVehicleManual",{...route})
+                }/>
 				{data != undefined && data.vehicles.length ? (
 					<RadioButton.Group
 						onValueChange={(newValue) => setSelectedVehicle(newValue)}
@@ -88,7 +89,7 @@ export default function QuoteVehicleScreen({ navigation, route }) {
 					selectedVehicle: selectedVehicle,
 				})}
 			/>
-		</View>
+		</SafeAreaView>
 	);
 }
 
