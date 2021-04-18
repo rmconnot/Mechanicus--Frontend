@@ -4,6 +4,7 @@ import { State } from "react-native-gesture-handler";
 import styles from "./Styles";
 import { gql, useLazyQuery } from "@apollo/client";
 import {colors, fonts, commonStyles} from '../../common/Style';
+import {BtnLarge} from '../../common/Buttons'
 
 /* <LoginScreen> */
 
@@ -80,17 +81,15 @@ export default function Login({ navigation }) {
 					}
 				/>
 			</View>
+			<BtnLarge   title = "Log In" onPress={handleLogin}/>
+			<TouchableOpacity 
+				style={styles.signUpBtn}
+				onPress={() => navigation.navigate("SignUp")}>
+				<Text style={styles.notificationText}>Does not have an account?</Text>
+				<Text style={styles.signUpText}>Sign up</Text>
+			</TouchableOpacity>
 			<TouchableOpacity>
 				<Text style={styles.forgot}>Forgot Password?</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
-				<Text style={styles.loginText}>LOGIN</Text>
-			</TouchableOpacity>
-			<TouchableOpacity
-				style={styles.signUpBtn}
-				onPress={() => navigation.navigate("SignUp")}
-			>
-				<Text style={styles.signUpText}>Signup</Text>
 			</TouchableOpacity>
 		</View>
 	);

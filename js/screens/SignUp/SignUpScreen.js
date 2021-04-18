@@ -3,6 +3,8 @@ import { Text, View, TextInput, TouchableOpacity, Alert } from "react-native";
 import styles from "./Styles";
 import { gql, useMutation } from "@apollo/client";
 import {colors, fonts, commonStyles} from '../../common/Style';
+import {BtnLarge} from '../../common/Buttons'
+import {Icon} from '../../common/Svg'
 
 const CUSTOMER_MUTATION = gql`
 	mutation($email: String!, $phone: String!, $password: String!) {
@@ -73,6 +75,11 @@ export const SignUpScreen = ({ navigation }) => {
 		}
 	};
 
+	const [status, onChangeStatus] = React.useState('false');
+	const changeStatus = () => {
+		onChangeStatus(!status);
+	};
+
 	return (
 		<View>
 			<Text style={styles.title}>Sign Up</Text>
@@ -129,9 +136,26 @@ export const SignUpScreen = ({ navigation }) => {
 					}
 				/>
 			</View>
-			<TouchableOpacity style={styles.registerBtn} onPress={handleSubmission}>
-				<Text style={styles.registerText}>Register as New User</Text>
-			</TouchableOpacity>
+
+			<View style={styles.policyContainer}>
+				
+				<TouchableOpacity
+					activeOpacity={0.6}
+					onPress={(e) => changeStatus()}
+					
+					>
+					<View 
+						style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}>
+							<Icon name='complete' color = {"white"} size = {16}/>
+					</View>
+
+				</TouchableOpacity>
+				<Text>
+					Click here to agree our terms and policies
+				</Text>
+			</View>
+			<BtnLarge   title = "Sign Up" onPress={handleSubmission}/>
+			
 			{/* <TouchableOpacity
 				style={styles.cancelBtn}
 				onPress={() => {
