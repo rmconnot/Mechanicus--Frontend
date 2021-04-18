@@ -35,8 +35,6 @@ import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
 import { test1Screen } from "./test1Screen";
 import { test2Screen } from "./test2Screen";
 
-// TEST MODULE
-import { TEST } from "./moduleTest";
 
 // =====
 // nav dependencies
@@ -51,7 +49,7 @@ const Stack = createStackNavigator();
 // connect to backend
 
 
-const IP = "192.168.0.5";
+const IP = "192.168.0.106";
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
 
@@ -88,8 +86,8 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="QuoteService">
-					<Stack.Screen name="test1" component={test1Screen} 						options={{
+				<Stack.Navigator initialRouteName="Profile">
+					<Stack.Screen name="test1" component={test1Screen} options={{
 							headerShown: false
 					  }}/>
 					<Stack.Screen name="test2" component={test2Screen} 						options={{
@@ -127,7 +125,9 @@ export default function App() {
 					/>
 					<Stack.Screen name="Schedule" component={ScheduleScreen} />
 
-					<Stack.Screen name="Profile" component={ProfileScreen} />
+					<Stack.Screen name="Profile" component={ProfileScreen} options={{
+							headerShown: false
+					  }}/>
 
 					<Stack.Screen name="QuoteVehicle" component={ QuoteVehicleScreen } />
 					<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />

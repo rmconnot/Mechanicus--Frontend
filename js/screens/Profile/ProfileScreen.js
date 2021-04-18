@@ -2,6 +2,9 @@ import * as React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import BottomNav from '../../common/BottomNav';
 import { gql, useQuery } from "@apollo/client";
+import styles from "./Styles";
+import {Icon} from '../../common/Svg'
+import { colors } from '../../common/Style';
 
 const CUSTOMER_QUERY = gql`
 	query($id: Int!) {
@@ -17,7 +20,7 @@ const CUSTOMER_QUERY = gql`
 
 /* <ProfileScreen> */
 export function ProfileScreen({ navigation, route }) {
-    const { currentUser } = route.params;
+    // const { currentUser } = route.params;
 
     const {data, loading, error} = useQuery(CUSTOMER_QUERY,{
         variables: {
@@ -31,34 +34,36 @@ export function ProfileScreen({ navigation, route }) {
     return (
         <View style={styles.container}> 
             <View>
-                <Text>{data.customerProfile.firstName}{data.customerProfile.lastName}</Text>
-                <View>
-                    <Text>info</Text>
+                <View style={styles.profileIcon}>
+                    <Icon name = "account" color = {colors.gray4} size = {56}/>
                 </View>
+                
+                <Text style={styles.userName}>{data.customerProfile.firstName} {data.customerProfile.lastName}</Text>
                 <View>
-                    <Text>Zipcode: {data.customerProfile.zipcode}</Text>
-                    <Text>Addresses: {data.customerProfile.streetAddress2} {data.customerProfile.streetAddress1}</Text>
+                    <Text style={styles.title}>info</Text>
+                </View>
+                <View style={styles.inputBox}>
+                    <Text style={styles.inputTextTitle}>Zipcode</Text>
+                    {/* <Text style={styles.inputTextContent}>{data.customerProfile.zipcode}</Text> */}
+                </View>
+                <View style={styles.inputBox}>
+                    <Text style={styles.inputTextTitle}>Addresses</Text>
+                    {/* <Text>{data.customerProfile.streetAddress2} {data.customerProfile.streetAddress1}</Text> */}
                 </View>
             </View>
 
             <View>
                 <View>
-                    <Text>Settings</Text>
+                    <Text style={styles.title}>Settings</Text>
                 </View>
-                <View>
-                    <Text>Notification</Text>
-                    <Text>About us</Text>
+                <View style={styles.inputBox}>
+                    <Text style={styles.inputTextTitle}>Notification</Text>
+                </View>
+                <View style={styles.inputBox}>
+                    <Text style={styles.inputTextTitle}>About us</Text>
                 </View>
             </View>
-            <BottomNav navigation={ navigation } activated = "Profile"/>
+            {/* <BottomNav navigation={ navigation } activated = "Profile"/> */}
         </View>
     );
 } 
-
-const styles = StyleSheet.create({
-	container: {
-        flex: 1,
-		justifyContent: "space-between",
-	},
-	
-});
