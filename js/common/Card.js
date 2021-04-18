@@ -277,7 +277,10 @@ export const QuoteCard = ({
 
 // APPOINTMENT, cards displayed in appointment list
 export const TaskCard = ({ navigation, item = sampleAppointment, route }) => {
-	const tagStyle = taskStatus[item.status];
+	const tagStyle = taskStatus[item.status] || {
+		color: colors.secondaryDark,
+		bgColor: colors.secondaryLight,
+	};
 	const { services, vehicle } = item.quote;
 
 	let serviceStr = get_service_string(services);

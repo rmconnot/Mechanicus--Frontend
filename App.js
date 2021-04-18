@@ -86,9 +86,7 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-
-				<Stack.Navigator initialRouteName="Profile">
-				<Stack.Navigator initialRouteName="test">
+				<Stack.Navigator initialRouteName="LogIn">
 					<Stack.Screen name="test1" component={test1Screen} 						options={{
 							headerShown: false
 					  }}/>

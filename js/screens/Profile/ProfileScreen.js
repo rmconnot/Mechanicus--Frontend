@@ -63,7 +63,10 @@ export function ProfileScreen({ navigation, route }) {
                     <Text style={styles.inputTextTitle}>About us</Text>
                 </View>
             </View>
-            {/* <BottomNav navigation={ navigation } activated = "Profile"/> */}
+            <View style={styles.bottom}>
+                <BottomNav navigation={ navigation } activated = "Account"/>
+            </View>
+            
         </View>
     );
 } 
