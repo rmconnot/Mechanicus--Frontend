@@ -94,6 +94,9 @@ export default function App() {
 					<Stack.Screen name="test2" component={test2Screen} 						options={{
 							headerShown: false
 					  }}/>
+					  <Stack.Screen name="test" component={TEST} 						options={{
+							headerShown: false
+					  }}/>
 					<Stack.Screen 
 						name="LogIn" 
 						component={LoginScreen} 
