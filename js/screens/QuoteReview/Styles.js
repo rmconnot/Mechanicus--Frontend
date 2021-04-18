@@ -8,10 +8,13 @@ export const styles = StyleSheet.create({
         flex: 1,
 		justifyContent: "space-between",
 	},
+    content: {
+        marginBottom: 36,
+    },
     row:{
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingHorizontal: 8,
-    }
+    },
+
 	
 });

@@ -88,11 +88,14 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="QuoteService">
+				<Stack.Navigator initialRouteName="test">
 					<Stack.Screen name="test1" component={test1Screen} 						options={{
 							headerShown: false
 					  }}/>
 					<Stack.Screen name="test2" component={test2Screen} 						options={{
+							headerShown: false
+					  }}/>
+					  <Stack.Screen name="test" component={TEST} 						options={{
 							headerShown: false
 					  }}/>
 					<Stack.Screen 
