@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
 	TextInput,
 	Text,
@@ -117,8 +117,8 @@ export default function TaskDetailPastScreen({ navigation, route }) {
 		},
 	});
 
-	if (loading) return <Text>Loading...</Text>;
-	if (error) return <Text>Oh no... {error.message}</Text>;
+    if (loading) return (<Text>Loading...</Text>);
+    if (error) return (<Text>Oh no... {error.message}</Text>);
 
 	// console.log(data.quote[0]);
 
@@ -152,6 +152,12 @@ export default function TaskDetailPastScreen({ navigation, route }) {
 					</Text>
 					<Text>{data.quote[0].vehicle.vin}</Text>
 					<Text>{data.quote[0].scheduleDate}</Text>
+				</View>
+				<View>
+					<Button
+						title="Cancel"
+						onPress={() => Alert.alert("jump to the cancel page")}
+					/>
 				</View>
 				<TaskProgress />
 			</View>

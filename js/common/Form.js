@@ -1,6 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { VehicleCard } from './Card';
+import React, { useEffect, useState } from "react";
+import {
+	View,
+	Text,
+	Button,
+	StyleSheet,
+	FlatList,
+	TouchableOpacity,
+	TextInput,
+	Checkbox,
+	Image
+} from "react-native";
+import {colors, fonts, commonStyles} from './Style';
+import {Icon} from './Svg';
 
 /* consts */
 const sampleOptions = [
@@ -17,10 +28,122 @@ const sampleOptions = [
 		value: "02",
 	},
 ];
+
+const sampleServiceList = [
+	{
+		id: "01",
+		type: "Vehicle Inspection",
+		price: 120,
+	},
+	{
+		id: "02",
+		type: "Oil change",
+		price: 100,
+		options: [
+			{
+				id: "02-1",
+				type: "synthetic oil",
+				price: 65,
+			},
+			{
+				id: "02-2",
+				type: "synthetic blends",
+				price: 70,
+			},
+			{
+				id: "02-3",
+				type: "high mileage oil",
+				price: 100,
+			},
+			{
+				id: "02-4",
+				type: "conventional oil",
+				price: 120,
+			},
+			
+		]
+	},
+	{
+		id: "03",
+		type: "Brake repair",
+		price: 90,
+	},
+	{
+		id: "04",
+		type: "Battery replacement",
+		price: 70,
+	},
+	{
+		id: "05",
+		type: "Battery Jump Service",
+		price: 20,
+	},
+];
+
 /*=============================*/
 
+/* <Input box> */
+class FormInputBox extends React.Component {
+	props: {
+		placeholder: String,
+		name: String,
+		title: String
+	};
+
+	state: {
+		email: "",
+		phone: "",
+		password: "",
+		confirmPassword: "",
+		verification:"",
+		address1:"",
+		address2:""
+    }
+	render() {
+		// console.log("TabNav active: ", this.props.title.toLowerCase());
+		let name = this.props.name
+		return (
+			<View>
+				<Text style={styles.inputText}>{this.props.title}</Text>
+				<TextInput
+					style={styles.inputBox}
+					placeholder={this.props.placeholder}
+					placeholderTextColor={colors.gray4}
+					autoCapitalize="none"
+					onChangeText={(text) =>
+						this.setState((prevState) => ({ ...prevState, name: text.trim() }))
+					}
+				/>
+			</View>
+		);
+	}
+}
+
+export function SignUpInput() {
+	
+	return (
+		<View style={styles.formGroup}>
+			<FormInputBox placeholder="    username@email.address" name="email" title="Email"/>
+			<FormInputBox placeholder="    123-456-7890" name="phone" title="Phone"/>
+			<FormInputBox placeholder="    8 digit numbers" name="password" title="Password"/>
+			<FormInputBox placeholder="    8 digit numbers" name="confirmPassword" title="Confirm password"/>
+		</View>
+	);
+}
+
+export function LogInInput() {
+	
+	return (
+		<View style={styles.formGroup}>
+			<FormInputBox placeholder="    username@email.address" name="email" title="Email"/>
+			<FormInputBox placeholder="    8 digit numbers" name="password" title="password"/>
+		</View>
+	);
+}
+
+
 /* <Checkbox> */
-export function Checkbox({
+export function CheckboxItem({
 	id = "test",
 	text = "option displayed",
 	checked = false,
@@ -50,79 +173,180 @@ export function ServiceCheckbox({
 	checked = false,
 	handleStatus = () => {}, //handle status change in checkboxes
 }) {
-    const [status, onChangeStatus] = useState(checked);
-    const changeStatus = () => {
-        handleStatus({checked: !status, id: id});
-        onChangeStatus(!status);
-    };
-    return (
-        <TouchableOpacity 
-        style={styles.checkboxContainer}
-        activeOpacity={0.6}
-        onPress={ e => changeStatus() }
-        > 
-            <Text>{text},{price}</Text>
-            <View style={[styles.checkboxMark,status?styles.checkboxMarkActive:""]}></View>
-        </TouchableOpacity>
-    );
-} 
+	const [status, onChangeStatus] = React.useState(checked);
+	const changeStatus = () => {
+		handleStatus({ checked: !status, id: id });
+		onChangeStatus(!status);
+	};
+	return (
+		<TouchableOpacity
+			style={[commonStyles.shadowDefault, status? styles.checkboxContainerActive: styles.checkboxContainer]}
+			activeOpacity={0.6}
+			onPress={(e) => changeStatus()}
+		>
+			<Text style={styles.serviceText}>
+				{text}
+			</Text>
+			<View style={styles.leftPart}> 
+			<View style={styles.leftPart1}>
+				<Icon name='money' color = {colors.primaryDark} size={24}/>
+				<Text style={styles.servicePrice}>{price}</Text>
+			</View>
 
-export function CheckboxGroup({
-    selections = [],//stored ids of checked item
-    options = sampleOptions,
-    handleSelections,
-}) {    
-
-    const renderItem = ({item}) => {
-        return (
-            <ServiceCheckbox 
-            id={item.id} 
-            text={item.type} 
-            price={item.price} 
-            checked={selections.includes(item.id)} 
-            handleStatus={handleSelections}
-            />
-        );
-    };
-    return (
-        <View>
-            <FlatList 
-            data={options}
-            renderItem={renderItem}
-            keyExtractor={item => String(item.id) }
-            />
-        </View>
-    );
+			<View style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}/>
+			</View>
+			
+		</TouchableOpacity>
+	);
 }
 
-/* <Radio> */
-//radio selections
-export function VehicleRadio({
-    options = [],
-    selected = "",
-    handleSelection = () => {}
-}){
-    const renderItem = ({item}) => {
-        return (
-            <TouchableOpacity
-            style={
-                item.id == selected? styles.radioSelected: ""
-            }
-            activeOpacity={0.6}
-            onPress={ e => handleSelection(item.id) }>
-                <VehicleCard item={item} />
-            </TouchableOpacity>
-        );
-    };
-    return (
-        <View>
-            <FlatList 
-            data={options}
-            renderItem={renderItem}
-            keyExtractor={item => String(item.id) }
-            />
-        </View>
-    );
+export function SubOptions({
+	checked = false,
+	item = sampleServiceList[1],
+	handleStatus = () => {}, //handle status change in checkboxes
+}) {
+
+	const [status, onChangeStatus] = React.useState(checked);
+	const changeStatus = () => {
+		onChangeStatus(!status);
+	};
+	
+	const renderSubItem = ({ item }) => {
+		return (
+			<View>
+				<ServiceCheckbox
+					id={item.id}
+					text={item.type}
+					price={item.price}
+					checked={item.checked}
+					handleStatus={handleStatus}
+				/>
+			</View>
+
+		);
+	};
+	return (
+		<View>
+		<TouchableOpacity
+			style={[commonStyles.shadowDefault, status? styles.checkboxContainerActive: styles.checkboxContainer]}
+			activeOpacity={0.6}
+			onPress={(e) => changeStatus()}
+		>
+			<Text style={styles.serviceText}>
+				{item.type}
+			</Text>
+			<View style={styles.leftPart}> 
+			<View style={styles.leftPart1}>
+				<Icon name='money' color = {colors.primaryDark} size={24}/>
+				<Text style={styles.servicePrice}>{item.price}</Text>
+			</View>
+
+			<View style={styles.checkboxMark}/>
+			</View>
+			
+		</TouchableOpacity>
+		<FlatList
+			data={item.options}
+			renderItem={renderSubItem}
+			keyExtractor={(item) => item.id.toString()}
+			style={status?styles.showFlatList:styles.hideFlatList}
+			extraData={status}
+			/>
+		</View>
+	);
+
+}
+
+
+
+export function CheckboxGroup({
+	options = sampleServiceList,
+	handleCheckedServices,
+	Menuchecked = false
+}) {
+	const initSelections = () => {
+		let result = [];
+		options.forEach((item) => {
+			if (item.checked) result.push(item.id);
+		});
+		return result;
+	};
+
+	const [Menustatus, onChangeMenuStatus] = React.useState(Menuchecked);
+	const changeMenuStatus = () => {
+		onChangeMenuStatus(!Menustatus);
+	};
+
+	//selections: stored ids of checked options
+	const [selections, onChangeSelections] = React.useState(
+		initSelections(options)
+	);
+	const handleStatus = (item) => {
+		let temp = selections.slice();
+		let index = selections.indexOf(item.id);
+		//if item is not checked and exist in selections, remove it from selections
+		if (!item.checked && index != -1) {
+			if (item.id == "02") {
+				changeMenuStatus();
+				console.log("menu status not checked", Menustatus);
+				temp.splice(index, 1);
+				onChangeSelections(temp);
+			}
+			temp.splice(index, 1);
+			onChangeSelections(temp);
+		} //if item is checked and not in selections, add it in
+		else if (item.checked && index == -1) {
+			if (item.id == "02") {
+				changeMenuStatus();
+				console.log("menu status checked", Menustatus);
+				temp.push(item.id);
+				onChangeSelections(temp);
+			}
+			temp.push(item.id);
+			onChangeSelections(temp);
+		}
+	};
+
+	
+	const renderItem = ({ item }) => {
+		if (item.options && Menustatus) {
+			return (
+			<View>
+				<SubOptions options={item}/> 
+			</View>
+			);
+		}
+		return (
+			<ServiceCheckbox
+				id={item.id}
+				text={item.type}
+				price={item.price}
+				checked={item.checked}
+				handleStatus={handleStatus}
+	
+			/>
+		);
+	};
+
+
+	useEffect(() => {
+		console.log("selections: ", selections);
+		if (selections) {
+			handleCheckedServices(selections);
+		}
+	});
+
+	return (
+		<View>
+			<FlatList
+				data={options}
+				renderItem={renderItem}
+				keyExtractor={(item) => item.id.toString()}
+				style={styles.flatListContainer}
+			/>
+
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
@@ -130,42 +354,83 @@ const styles = StyleSheet.create({
 	checkboxContainer: {
 		width: "100%",
 		flexDirection: "row",
-		margin: 4,
+		marginBottom: 20,
 		padding: 8,
 		justifyContent: "space-between",
 		alignItems: "center",
+		backgroundColor: 'white',
+		padding: 20, 
+		borderRadius: 8,
+
+	},
+	checkboxContainerActive: {
+		width: "100%",
+		flexDirection: "row",
+		marginBottom: 20,
+		padding: 8,
+		justifyContent: "space-between",
+		alignItems: "center",
+		backgroundColor: 'white',
+		padding: 20, 
+		borderRadius: 8,
+		borderColor: colors.primaryDark,
+		borderWidth: 1
+
+	},
+	hideFlatList: {
+		opacity: 0, 
+		height: 0
+	},
+	showFlatList: {
+		width: "90%",
+		marginLeft: 35
+	},
+	flatListContainer: {
+		width: "95%",
+		paddingLeft: 20
 	},
 	checkboxMark: {
-		width: 24,
-		height: 24,
-		borderColor: "#666",
-		borderWidth: 1,
+		width: 16,
+		height: 16,
+		borderColor: colors.primaryDark,
+		borderWidth: 2,
+		borderRadius: 2,
 		margin: 4,
 	},
 	checkboxMarkActive: {
-		backgroundColor: "#666",
+		backgroundColor: colors.primaryDark,
 	},
-    checkboxContainer: {
-        width: "100%",
-        flexDirection: "row",
-        margin: 4,
-        padding: 8,
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    checkboxMark: {
-        width: 24,
-        height: 24,
-        borderColor: "#666",
-        borderWidth: 1,
-        margin: 4,
-    },
-    checkboxMarkActive: {
-        backgroundColor: "#666"
-    },
-    radioSelected: {
-        borderWidth: 2,
-        borderColor: "black",
-    }
-    
+	serviceText:{
+		fontSize:fonts.body,
+		color: colors.text,
+	},
+	servicePrice:{
+		fontSize: fonts.h3,
+		color: colors.text,
+	},
+	leftPart:{
+		flexDirection:'row'
+	},
+	leftPart1:{
+		flexDirection:'row',
+		paddingRight: 14
+	},
+	inputBox: {
+		borderStyle: "solid",
+		backgroundColor: 'white',
+		paddingVertical: 12,
+		marginHorizontal: 60,
+		marginBottom: 40,
+		borderRadius: 4,
+	},
+	inputText: {
+		paddingLeft: 60,
+		fontSize: fonts.body,
+		color: colors.text
+	},
+	formGroup: {
+		display:"flex",
+	},
+
+
 });

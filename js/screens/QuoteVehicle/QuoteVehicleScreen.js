@@ -62,8 +62,6 @@ export default function QuoteVehicleScreen({ navigation, route }) {
 		/>
 	);
 
-	console.log("data: ", data);
-
 	return (
 		<View style={styles.container}>
 			<View>
