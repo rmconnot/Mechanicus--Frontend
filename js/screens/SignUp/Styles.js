@@ -73,7 +73,25 @@ const styles = StyleSheet.create({
   cancelText:{
     color:"#fff",
     fontSize:16
-  }
+  },
+  checkboxMark: {
+		width: 16,
+		height: 16,
+		borderColor: colors.primaryDark,
+		borderWidth: 2,
+		borderRadius: 2,
+    justifyContent:'center'
+	},
+	checkboxMarkActive: {
+		backgroundColor: colors.primaryDark,
+    alignItems:'center'
+	},
+  policyContainer: {
+    flexDirection:'row',
+    paddingBottom:48,
+    alignContent:'center',
+    justifyContent:'center',
+  },
 });
 
 export default styles;

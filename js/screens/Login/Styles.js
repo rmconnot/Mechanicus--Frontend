@@ -41,41 +41,24 @@ const styles = StyleSheet.create({
   },
 
   forgot:{
-    color:"white",
-    fontSize:12
+    color: colors.text,
+    fontSize: fonts.note,
+    textAlign:'center'
   },
-  loginBtn:{
-    width:"80%",
-    borderRadius:25,
-    borderWidth: 2.5,
-    borderColor: "#fff",
-    backgroundColor: "#fff",
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
-  },
+
   signUpBtn:{
-    width:"80%",
-    backgroundColor:"#7ad7f0",
-    borderRadius:25,
-    borderWidth: 2.5,
-    borderColor: "#fff",
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
+    flexDirection:'row',
+    justifyContent:'center',
+    paddingTop:13
   },
-  loginText:{
-    color:"#7ad7f0",
-    fontSize:16
+  notificationText:{
+    color:colors.text,
+    fontSize:fonts.note
   },
   signUpText:{
-    color:"#fff",
-    fontSize:16
-  }
+    color:colors.primaryDark,
+    fontSize:fonts.note
+  },
 });
 
 export default styles;

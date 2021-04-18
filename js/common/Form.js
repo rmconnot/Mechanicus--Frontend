@@ -143,29 +143,6 @@ export function LogInInput() {
 
 
 /* <Checkbox> */
-export function CheckboxItem({
-	id = "test",
-	text = "option displayed",
-	checked = false,
-	handleStatus = () => {}, //handle status change in checkboxes
-}) {
-    const [status, onChangeStatus] = useState(checked);
-    const changeStatus = () => {
-        handleStatus({checked: !status, id: id});
-        onChangeStatus(!status);
-    };
-    return (
-        <TouchableOpacity 
-        style={styles.checkboxContainer}
-        activeOpacity={0.6}
-        onPress={ e => changeStatus() }
-        > 
-            <Text>{text}</Text>
-            <View style={[styles.checkboxMark,status?styles.checkboxMarkActive:""]}></View>
-        </TouchableOpacity>
-    );
-} 
-
 export function ServiceCheckbox({
 	id = "test",
 	text = "option displayed",
@@ -178,6 +155,7 @@ export function ServiceCheckbox({
 		handleStatus({ checked: !status, id: id });
 		onChangeStatus(!status);
 	};
+	const icon = status? <Icon name={"complete"} color={"white"}/>: <Text></Text>;
 	return (
 		<TouchableOpacity
 			style={[commonStyles.shadowDefault, status? styles.checkboxContainerActive: styles.checkboxContainer]}
@@ -188,18 +166,20 @@ export function ServiceCheckbox({
 				{text}
 			</Text>
 			<View style={styles.leftPart}> 
-			<View style={styles.leftPart1}>
-				<Icon name='money' color = {colors.primaryDark} size={24}/>
-				<Text style={styles.servicePrice}>{price}</Text>
-			</View>
-
-			<View style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}/>
+				<View style={styles.leftPart1}>
+					<Icon name='money' color = {colors.primaryDark} size={24}/>
+					<Text style={styles.servicePrice}>{price}</Text>
+				</View>
+				<View style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}>
+					<Icon name={"complete"} color={"white"}/>
+				</View>
 			</View>
 			
 		</TouchableOpacity>
 	);
 }
 
+//suboptions for oil change
 export function SubOptions({
 	checked = false,
 	item = sampleServiceList[1],
@@ -396,6 +376,8 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderRadius: 2,
 		margin: 4,
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	checkboxMarkActive: {
 		backgroundColor: colors.primaryDark,

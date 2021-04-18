@@ -11,6 +11,7 @@ import {
 	StyleSheet,
 } from "react-native";
 import { colors, commonStyles } from "./Style";
+import { Icon } from "./Svg";
 
 
 export const BtnSmall = ({
@@ -57,7 +58,7 @@ export const BtnLarge = ({
 //btn that is large with round sides
 export const BtnDisplay = ({
     title = "Get A Quote",
-    iconSrc = require("../../assets/arrow_right_24px.png"),
+    icon = "add",
     onPress = ()=>{},
 }) => {
     return (
@@ -66,7 +67,22 @@ export const BtnDisplay = ({
         onPress={onPress}
         >
             <Text style={[commonStyles.body, styles.capitalize]}>{title}</Text>
-            <Image source={ iconSrc }/>
+            <Icon color={"white"} size={24} name={icon}/>
+        </TouchableOpacity>
+    );
+    
+};
+
+export const BtnBare = ({
+    title = "Edit",
+    onPress = ()=>{},
+}) => {
+    return (
+        <TouchableOpacity
+        onPress={onPress}
+        >
+            <Text style={[commonStyles.body, styles.capitalize, {color: colors.primaryDark}]}>{title}</Text>
+            
         </TouchableOpacity>
     );
     

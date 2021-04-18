@@ -82,22 +82,30 @@ export const Tag = ({
 
 //only displays vehicle information, for quotes and appointment details
 export const VehicleInfoCard = ({
-	item = sampleAppointment.quote.vehicle, //vehicle data object
+	item, //vehicle data object
 }) => {
+	if(item){
+		return (
+			<View style={[commonStyles.card, commonStyles.cardBody]}>
+				<View style={[styles.col_A, styles.imgContainer]}>
+					<Image style={styles.vehicleImg} source={{ uri: item.imgUrl }} />
+				</View>
+				<View style={styles.col_B}>
+					<Text style={commonStyles.h3}>
+						{item.make} {item.model}
+					</Text>
+					<Text style={commonStyles.body}>{item.year}</Text>
+					<Text style={[commonStyles.cap2, { marginTop: 12 }]}>
+						VIN {item.vin}
+					</Text>
+				</View>
+			</View>
+		);
+	} 
+	
 	return (
 		<View style={[commonStyles.card, commonStyles.cardBody]}>
-			<View style={[styles.col_A, styles.imgContainer]}>
-				<Image style={styles.vehicleImg} source={{ uri: item.imgUrl }} />
-			</View>
-			<View style={styles.col_B}>
-				<Text style={commonStyles.h3}>
-					{item.make} {item.model}
-				</Text>
-				<Text style={commonStyles.body}>{item.year}</Text>
-				<Text style={[commonStyles.cap2, { marginTop: 12 }]}>
-					VIN {item.vin}
-				</Text>
-			</View>
+			<Text style={[commonStyles.body, {color:colors.gray4}]}>No Vehicle</Text>
 		</View>
 	);
 };
@@ -136,6 +144,7 @@ export const ServiceInfoCard = ({
 		});
 		return total;
 	};
+	if(item){
 	return (
 		<View style={commonStyles.card}>
 			<FlatList data={item} renderItem={renderItem} />
@@ -143,6 +152,12 @@ export const ServiceInfoCard = ({
 				<Text style={commonStyles.body}>Total Price </Text>
 				<Text style={commonStyles.h3}> {get_cost()}</Text>
 			</View>
+		</View>
+	);}
+
+	return (
+		<View style={commonStyles.card}>
+			<Text>No services selected</Text>
 		</View>
 	);
 };
@@ -262,7 +277,10 @@ export const QuoteCard = ({
 
 // APPOINTMENT, cards displayed in appointment list
 export const TaskCard = ({ navigation, item = sampleAppointment, route }) => {
-	const tagStyle = taskStatus[item.status];
+	const tagStyle = taskStatus[item.status] || {
+		color: colors.secondaryDark,
+		bgColor: colors.secondaryLight,
+	};
 	const { services, vehicle } = item.quote;
 
 	let serviceStr = get_service_string(services);

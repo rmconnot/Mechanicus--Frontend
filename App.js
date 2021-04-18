@@ -35,9 +35,6 @@ import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
 import { test1Screen } from "./test1Screen";
 import { test2Screen } from "./test2Screen";
 
-// TEST MODULE
-// import { TEST } from "./moduleTest";
-
 // =====
 // nav dependencies
 import { NavigationContainer } from "@react-navigation/native";
@@ -88,7 +85,7 @@ export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName="AddVehicleManual">
+				<Stack.Navigator initialRouteName="LogIn">
 					<Stack.Screen name="test1" component={test1Screen} 						options={{
 							headerShown: false
 					  }}/>
@@ -127,7 +124,9 @@ export default function App() {
 					/>
 					<Stack.Screen name="Schedule" component={ScheduleScreen} />
 
-					<Stack.Screen name="Profile" component={ProfileScreen} />
+					<Stack.Screen name="Profile" component={ProfileScreen} options={{
+							headerShown: false
+					  }}/>
 
 					<Stack.Screen name="QuoteVehicle" component={ QuoteVehicleScreen } />
 					<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />
