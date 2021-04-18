@@ -81,7 +81,7 @@ export default function QuoteServiceScreen({ navigation, route }) {
 	return (
 		<View style={styles.container}>
 			<View>
-				<QuoteProgress curStep={2} status={[true, false, false]} />
+				<QuoteProgress curStep={2} status={[true, true, false]} />
 				<CheckboxGroup
 					options={data ? data.services : emptyServiceList}
 					handleCheckedServices={handleCheckedServices}

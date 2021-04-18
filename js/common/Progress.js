@@ -9,8 +9,11 @@ const ProgressDot = ({
     done = false,
     label = "step",
 }) => {
-    let textStyle = active? {color: colors.primaryDark} : {color: colors.gray3};
-    let dotStyle = active? [styles.dot, styles.dotActive, commonStyles.shadowThemeFloat]:styles.dot;
+    let textStyle = done? {color: colors.primaryDark} : {color: colors.gray3};
+    let dotStyle = done? [styles.dot, styles.dotActive]:[styles.dot];
+    if(active){
+        dotStyle.push(commonStyles.shadowThemeFloat);
+    }
     return (
         <View style={styles.dotContainer}>
             <View style={dotStyle}>
