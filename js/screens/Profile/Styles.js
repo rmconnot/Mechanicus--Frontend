@@ -43,6 +43,9 @@ const styles = StyleSheet.create({
 		fontSize: fonts.note,
 		color: colors.text
 	},
+  bottom: {
+    paddingTop:110
+  }
 });
 
 export default styles;
