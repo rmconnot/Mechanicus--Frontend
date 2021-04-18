@@ -20,12 +20,12 @@ const imageURL = {
 	line: "./images/line.png",
 };
 
-const QUOTE_QUERY = gql`
-	query($customerID: Int!) {
-		quote(customerID: $customerID) {
+const APPOINTMENT_QUERY = gql`
+	query($appointmentID: Int!) {
+		appointment(appointmentID: $appointmentID) {
 			scheduleDate
 			status
-			mechanician {
+			mechanic {
 				firstName
 				lastName
 				phone
@@ -38,10 +38,8 @@ const QUOTE_QUERY = gql`
 				vin
 			}
 			services {
-				service {
-					type
-					price
-				}
+				type
+				price
 			}
 		}
 	}
@@ -110,12 +108,12 @@ const sampleQuotes = [
 ];
 
 export default function TaskDetailPastScreen({ navigation, route }) {
-	const { currentUser } = route.params;
-	console.log(currentUser);
+	const { appointmentID } = route.params;
+	console.log("Entering"+appointmentID);
 
-	const { loading, data, error } = useQuery(QUOTE_QUERY, {
+	const { loading, data, error } = useQuery(APPOINTMENT_QUERY, {
 		variables: {
-			customerID: 1,
+			appointmentID: appointmentID,
 		},
 	});
 

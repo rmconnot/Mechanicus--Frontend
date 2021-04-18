@@ -33,7 +33,7 @@ import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 import ProfileScreen from "./js/screens/Profile/ProfileScreen";
 
 // TEST MODULE
-import TEST from "./moduleTest";
+// import TEST from "./moduleTest";
 
 // =====
 // nav dependencies
@@ -110,7 +110,7 @@ export default function App() {
 					<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
 
 					{/* for test */}
-					<Stack.Screen name="test" component={TEST} />
+					{/*<Stack.Screen name="test" component={TEST} />*/}
 				</Stack.Navigator>
 			</NavigationContainer>
 		</ApolloProvider>

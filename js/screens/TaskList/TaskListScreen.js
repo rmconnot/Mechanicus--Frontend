@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	View,
 	Text,
@@ -77,6 +77,7 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 		newAppointment(customerID: $customerID) {
 			id
 			scheduleDate
+			status
 			quote{
 				vehicle {
 					id
@@ -90,6 +91,11 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 					price,
 				}
 			}
+			mechanic{
+				firstName
+				lastName
+				phone
+			}
 		}
 	}
 `;
@@ -99,6 +105,7 @@ const APPOINTMENTS_QUERY = gql`
 		appointments(customerID: $customerID) {
 			id
 			scheduleDate
+			status
 			quote{
 				vehicle {
 					id
@@ -111,6 +118,11 @@ const APPOINTMENTS_QUERY = gql`
 					type,
 					price,
 				}
+			}
+			mechanic{
+				firstName
+				lastName
+				phone
 			}
 		}
 	}
@@ -162,17 +174,17 @@ const QUOTES_QUERY = gql`
 
 export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
-	// console.log(currentUser);
+	console.log(currentUser);
 	const [displayType, setDisplayType] = useState("task");
   
   	const renderItemPast = ({item}) => {
 		return (
-			<TaskCard item={item} navigation={navigation} to="TaskDetailPast"/>
+			<TaskCard item={item} navigation={navigation} route={route} to="TaskDetailPast"/>
 		);
 	};
 	const renderItemPresent = ({item}) => {
 		return (
-			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent"/>
+			<TaskCard item={item} navigation={navigation} route={route} to="TaskDetailPresent"/>
 		);
 	};
 
@@ -216,7 +228,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<View style={styles.main}>
+			<ScrollView style={styles.main}>
 				<View style={styles.tabContainer}>
 					<TouchableOpacity style={displayType == "task" ? styles.switchBtnActive : styles.switchBtn} onPress={switchToTask}>
 						<Text style={displayType == "task" ? styles.tabActive : styles.tab}>Tasks</Text>
@@ -234,7 +246,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 				<View>
 					<Text>Upcoming appointments</Text>
 					{data ? (
-						<FlatList data={data.appointments} renderItem={renderItemPresent} />
+						<FlatList data={data.appointments} renderItem={renderItemPresent} scrollEnabled={false} />
 					) : (
 						<Text>No upcoming appointments</Text>
 					)}
@@ -243,12 +255,12 @@ export const TaskListScreen = ({ navigation, route }) => {
 					<Text>Past appointments</Text>
 					<Text>March</Text>
 					{data ? (
-						<FlatList data={data.appointments} renderItem={renderItemPast} />
+						<FlatList data={data.appointments} renderItem={renderItemPast} scrollEnabled={false} />
 					) : (
 						<Text>No past appointments</Text>
 					)}
 				</View>
-			</View>
+			</ScrollView>
 			<BottomNav navigation={navigation} />
 		</SafeAreaView>
 	);

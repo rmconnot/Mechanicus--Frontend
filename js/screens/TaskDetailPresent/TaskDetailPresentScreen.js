@@ -20,25 +20,25 @@ const imageURL = {
 	line: "./images/line.png",
 };
 
-const QUOTE_QUERY = gql`
-	query($customerID: Int!) {
-		quote(customerID: $customerID) {
+const APPOINTMENT_QUERY = gql`
+	query($appointmentID: Int!) {
+		appointment(appointmentID: $appointmentID) {
 			scheduleDate
 			status
-			mechanician {
+			mechanic {
 				firstName
 				lastName
 				phone
 			}
-			vehicle {
-				year
-				make
-				model
-				imgUrl
-				vin
-			}
-			services {
-				service {
+			quote {
+				vehicle {
+					year
+					make
+					model
+					imgUrl
+					vin
+				}
+				services {
 					type
 					price
 				}
@@ -62,7 +62,7 @@ const sampleQuotes = [
 				type: "Oil change",
 			},
 		],
-		mechanician: {
+		mechanic: {
 			firstName: "Michael",
 			lastName: "Williams",
 			phone: "123-456-7890",
@@ -92,12 +92,12 @@ const sampleQuotes = [
 				type: "Oil change",
 			},
 		],
-		mechanicianID: {
+		mechanic: {
 			firstName: "Bill",
 			lastName: "Davis",
 			phone: "123-456-7890",
 		},
-		vehicleID: {
+		vehicle: {
 			vin: "1122334455",
 			vehicleType: "Truck",
 			year: 2005,
@@ -110,19 +110,21 @@ const sampleQuotes = [
 ];
 
 export default function TaskDetailPresentScreen({ navigation, route }) {
-	const { currentUser } = route.params;
-	console.log(currentUser);
+	const { appointmentID } = route.params;
+	console.log(appointmentID);
 
-	const { loading, data, error } = useQuery(QUOTE_QUERY, {
+	const { loading, data, error } = useQuery(APPOINTMENT_QUERY, {
 		variables: {
-			customerID: 1,
+			appointmentID: appointmentID,
 		},
 	});
+
+	console.log(data);
+	// data = data.appointment;
 
 	if (loading) return <Text>Loading...</Text>;
 	if (error) return <Text>Oh no... {error.message}</Text>;
 
-	// console.log(data.quote[0]);
 
 	var serviceTypeList = [];
 	var servicePriceList = [];
@@ -130,10 +132,10 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 	var totalPrice = 0;
 
 	// extract service type and price from the object
-	for (let i = 0; i < data.quote[0].services.length; i++) {
-		serviceTypeList.push(data.quote[0].services[i].service.type);
-		servicePriceList.push(data.quote[0].services[i].service.price);
-		totalPrice += data.quote[0].services[i].service.price;
+	for (let i = 0; i < data.appointment.quote.services.length; i++) {
+		serviceTypeList.push(data.appointment.quote.services[i].type);
+		servicePriceList.push(data.appointment.quote.services[i].price);
+		totalPrice += data.appointment.quote.services[i].price;
 	}
 
 	for (let i = 0; i < serviceTypeList.length; i++) {
@@ -150,10 +152,10 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 			<View>
 				<View>
 					<Text>
-						{data.quote[0].vehicle.make}, {data.quote[0].vehicle.year}
+						{data.appointment.quote.vehicle.make}, {data.appointment.quote.vehicle.year}
 					</Text>
-					<Text>{data.quote[0].vehicle.vin}</Text>
-					<Text>{data.quote[0].scheduleDate}</Text>
+					<Text>{data.appointment.quote.vehicle.vin}</Text>
+					<Text>{data.appointment.scheduleDate}</Text>
 				</View>
 				<View>
 					<Button
@@ -166,20 +168,19 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 			<View>
 				<Text style={commonStyles.sectionTitle}>Mechanician</Text>
 				<View style={commonStyles.row}>
-					<Text>Name</Text>
+					<Text>Name: </Text>
 					<Text>
-						{data.quote[0].mechanician.firstName}
-						{data.quote[0].mechanician.lastName}
+						{data.appointment.mechanic.firstName} {data.appointment.mechanic.lastName}
 					</Text>
 				</View>
 				<View style={commonStyles.row}>
-					<Text>Phone</Text>
-					<Text> {data.quote[0].mechanician.phone}</Text>
+					<Text>Phone: </Text>
+					<Text> {data.appointment.mechanic.phone}</Text>
 				</View>
 			</View>
 			<View>
 				<Text style={commonStyles.sectionTitle}>Vehicle</Text>
-				<VehicleCard item={data ? data.quote[0] : sampleQuotes} />
+				<VehicleCard item={ data.appointment.quote.vehicle } />
 			</View>
 
 			<View>

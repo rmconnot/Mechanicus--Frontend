@@ -171,6 +171,7 @@ export class TaskCard extends React.Component {
 	static defaultProps = {
 		item: Object,
 		navigation: Object,
+        route: Object,
 		to: String,
 	};
 
@@ -231,7 +232,7 @@ export class TaskCard extends React.Component {
 				style={[commonStyles.card, commonStyles.shadowDefault]}
 				onPress={(e) =>
 					this.props.navigation.navigate(to, {
-						currentUser: currentUser,
+						appointmentID: item.id,
 					})
 				}
 			>
