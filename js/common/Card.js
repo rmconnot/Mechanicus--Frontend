@@ -236,7 +236,7 @@ export const QuoteCard = ({
 		<TouchableOpacity
 			style={[commonStyles.card, commonStyles.shadowDefault]}
 			onPress={(e) =>
-				this.props.navigation.navigate("QuoteDetail", {
+				navigation.navigate("QuoteDetail", {
 					...route,
 					quote: item,
 				})
@@ -277,7 +277,10 @@ export const QuoteCard = ({
 
 // APPOINTMENT, cards displayed in appointment list
 export const TaskCard = ({ navigation, item = sampleAppointment, route }) => {
-	const tagStyle = taskStatus[item.status];
+	const tagStyle = taskStatus[item.status] || {
+		color: colors.secondaryDark,
+		bgColor: colors.secondaryLight,
+	};
 	const { services, vehicle } = item.quote;
 
 	let serviceStr = get_service_string(services);
@@ -290,9 +293,9 @@ export const TaskCard = ({ navigation, item = sampleAppointment, route }) => {
 		<TouchableOpacity
 			style={[commonStyles.card, commonStyles.shadowDefault]}
 			onPress={(e) =>
-				navigation.navigate("TaskDetail", {
+				navigation.navigate("TaskDetailPresent", {
 					...route,
-					appointment: item,
+					appointmentID: item.id,
 				})
 			}
 		>

@@ -22,7 +22,7 @@ import QuoteCompleteScreen from "./js/screens/QuoteComplete/QuoteCompleteScreen"
 // SCREENS-TASK
 
 import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
-import TaskDetailPastScreen from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
+import QuoteDetailScreen from "./js/screens/QuoteDetail/QuoteDetailScreen";
 import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
 import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
@@ -36,7 +36,7 @@ import { test1Screen } from "./test1Screen";
 import { test2Screen } from "./test2Screen";
 
 // TEST MODULE
-// import TEST from "./moduleTest";
+import { TEST } from "./moduleTest";
 
 // =====
 // nav dependencies
@@ -113,8 +113,8 @@ export default function App() {
 
 					<Stack.Screen name="TaskList" component={TaskListScreen} />
 					<Stack.Screen
-						name="TaskDetailPast"
-						component={TaskDetailPastScreen}
+						name="QuoteDetail"
+						component={QuoteDetailScreen}
 					/>
 					<Stack.Screen
 						name="TaskDetailPresent"

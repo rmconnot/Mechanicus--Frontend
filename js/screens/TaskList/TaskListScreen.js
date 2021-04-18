@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import BottomNav from "../../common/BottomNav";
 import { gql, useQuery } from "@apollo/client";
-import { TaskCard } from "../../common/Card";
+import { TaskCard, QuoteCard } from "../../common/Card";
 import { styles } from "./Styles";
 
 const sampleQuotes = [
@@ -135,6 +135,7 @@ const QUOTES_QUERY = gql`
 			services {
 				id
 				type
+				price
 			}
 			vehicle {
 				id
@@ -142,6 +143,7 @@ const QUOTES_QUERY = gql`
 				model
 				year
 				vehicleType
+				imgUrl
 			}
 			costEstimate
 			createdAt
@@ -156,6 +158,7 @@ const QUOTES_SUBSCRIPTION = gql`
 			services {
 				id
 				type
+				price
 			}
 			vehicle {
 				id
@@ -163,6 +166,7 @@ const QUOTES_SUBSCRIPTION = gql`
 				model
 				year
 				vehicleType
+				imgUrl
 			}
 			costEstimate
 			createdAt
@@ -177,16 +181,18 @@ export const TaskListScreen = ({ navigation, route }) => {
 	console.log(currentUser);
 	const [displayType, setDisplayType] = useState("task");
   
-  	const renderItemPast = ({item}) => {
-		return (
-			<TaskCard item={item} navigation={navigation} route={route} to="TaskDetailPast"/>
-		);
-	};
 	const renderItemPresent = ({item}) => {
 		return (
 			<TaskCard item={item} navigation={navigation} route={route} to="TaskDetailPresent"/>
 		);
 	};
+
+	const renderItemQuotes = ({item}) => {
+		console.log('this is');
+		return (
+			<QuoteCard item={item} navigation={navigation} route={route} to="QuoteDetail"/>
+		);
+	}
 
 	const { subscribeToMore, data, error, loading } = useQuery(
 		APPOINTMENTS_QUERY,
@@ -197,11 +203,13 @@ export const TaskListScreen = ({ navigation, route }) => {
 	);
 
 	const switchToTask = () => {
-
+		setDisplayType("task");
+		console.log(data.appointments);
 	};
 
 	const switchToQuote = () => {
-		
+		setDisplayType("quote");
+		console.log(data.quotes);
 	};
 
 	const {
@@ -276,20 +284,11 @@ export const TaskListScreen = ({ navigation, route }) => {
 					}
 				/>
 				<View>
-					<Text>Upcoming appointments</Text>
+					<Text>{displayType == "task" ? "Appointments" : "Quotes"}</Text>
 					{data ? (
-						<FlatList data={data.appointments} renderItem={renderItemPresent} scrollEnabled={false} />
+						<FlatList data={displayType == "task" ? data.appointments : quoteData.quotes} renderItem={displayType == "task" ? renderItemPresent : renderItemQuotes} />
 					) : (
 						<Text>No upcoming appointments</Text>
-					)}
-				</View>
-				<View>
-					<Text>Past appointments</Text>
-					<Text>March</Text>
-					{data ? (
-						<FlatList data={data.appointments} renderItem={renderItemPast} scrollEnabled={false} />
-					) : (
-						<Text>No past appointments</Text>
 					)}
 				</View>
 			</View>

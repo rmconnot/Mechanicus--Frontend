@@ -10,7 +10,7 @@ import {
 	Button,
 } from "react-native";
 import { TaskProgress } from "../../common/Progress";
-import { VehicleCard } from "../../common/Card";
+import { VehicleInfoCard } from "../../common/Card";
 import { commonStyles } from "../../common/commonStyles";
 import { styles } from "./Styles";
 import { gql, useQuery } from "@apollo/client";
@@ -142,7 +142,7 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 		renderList.push(
 			<View key={i} style={[commonStyles.row, commonStyles.spaceBetween]}>
 				<Text>{serviceTypeList[i]}</Text>
-				<Text> {servicePriceList[i]}</Text>
+				<Text>$ {servicePriceList[i]}</Text>
 			</View>
 		);
 	}
@@ -180,7 +180,7 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 			</View>
 			<View>
 				<Text style={commonStyles.sectionTitle}>Vehicle</Text>
-				<VehicleCard item={ data.appointment.quote.vehicle } />
+				<VehicleInfoCard item={ data.appointment.quote.vehicle } />
 			</View>
 
 			<View>
@@ -188,7 +188,7 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 				{renderList}
 			</View>
 			<View>
-				<Text>Total Price: {totalPrice}</Text>
+				<Text>Total Price: $ {totalPrice}</Text>
 			</View>
 		</View>
 	);
