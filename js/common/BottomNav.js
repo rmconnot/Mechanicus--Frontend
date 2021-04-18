@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, Image } fro
 import {colors, fonts, commonStyles} from './Style';
 import ImageSrcs from './Images';
 import { BtnLarge } from './Buttons';
+import { Icon } from './Svg';
 
 
 const BtmNavOptions = [
@@ -97,39 +98,46 @@ export default function BottomNav({
 	activated = "Task",
 	routeProps
 }) {
-	const navigate = navigation.navigate;
 	return (
-		<View style={styles.container}>
-			<TabNav title="Task" to="TaskList" navigate={navigate} active={activated=="Task"} routeProps={routeProps}/>
-			<TabNav title="My Vehicles" to="VehicleList" navigate={navigate}  active={activated=="Vehicles"} routeProps={routeProps}/>
-			<TabNav title="Profile" to="Profile" navigate={navigate}  active={activated=="Profile"} routeProps={routeProps}/>
+		<View style={[styles.bottomNav, commonStyles.shadowUp]}>
+			<NavItem 
+			active={ activated == BtmNavOptions[0].title}
+			title={ BtmNavOptions[0].title } 
+			icon={ BtmNavOptions[0].icon } 
+			to = { BtmNavOptions[0].screen } 
+			navigation={navigation}  
+			routeProps={routeProps}/>
+			<NavItem 
+			active={ activated == BtmNavOptions[1].title}
+			title={ BtmNavOptions[1].title } 
+			icon={ BtmNavOptions[1].icon } 
+			to = { BtmNavOptions[1].screen } 
+			navigation={navigation}  
+			routeProps={routeProps}/>
+			<NavItem 
+			active={ activated == BtmNavOptions[2].title}
+			title={ BtmNavOptions[2].title } 
+			icon={ BtmNavOptions[2].icon } 
+			to = { BtmNavOptions[2].screen } 
+			navigation={navigation}  
+			routeProps={routeProps}/>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	BtmNavContainer: {
-		flexDirection: "row",
-		backgroundColor: "white",
-		borderTopLeftRadius: 20,
-		borderTopRightRadius: 20,
-		marginBottom: -30
-	},
-	spaceBetween: {
-		justifyContent: "space-between",
-	},
 	bottomNav: {
-		flex: 1 / 3,
-		alignItems: 'center',
-		paddingVertical: 30,
+		flexDirection: "row",
+		justifyContent: "space-around",
+		backgroundColor: "white",
+		paddingTop: 24,
+		paddingBottom: 32,
+		borderTopLeftRadius: 24,
+		borderTopRightRadius: 24,
 	},
-	activeBtn: {
-		color: colors.primaryDark,
-		fontSize: fonts.note
-	},
-	inactiveBtn: {
-		color: colors.gray3,
-		fontSize: fonts.note
+	navItemContainer: {
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	navGroupContainer: {
 		backgroundColor: "white",
@@ -142,6 +150,6 @@ const styles = StyleSheet.create({
 		borderTopWidth: 1,
 	},
 	navGroupItem: {
-		width: "30%",
+		minWidth: "30%",
 	},
 });
