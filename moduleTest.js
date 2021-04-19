@@ -24,6 +24,7 @@ export const TEST = ({
                 <QuoteProgress />
                 <TaskProgress />
                 <BtnLarge />
+                <BtnDisplay />
             </View>
             <BottomNav navigation={navigation} activated="My Vehicles" />
         </View>

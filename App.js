@@ -32,8 +32,11 @@ import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
 import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
+
+// FRONT END TESTING
 import { test1Screen } from "./test1Screen";
 import { test2Screen } from "./test2Screen";
+import { TEST } from "./moduleTest";
 
 // =====
 // nav dependencies
@@ -92,6 +95,7 @@ export default function App() {
 					<Stack.Screen name="test2" component={test2Screen} 						options={{
 							headerShown: false
 					  }}/>
+					<Stack.Screen name="test" component={TEST} />
 					<Stack.Screen 
 						name="LogIn" 
 						component={LoginScreen} 

@@ -75,7 +75,7 @@ const NavItem = ({
 	return (
 		<TouchableOpacity
 			style={styles.navItemContainer}
-			onPress={() => navigation.navigate(to, routeProps ? routeProps : null)}
+			onPress={() => navigation.navigate(to, {...routeProps.params})}
 		>
 			<Icon name={icon} size={24} color={statusColor} />
 			<Text
@@ -130,8 +130,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-around",
 		backgroundColor: "white",
-		paddingTop: 24,
-		paddingBottom: 32,
+		paddingVertical: 24,
 		borderTopLeftRadius: 24,
 		borderTopRightRadius: 24,
 	},
@@ -143,8 +142,7 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 		flexDirection: "row",
 		paddingHorizontal: 16,
-		paddingBottom: 32,
-		paddingTop: 12,
+		paddingVertical: 12,
 		justifyContent: "space-between",
 		borderTopColor: colors.gray6,
 		borderTopWidth: 1,
