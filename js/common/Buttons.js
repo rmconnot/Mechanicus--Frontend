@@ -33,6 +33,7 @@ export const BtnLarge = ({
     onPress = ()=>{},
     sub = false, //deside the btn style, outlined or filled
     disabled = false,
+    cancel = false,
 }) => {
     let textColor = colors.text;
     let btnStyle = [commonStyles.btn, commonStyles.btn_lg];
@@ -43,6 +44,17 @@ export const BtnLarge = ({
     if(disabled){
         textColor = colors.gray3;
         btnStyle.push(commonStyles.btn_disabled);
+    }
+    if(cancel){
+        return (
+            <TouchableOpacity
+            style={ [commonStyles.btn, commonStyles.btn_lg, commonStyles.btn_cancel] }
+            onPress={onPress}
+            disabled={disabled}
+            >
+                <Text style={[commonStyles.body, styles.capitalize, {color:textColor}]}>{title}</Text>
+            </TouchableOpacity>
+        );
     }
     return (
         <TouchableOpacity

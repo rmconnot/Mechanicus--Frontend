@@ -72,6 +72,7 @@ export const commonStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 4,
+        marginVertical: 8,
     },
     btn_sub: {
         borderWidth: 1,
@@ -79,8 +80,12 @@ export const commonStyles = StyleSheet.create({
         backgroundColor: "transparent",
     },
     btn_disabled: {
-        backgroundColor: colors.gray5,
-        borderWidth: 0,
+        opacity: 0.5,
+    },
+    btn_cancel: {
+        borderWidth: 1,
+        borderColor: colors.gray4,
+        backgroundColor: "transparent",
     },
     btn_sm: {
         paddingHorizontal: 12,
@@ -158,8 +163,33 @@ export const commonStyles = StyleSheet.create({
         fontSize: fonts.caption2,
         fontWeight: "300",
     },
+    sectionTitle: {
+        color: colors.gray3,
+        fontSize: fonts.body,
+        marginBottom: 4,
+    },
     // spacing
     m_b_s: {
         marginBottom: spacings.S,
+    },
+    //form
+    //filled gray box
+    inputBox: {
+        color: colors.text,
+		backgroundColor: 'white',
+		padding: 12,
+		borderRadius: 4,
+        fontSize: fonts.body,
+        marginBottom: 24,
+	},
+    //outlined white box
+    inputBox2: {
+        color: colors.text,
+        borderWidth: 1,
+        borderColor: colors.gray4,
+		backgroundColor: 'white',
+		padding: 12,
+		borderRadius: 4,
+        fontSize: fonts.body,
     },
 });

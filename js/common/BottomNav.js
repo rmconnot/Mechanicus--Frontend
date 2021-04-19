@@ -22,16 +22,26 @@ export function NavGroup({
 	callbackFunction = null,
 }) {
 	const navigate = navigation.navigate;
-	const onPress = async () => {
-		if (callbackFunction) {
-			await callbackFunction();
-		}
-		navigation.navigate(
-			to,
-			routeProps ? routeProps : null
-		);
-	};
 	// console.log("callbackFunction: ", callbackFunction);
+	if(options.length==1){
+		return (
+			<View style={styles.navGroupContainer}>
+				<View style={styles.navGroupItem}>
+				</View>
+				<View style={styles.navGroupItem}>
+					<BtnLarge
+						style={styles.navGroupItem}
+						title={options[0].title}
+						onPress={() =>
+							navigation.navigate(
+								options[0].to,
+								routeProps ? routeProps : null
+							)}
+					/>
+				</View>
+			</View>
+		);
+	}
 	return (
 		<View style={styles.navGroupContainer}>
 			<View style={styles.navGroupItem}>

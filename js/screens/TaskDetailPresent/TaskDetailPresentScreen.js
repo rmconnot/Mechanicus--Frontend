@@ -10,8 +10,8 @@ import {
 	Button,
 } from "react-native";
 import { TaskProgress } from "../../common/Progress";
-import { VehicleInfoCard } from "../../common/Card";
-import { commonStyles } from "../../common/commonStyles";
+import { VehicleInfoCard, MechanicInfoCard, ServiceInfoCard } from "../../common/Card";
+import { commonStyles, colors } from "../../common/Style";
 import { styles } from "./Styles";
 import { gql, useQuery } from "@apollo/client";
 
@@ -125,70 +125,33 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 	if (loading) return <Text>Loading...</Text>;
 	if (error) return <Text>Oh no... {error.message}</Text>;
 
-
-	var serviceTypeList = [];
-	var servicePriceList = [];
-	var renderList = [];
-	var totalPrice = 0;
-
-	// extract service type and price from the object
-	for (let i = 0; i < data.appointment.quote.services.length; i++) {
-		serviceTypeList.push(data.appointment.quote.services[i].type);
-		servicePriceList.push(data.appointment.quote.services[i].price);
-		totalPrice += data.appointment.quote.services[i].price;
-	}
-
-	for (let i = 0; i < serviceTypeList.length; i++) {
-		renderList.push(
-			<View key={i} style={[commonStyles.row, commonStyles.spaceBetween]}>
-				<Text>{serviceTypeList[i]}</Text>
-				<Text>$ {servicePriceList[i]}</Text>
-			</View>
-		);
-	}
-
 	return (
-		<View style={commonStyles.container}>
-			<View>
-				<View>
-					<Text>
-						{data.appointment.quote.vehicle.make}, {data.appointment.quote.vehicle.year}
-					</Text>
-					<Text>{data.appointment.quote.vehicle.vin}</Text>
-					<Text>{data.appointment.scheduleDate}</Text>
-				</View>
-				<View>
-					<Button
-						title="Cancel"
-						onPress={() => Alert.alert("jump to the cancel page")}
-					/>
-				</View>
-				<TaskProgress />
+		<View style={commonStyles.pageContainer}>
+			<Button
+				title="Cancel"
+				onPress={() => Alert.alert("jump to the cancel page")}
+			/>
+			
+			<TaskProgress />
+			
+			<View style={styles.section} >
+				<Text style={commonStyles.sectionTitle}>Schedule</Text>
+				<Text style={commonStyles.h3}>{data.appointment.scheduleDate}</Text>
 			</View>
-			<View>
+
+			<View style={styles.section} >
 				<Text style={commonStyles.sectionTitle}>Mechanician</Text>
-				<View style={commonStyles.row}>
-					<Text>Name: </Text>
-					<Text>
-						{data.appointment.mechanic.firstName} {data.appointment.mechanic.lastName}
-					</Text>
-				</View>
-				<View style={commonStyles.row}>
-					<Text>Phone: </Text>
-					<Text> {data.appointment.mechanic.phone}</Text>
-				</View>
+				<MechanicInfoCard item = { data ? data.appointment.mechanic : ""}/>
 			</View>
-			<View>
+
+			<View style={styles.section} >
 				<Text style={commonStyles.sectionTitle}>Vehicle</Text>
 				<VehicleInfoCard item={ data.appointment.quote.vehicle } />
 			</View>
 
-			<View>
+			<View style={styles.section} >
 				<Text style={commonStyles.sectionTitle}>Service</Text>
-				{renderList}
-			</View>
-			<View>
-				<Text>Total Price: $ {totalPrice}</Text>
+				<ServiceInfoCard item={data.appointment.quote.services}/>
 			</View>
 		</View>
 	);

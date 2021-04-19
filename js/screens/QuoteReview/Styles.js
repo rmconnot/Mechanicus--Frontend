@@ -15,6 +15,9 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
     },
+    section: {
+        marginBottom: 24
+    },
 
 	
 });

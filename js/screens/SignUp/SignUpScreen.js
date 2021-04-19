@@ -4,7 +4,7 @@ import styles from "./Styles";
 import { gql, useMutation } from "@apollo/client";
 import axios from "axios";
 import { colors, fonts, commonStyles } from "../../common/Style";
-import { BtnLarge } from "../../common/Buttons";
+import { BtnLarge, BtnSmall } from "../../common/Buttons";
 import { Icon } from "../../common/Svg";
 
 const CUSTOMER_MUTATION = gql`
@@ -165,7 +165,7 @@ export const SignUpScreen = ({ navigation }) => {
 			<View style={styles.content}>
 				<Text style={[commonStyles.body, styles.label]}>Email</Text>
 				<TextInput
-					style={styles.inputBox}
+					style={commonStyles.inputBox}
 					placeholder="username@email.address"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
@@ -176,7 +176,7 @@ export const SignUpScreen = ({ navigation }) => {
 
 				<Text style={[commonStyles.body, styles.label]}>Phone</Text>
 				<TextInput
-					style={styles.inputBox}
+					style={commonStyles.inputBox}
 					placeholder="123-456-7890"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
@@ -185,10 +185,27 @@ export const SignUpScreen = ({ navigation }) => {
 					}
 				/>
 
+				<Text style={[commonStyles.body, styles.label]}>Verification</Text>
+				<View style={styles.codeContainer}>
+					<TextInput
+						style={[commonStyles.inputBox, styles.codeInput]}
+						placeholder="Verification code"
+						placeholderTextColor={colors.gray4}
+						autoCapitalize="none"
+						onChangeText={(text) =>
+							setInput((prevState) => ({
+								...prevState,
+								verificationCodeInput: text.trim(),
+							}))
+						}
+					/>
+					<BtnSmall title="send code" onPress={sendVerification}/>
+				</View>
+				
 				<Text style={[commonStyles.body, styles.label]}>Password</Text>
 				<TextInput
 					secureTextEntry={true}
-					style={styles.inputBox}
+					style={commonStyles.inputBox}
 					placeholder="8 digit numbers"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
@@ -203,7 +220,7 @@ export const SignUpScreen = ({ navigation }) => {
 				<Text style={[commonStyles.body, styles.label]}>Confirm password</Text>
 				<TextInput
 					secureTextEntry={true}
-					style={styles.inputBox}
+					style={commonStyles.inputBox}
 					placeholder="8 digit numbers"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
@@ -212,23 +229,7 @@ export const SignUpScreen = ({ navigation }) => {
 					}
 				/>
 			</View>
-			<View style={styles.inputView2}>
-				<TextInput
-					style={styles.inputText}
-					placeholder="Enter your verification code"
-					placeholderTextColor="#003f5c"
-					autoCapitalize="none"
-					onChangeText={(text) =>
-						setInput((prevState) => ({
-							...prevState,
-							verificationCodeInput: text.trim(),
-						}))
-					}
-				/>
-				<TouchableOpacity style={styles.codeBtn} onPress={sendVerification}>
-					<Text style={styles.codeBtnText}>Send Code</Text>
-				</TouchableOpacity>
-			</View>
+			
 
 			<BtnLarge title="Sign Up" onPress={handleSubmission} />
 

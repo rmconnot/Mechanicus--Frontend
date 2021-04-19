@@ -65,7 +65,7 @@ export default function Login({ navigation }) {
 			<View style={styles.content}>
 				<Text style={[commonStyles.body ,styles.label]}>Email</Text>
 				<TextInput
-					style={styles.inputBox}
+					style={commonStyles.inputBox}
 					placeholder="username@email.address"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
@@ -78,7 +78,7 @@ export default function Login({ navigation }) {
 				
 				<View style={styles.pswContainer}>
 					<TextInput
-						style={[styles.inputBox,styles.pswInput]}
+						style={[commonStyles.inputBox,styles.pswInput]}
 						secureTextEntry={!pswVisibility}
 						placeholder="8 digit numbers"
 						placeholderTextColor={colors.gray4}

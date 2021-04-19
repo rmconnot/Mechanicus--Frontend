@@ -27,7 +27,7 @@ import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPr
 
 // import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
 import { AddVehicleManualScreen } from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
-// import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
+import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
 import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
@@ -48,10 +48,11 @@ const Stack = createStackNavigator();
 
 // connect to backend
 
-const IP = "172.20.10.2";
+const IP = "192.168.0.5"; 
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
-	uri: "http://10.20.1.148:4000/graphql",
+	// uri: "http://10.20.1.148:4000/graphql",
+	uri: `http://${IP}:4000/graphql`, 
 });
 
 const wsLink = new WebSocketLink({
@@ -121,7 +122,7 @@ export default function App() {
 						component={TaskDetailPresentScreen}
 					/>
 
-					{/* <Stack.Screen name="VehicleList" component={VehicleListScreen} /> */}
+					<Stack.Screen name="VehicleList" component={VehicleListScreen} />
 					{/* <Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} /> */}
 					<Stack.Screen
 						name="AddVehicleManual"
