@@ -1,76 +1,121 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, Image, Button } from 'react-native';
-import { CustomPicker } from '../../common/CustomPicker';
-import BottomNav from '../../common/BottomNav';
+import { gql, useMutation } from "@apollo/client";
 import styles from './Styles';
 
 
-export default class AddVehicleManualScreen extends React.Component {
-    constructor(props) {
-        super(props);
-        // this.dataModel = getDataModel();
-        this.state = {
+const VEHICLE_MUTATION = gql`
+	mutation($customerID: Int!, $vin: String!, $type: String!, $year: Int!, $make: String!, $model: String!) {
+		createVehicle(customerID: $customerID, vin: $vin, vehicleType: $type, year: $year, make: $make, model: $model) {
+			id
+		}
+	}
+`;
+
+export const AddVehicleManualScreen = ({ navigation, route }) => {
+    const [input, setInput] = useState({
+        customerID: route.params.id,
         vin: "",
         type:"",
-        year:"",
-        maker: "",
+        year:0,
+        make: "",
         model: "",
-        };
-    }
+        // imgUrl: "",
+	});
+
+    const [makeRequest, { data }, error] = useMutation(VEHICLE_MUTATION, {
+		onError: (error) => {
+            console.error(`Error! ${error}`);
+            Alert.alert("Error","VIN already in use", [
+                { text: "OK", style: "OK" },
+            ]);
+        }
+	});
+
     
-    onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        //setShow(Platform.OS === 'ios');
-        this.setState({date: currentDate});
-    }
+	const addVehicle = async () => {
+        makeRequest({
+            variables: {
+                customerID: input.customerID,
+                vin: input.vin,
+                type: input.type,
+                year: input.year,
+                make: input.make,
+                model: input.model,
+                // imgUrl: input.imgUrl
+            },
+        }).then((result) => {
+            if (result != undefined){
+                console.log(result);
+                navigation.goBack();
+                return;
+            }
+        })
+	};
     
-    render(){
-        return (
+    return (
         <View style={styles.container}>
             <Text style={styles.logo}>Add Vehicle Maunally</Text>
-            <View style={styles.inputView} >
-            <TextInput  
-                style={styles.inputText}
-                placeholder="Enter VIN of your vehicle" 
-                placeholderTextColor="#003f5c"
-                onChangeText={text => this.setState({vin:text})}/>
+            <View>
+                <Text style={styles.inputText} >VIN</Text>
+                <TextInput  
+                    style={styles.inputBox}
+                    placeholder="Enter VIN of your vehicle" 
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(text) =>
+                        setInput((prevState) => ({ ...prevState, vin: text.trim() }))
+                    }
+                />
+                <Text style={styles.inputText} >Type</Text>
+
+                <TextInput  
+                    style={styles.inputBox}
+                    placeholder="Enter type of your vehicle" 
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(text) =>
+                        setInput((prevState) => ({ ...prevState, type: text.trim() }))
+                    }                
+                />
+                <Text style={styles.inputText} >Year</Text>
+
+                <TextInput  
+                    style={styles.inputBox}
+                    placeholder="Enter year of your vehicle" 
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(text) =>
+                        setInput((prevState) => ({ ...prevState, year: parseInt(text.trim(),10) }))
+                    }
+                />
+                <Text style={styles.inputText} >Maker</Text>
+
+                <TextInput  
+                    style={styles.inputBox}
+                    placeholder="Enter maker of your vehicle" 
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(text) =>
+                        setInput((prevState) => ({ ...prevState, make: text.trim() }))
+                    }
+                />
+                <Text style={styles.inputText} >Model</Text>
+            
+                <TextInput  
+                    style={styles.inputBox}
+                    placeholder="Enter model of your vehicle" 
+                    placeholderTextColor="#003f5c"
+                    onChangeText={(text) =>
+                        setInput((prevState) => ({ ...prevState, model: text.trim() }))
+                    }
+                />     
             </View>
-            <View style={styles.inputView} >
-            <TextInput  
-                style={styles.inputText}
-                placeholder="Enter type of your vehicle" 
-                placeholderTextColor="#003f5c"
-                onChangeText={text => this.setState({type:text})}/>
-            </View>
-            <View style={styles.inputView} >
-            <TextInput  
-                style={styles.inputText}
-                placeholder="Enter year of your vehicle" 
-                placeholderTextColor="#003f5c"
-                onChangeText={text => this.setState({year:text})}/>
-            </View>
-            <View style={styles.inputView} >
-            <TextInput  
-                style={styles.inputText}
-                placeholder="Enter maker of your vehicle" 
-                placeholderTextColor="#003f5c"
-                onChangeText={text => this.setState({maker:text})}/>
-            </View>
-            <View style={styles.inputView} >
-            <TextInput  
-                style={styles.inputText}
-                placeholder="Enter model of your vehicle" 
-                placeholderTextColor="#003f5c"
-                onChangeText={text => this.setState({model:text})}/>
-            </View>
-            <TouchableOpacity style={styles.registerBtn} onPress={() => Alert.alert('submit request & jump to the vehicle page'+this.state)}>
+
+           
+            <TouchableOpacity style={styles.registerBtn} onPress={addVehicle}>
             <Text style={styles.registerText}>Confirm</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelBtn} onPress={() => Alert.alert('jump to the quote page')}>
+            <TouchableOpacity style={styles.cancelBtn} onPress={() => navigation.goBack()}>
             <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>
     
         </View>
         );
-    }
 }

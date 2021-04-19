@@ -25,9 +25,9 @@ import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
 import { TaskDetailPastScreen }from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
 import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
-import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
-import AddVehicleManualScreen from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
-import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
+// import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
+import { AddVehicleManualScreen } from "./js/screens/AddVehicleManual/AddVehicleManualScreen";
+// import { VehicleListScreen } from "./js/screens/VehicleList/VehicleListScreen";
 import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 
 // SCREENS-PROFILE
@@ -37,7 +37,6 @@ import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
 import { test1Screen } from "./test1Screen";
 import { test2Screen } from "./test2Screen";
 import { TEST } from "./moduleTest";
-
 
 // =====
 // nav dependencies
@@ -52,7 +51,7 @@ const Stack = createStackNavigator();
 // connect to backend
 
 
-const IP = "192.168.0.5";
+const IP = "172.20.10.2";
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
 
@@ -121,8 +120,8 @@ export default function App() {
 						component={TaskDetailPresentScreen}
 					/>
 
-					<Stack.Screen name="VehicleList" component={VehicleListScreen} />
-					<Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} />
+					{/* <Stack.Screen name="VehicleList" component={VehicleListScreen} /> */}
+					{/* <Stack.Screen name="AddVehicleVIN" component={AddVehicleVINScreen} /> */}
 					<Stack.Screen
 						name="AddVehicleManual"
 						component={AddVehicleManualScreen}
