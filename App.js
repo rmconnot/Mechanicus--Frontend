@@ -22,7 +22,7 @@ import QuoteCompleteScreen from "./js/screens/QuoteComplete/QuoteCompleteScreen"
 // SCREENS-TASK
 
 import { TaskListScreen } from "./js/screens/TaskList/TaskListScreen";
-import { TaskDetailPastScreen }from "./js/screens/TaskDetailPast/TaskDetailPastScreen";
+import QuoteDetailScreen from "./js/screens/QuoteDetail/QuoteDetailScreen";
 import TaskDetailPresentScreen from "./js/screens/TaskDetailPresent/TaskDetailPresentScreen";
 
 // import AddVehicleVINScreen from "./js/screens/AddVehicleVIN/AddVehicleVINScreen";
@@ -43,19 +43,15 @@ import { TEST } from "./moduleTest";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-
-
 // navigation
 const Stack = createStackNavigator();
 
 // connect to backend
 
-
 const IP = "172.20.10.2";
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
-
-	uri: `http://${IP}:4000/graphql`,
+	uri: "http://10.20.1.148:4000/graphql",
 });
 
 const wsLink = new WebSocketLink({
@@ -82,39 +78,44 @@ const client = new ApolloClient({
 	cache: new InMemoryCache(),
 });
 
-
-
 export default function App() {
 	return (
 		<ApolloProvider client={client}>
 			<NavigationContainer>
 				<Stack.Navigator initialRouteName="LogIn">
-					<Stack.Screen name="test1" component={test1Screen} 						options={{
-							headerShown: false
-					  }}/>
-					<Stack.Screen name="test2" component={test2Screen} 						options={{
-							headerShown: false
-					  }}/>
-					<Stack.Screen name="test" component={TEST} />
-					<Stack.Screen 
-						name="LogIn" 
-						component={LoginScreen} 
+					<Stack.Screen
+						name="test1"
+						component={test1Screen}
 						options={{
-							headerShown: false
-					  }}/>
-					<Stack.Screen 
-						name="SignUp" 
-						component={SignUpScreen} 
-					  	options={{
-							headerShown: false
-					  }}/>
+							headerShown: false,
+						}}
+					/>
+					<Stack.Screen
+						name="test2"
+						component={test2Screen}
+						options={{
+							headerShown: false,
+						}}
+					/>
+					<Stack.Screen name="test" component={TEST} />
+					<Stack.Screen
+						name="LogIn"
+						component={LoginScreen}
+						options={{
+							headerShown: false,
+						}}
+					/>
+					<Stack.Screen
+						name="SignUp"
+						component={SignUpScreen}
+						options={{
+							headerShown: false,
+						}}
+					/>
 					{/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
 
 					<Stack.Screen name="TaskList" component={TaskListScreen} />
-					<Stack.Screen
-						name="TaskDetailPast"
-						component={TaskDetailPastScreen}
-					/>
+					<Stack.Screen name="QuoteDetail" component={QuoteDetailScreen} />
 					<Stack.Screen
 						name="TaskDetailPresent"
 						component={TaskDetailPresentScreen}
@@ -128,11 +129,15 @@ export default function App() {
 					/>
 					<Stack.Screen name="Schedule" component={ScheduleScreen} />
 
-					<Stack.Screen name="Profile" component={ProfileScreen} options={{
-							headerShown: false
-					  }}/>
+					<Stack.Screen
+						name="Profile"
+						component={ProfileScreen}
+						options={{
+							headerShown: false,
+						}}
+					/>
 
-					<Stack.Screen name="QuoteVehicle" component={ QuoteVehicleScreen } />
+					<Stack.Screen name="QuoteVehicle" component={QuoteVehicleScreen} />
 					<Stack.Screen name="QuoteService" component={QuoteServiceScreen} />
 					<Stack.Screen name="QuoteReview" component={QuoteReviewScreen} />
 					<Stack.Screen name="QuoteComplete" component={QuoteCompleteScreen} />

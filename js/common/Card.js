@@ -89,7 +89,7 @@ export const Tag = ({
 export const VehicleInfoCard = ({
 	item, //vehicle data object
 }) => {
-	if(item){
+	if (item) {
 		return (
 			<View style={[commonStyles.card, commonStyles.cardBody]}>
 				<View style={[styles.col_A, styles.imgContainer]}>
@@ -106,11 +106,13 @@ export const VehicleInfoCard = ({
 				</View>
 			</View>
 		);
-	} 
-	
+	}
+
 	return (
 		<View style={[commonStyles.card, commonStyles.cardBody]}>
-			<Text style={[commonStyles.body, {color:colors.gray4}]}>No Vehicle</Text>
+			<Text style={[commonStyles.body, { color: colors.gray4 }]}>
+				No Vehicle
+			</Text>
 		</View>
 	);
 };
@@ -149,16 +151,17 @@ export const ServiceInfoCard = ({
 		});
 		return total;
 	};
-	if(item){
-	return (
-		<View style={commonStyles.card}>
-			<FlatList data={item} renderItem={renderItem} />
-			<View style={styles.totalEntry}>
-				<Text style={commonStyles.body}>Total Price </Text>
-				<Text style={commonStyles.h3}> {get_cost()}</Text>
+	if (item) {
+		return (
+			<View style={commonStyles.card}>
+				<FlatList data={item} renderItem={renderItem} />
+				<View style={styles.totalEntry}>
+					<Text style={commonStyles.body}>Total Price </Text>
+					<Text style={commonStyles.h3}> {get_cost()}</Text>
+				</View>
 			</View>
-		</View>
-	);}
+		);
+	}
 
 	return (
 		<View style={commonStyles.card}>
@@ -221,7 +224,7 @@ export const QuoteCard = ({
 		<TouchableOpacity
 			style={[commonStyles.card, commonStyles.shadowDefault]}
 			onPress={(e) =>
-				this.props.navigation.navigate("QuoteDetail", {
+				navigation.navigate("QuoteDetail", {
 					...route,
 					quote: item,
 				})
@@ -262,7 +265,6 @@ export const QuoteCard = ({
 
 // APPOINTMENT, cards displayed in appointment list
 export const TaskCard = ({ navigation, item = sampleAppointment, route }) => {
-	console.log(item.status);
 	const tagStyle = taskStatus[item.status] || {
 		color: colors.secondaryDark,
 		bgColor: colors.secondaryLight,
@@ -279,9 +281,9 @@ export const TaskCard = ({ navigation, item = sampleAppointment, route }) => {
 		<TouchableOpacity
 			style={[commonStyles.card, commonStyles.shadowDefault]}
 			onPress={(e) =>
-				navigation.navigate("TaskDetail", {
+				navigation.navigate("TaskDetailPresent", {
 					...route,
-					appointment: item,
+					appointmentID: item.id,
 				})
 			}
 		>

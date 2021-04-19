@@ -10,7 +10,7 @@ import {
 	Button,
 } from "react-native";
 import { TaskProgress } from "../../common/Progress";
-import { VehicleCard } from "../../common/Card";
+import { VehicleInfoCard } from "../../common/Card";
 import { commonStyles } from "../../common/commonStyles";
 import { styles } from "./Styles";
 import { gql, useQuery } from "@apollo/client";
@@ -20,12 +20,12 @@ const imageURL = {
 	line: "./images/line.png",
 };
 
-const QUOTE_QUERY = gql`
-	query($customerID: Int!) {
-		quote(customerID: $customerID) {
+const APPOINTMENT_QUERY = gql`
+	query($appointmentID: Int!) {
+		appointment(appointmentID: $appointmentID) {
 			scheduleDate
 			status
-			mechanician {
+			mechanic {
 				firstName
 				lastName
 				phone
@@ -38,10 +38,8 @@ const QUOTE_QUERY = gql`
 				vin
 			}
 			services {
-				service {
-					type
-					price
-				}
+				type
+				price
 			}
 		}
 	}
@@ -109,39 +107,26 @@ const sampleQuotes = [
 	},
 ];
 
-export function TaskDetailPastScreen({ navigation, route }) {
-	// const { currentUser } = route.params;
-	// console.log(currentUser);
-
-	const {data, loading, error} = useQuery(quoteQuery,{
-        
-        variables: {
-            customerID: 1
-        },
-    });
-
-    if (loading) return (<Text>Loading...</Text>);
-    if (error) return (<Text>Oh no... {error.message}</Text>);
+export default function QuoteDetailScreen({ navigation, route }) {
+	const data = route.params.quote;
 
 	// console.log(data.quote[0]);
 
 	var serviceTypeList = [];
 	var servicePriceList = [];
 	var renderList = [];
-	var totalPrice = 0;
 
 	// extract service type and price from the object
-	for (let i = 0; i < data.quote[0].services.length; i++) {
-		serviceTypeList.push(data.quote[0].services[i].service.type);
-		servicePriceList.push(data.quote[0].services[i].service.price);
-		totalPrice += data.quote[0].services[i].service.price;
+	for (let i = 0; i < data.services.length; i++) {
+		serviceTypeList.push(data.services[i].type);
+		servicePriceList.push(data.services[i].price);
 	}
 
 	for (let i = 0; i < serviceTypeList.length; i++) {
 		renderList.push(
 			<View key={i} style={[commonStyles.row, commonStyles.spaceBetween]}>
 				<Text>{serviceTypeList[i]}</Text>
-				<Text> {servicePriceList[i]}</Text>
+				<Text>$ {servicePriceList[i]}</Text>
 			</View>
 		);
 	}
@@ -149,13 +134,6 @@ export function TaskDetailPastScreen({ navigation, route }) {
 	return (
 		<View style={commonStyles.container}>
 			<View>
-				<View>
-					<Text>
-						{data.quote[0].vehicle.make}, {data.quote[0].vehicle.year}
-					</Text>
-					<Text>{data.quote[0].vehicle.vin}</Text>
-					<Text>{data.quote[0].scheduleDate}</Text>
-				</View>
 				<View>
 					<Button
 						title="Cancel"
@@ -165,30 +143,16 @@ export function TaskDetailPastScreen({ navigation, route }) {
 				<TaskProgress />
 			</View>
 			<View>
-				<Text style={commonStyles.sectionTitle}>Mechanician</Text>
-				<View style={commonStyles.row}>
-					<Text>Name</Text>
-					<Text>
-						{data.quote[0].mechanician.firstName}
-						{data.quote[0].mechanician.lastName}
-					</Text>
-				</View>
-				<View style={commonStyles.row}>
-					<Text>Phone</Text>
-					<Text> {data.quote[0].mechanician.phone}</Text>
-				</View>
-			</View>
-			<View>
 				<Text style={commonStyles.sectionTitle}>Vehicle</Text>
-				<VehicleCard item={data ? data.quote[0] : sampleQuotes} />
+				<VehicleInfoCard item={data.vehicle} />
 			</View>
 
 			<View>
-				<Text style={commonStyles.sectionTitle}>Service</Text>
+				<Text style={commonStyles.sectionTitle}>Services</Text>
 				{renderList}
 			</View>
 			<View>
-				<Text>Total Price: {totalPrice}</Text>
+				<Text>Total Price: $ {data.costEstimate}</Text>
 			</View>
 		</View>
 	);
