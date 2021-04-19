@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	View,
 	Text,
@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import BottomNav from "../../common/BottomNav";
 import { gql, useQuery } from "@apollo/client";
-import { TaskCard } from "../../common/Card";
+import { TaskCard, QuoteCard } from "../../common/Card";
 import { styles } from "./Styles";
 import { commonStyles } from "../../common/Style";
 
@@ -78,18 +78,24 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 		newAppointment(customerID: $customerID) {
 			id
 			scheduleDate
+			status
 			quote {
-				services {
-					id
-					type
-				}
 				vehicle {
 					id
 					make
 					model
 					year
-					vehicleType
+					imgUrl
 				}
+				services {
+					type
+					price
+				}
+			}
+			mechanic {
+				firstName
+				lastName
+				phone
 			}
 		}
 	}
@@ -100,20 +106,25 @@ const APPOINTMENTS_QUERY = gql`
 		appointments(customerID: $customerID) {
 			id
 			scheduleDate
+			status
 			quote {
-				services {
-					id
-					type
-				}
 				vehicle {
 					id
 					make
 					model
 					year
-					vehicleType
+					imgUrl
+				}
+				services {
+					type
+					price
 				}
 			}
-			#mechanicID
+			mechanic {
+				firstName
+				lastName
+				phone
+			}
 		}
 	}
 `;
@@ -125,6 +136,7 @@ const QUOTES_QUERY = gql`
 			services {
 				id
 				type
+				price
 			}
 			vehicle {
 				id
@@ -132,6 +144,7 @@ const QUOTES_QUERY = gql`
 				model
 				year
 				vehicleType
+				imgUrl
 			}
 			costEstimate
 			createdAt
@@ -146,6 +159,7 @@ const QUOTES_SUBSCRIPTION = gql`
 			services {
 				id
 				type
+				price
 			}
 			vehicle {
 				id
@@ -153,6 +167,7 @@ const QUOTES_SUBSCRIPTION = gql`
 				model
 				year
 				vehicleType
+				imgUrl
 			}
 			costEstimate
 			createdAt
@@ -164,16 +179,29 @@ const QUOTES_SUBSCRIPTION = gql`
 
 export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
-	// console.log(currentUser);
+	console.log(currentUser);
+	const [displayType, setDisplayType] = useState("task");
 
-	/////  !!!------------ I think we will need to pass the current user's ID as a route param for the taskCards  -----------------!!! //////////
-
-	const renderItemPast = ({ item }) => {
-		return <TaskCard item={item} navigation={navigation} to="TaskDetailPast" />;
-	};
 	const renderItemPresent = ({ item }) => {
 		return (
-			<TaskCard item={item} navigation={navigation} to="TaskDetailPresent" />
+			<TaskCard
+				item={item}
+				navigation={navigation}
+				route={route}
+				to="TaskDetailPresent"
+			/>
+		);
+	};
+
+	const renderItemQuotes = ({ item }) => {
+		console.log("this is");
+		return (
+			<QuoteCard
+				item={item}
+				navigation={navigation}
+				route={route}
+				to="QuoteDetail"
+			/>
 		);
 	};
 
@@ -184,6 +212,16 @@ export const TaskListScreen = ({ navigation, route }) => {
 			onError: (error) => console.log(JSON.stringify(error, null, 2)),
 		}
 	);
+
+	const switchToTask = () => {
+		setDisplayType("task");
+		console.log(data.appointments);
+	};
+
+	const switchToQuote = () => {
+		setDisplayType("quote");
+		console.log(data.quotes);
+	};
 
 	const {
 		subscribeToMore: subscribeToMoreQuotes,
@@ -243,8 +281,28 @@ export const TaskListScreen = ({ navigation, route }) => {
 		<SafeAreaView style={commonStyles.container}>
 			<View style={commonStyles.pageContainer}>
 				<View style={styles.tabContainer}>
-					<Text style={styles.tab}>Tasks</Text>
-					<Text style={styles.tab}>Quotes</Text>
+					<TouchableOpacity
+						style={
+							displayType == "task" ? styles.switchBtnActive : styles.switchBtn
+						}
+						onPress={switchToTask}
+					>
+						<Text style={displayType == "task" ? styles.tabActive : styles.tab}>
+							Tasks
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={
+							displayType == "quote" ? styles.switchBtnActive : styles.switchBtn
+						}
+						onPress={switchToQuote}
+					>
+						<Text
+							style={displayType == "quote" ? styles.tabActive : styles.tab}
+						>
+							Quotes
+						</Text>
+					</TouchableOpacity>
 				</View>
 				<Button
 					title={"Get a Quote"}
@@ -253,15 +311,22 @@ export const TaskListScreen = ({ navigation, route }) => {
 					}
 				/>
 				<View>
-					<Text>Upcoming appointments</Text>
-					<FlatList 
-					data={data? data.appointments:[]} 
-					renderItem={renderItemPresent}
-					keyExtractor={(item) => item.id.toString()} 
-					/>
+					<Text>{displayType == "task" ? "Appointments" : "Quotes"}</Text>
+					{data ? (
+						<FlatList
+							data={
+								displayType == "task" ? data.appointments : quoteData.quotes
+							}
+							renderItem={
+								displayType == "task" ? renderItemPresent : renderItemQuotes
+							}
+						/>
+					) : (
+						<Text>No upcoming appointments</Text>
+					)}
 				</View>
 			</View>
-			<BottomNav navigation={navigation} routeProps={route} activated = "Home" />
+			<BottomNav navigation={navigation} routeProps={route} activated="Home" />
 		</SafeAreaView>
 	);
 };

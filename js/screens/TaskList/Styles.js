@@ -16,9 +16,26 @@ export const styles = StyleSheet.create({
     },
     tab:{
         fontSize: 18,
-        marginRight: 24,
-        marginBottom:16,
-        borderBottomWidth: 2,
-        borderBottomColor: "#ccc",
+        fontWeight: '200',
+        color: 'black',
+        textAlign: "center"
     },
+    tabActive:{
+        fontSize: 18,
+        fontWeight: '400',
+        color: 'white',
+        textAlign: "center"
+    },
+    switchBtn:{
+        backgroundColor: 'white',
+        width: 70,
+        margin: 20,
+        textAlign: "center"
+    },
+    switchBtnActive:{
+        backgroundColor: 'blue',
+        width: 70,
+        margin: 20,
+        textAlign: "center"
+    }
 });

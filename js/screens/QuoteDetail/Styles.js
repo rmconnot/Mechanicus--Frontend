@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-//////////////TaskDetail////////////////////
+//////////////QuoteDetail////////////////////
 export const styles = StyleSheet.create({
 });
