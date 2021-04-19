@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, Alert, SafeAreaView } from 'react-native';
 import { CheckboxGroup } from '../../common/Form';
 import { NavGroup } from '../../common/BottomNav';
 import { QuoteProgress } from '../../common/Progress';
@@ -79,7 +79,7 @@ export default function QuoteServiceScreen({ navigation, route }) {
 	};
 
 	return (
-		<View style={styles.container}>
+		<SafeAreaView style={styles.container}>
 			<View>
 				<QuoteProgress curStep={2} status={[true, true, false]} />
 				<CheckboxGroup
@@ -95,7 +95,7 @@ export default function QuoteServiceScreen({ navigation, route }) {
 					selectedServices: servicesListProp,
 				})}
 			/>
-		</View>
+		</SafeAreaView>
 	);
 }
 

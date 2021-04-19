@@ -12,6 +12,7 @@ import { gql, useQuery } from "@apollo/client";
 import { TaskCard, QuoteCard } from "../../common/Card";
 import { styles } from "./Styles";
 import { commonStyles } from "../../common/Style";
+import { BtnDisplay } from "../../common/Buttons";
 
 const sampleQuotes = [
 	{
@@ -182,29 +183,6 @@ export const TaskListScreen = ({ navigation, route }) => {
 	console.log(currentUser);
 	const [displayType, setDisplayType] = useState("task");
 
-	const renderItemPresent = ({ item }) => {
-		return (
-			<TaskCard
-				item={item}
-				navigation={navigation}
-				route={route}
-				to="TaskDetailPresent"
-			/>
-		);
-	};
-
-	const renderItemQuotes = ({ item }) => {
-		console.log("this is");
-		return (
-			<QuoteCard
-				item={item}
-				navigation={navigation}
-				route={route}
-				to="QuoteDetail"
-			/>
-		);
-	};
-
 	const { subscribeToMore, data, error, loading } = useQuery(
 		APPOINTMENTS_QUERY,
 		{
@@ -277,6 +255,29 @@ export const TaskListScreen = ({ navigation, route }) => {
 		},
 	});
 
+	const renderItemPresent = ({ item }) => {
+		return (
+			<TaskCard
+				item={item}
+				navigation={navigation}
+				route={route}
+				to="TaskDetailPresent"
+			/>
+		);
+	};
+
+	const renderItemQuotes = ({ item }) => {
+		console.log("this is");
+		return (
+			<QuoteCard
+				item={item}
+				navigation={navigation}
+				route={route}
+				to="QuoteDetail"
+			/>
+		);
+	};
+
 	return (
 		<SafeAreaView style={commonStyles.container}>
 			<View style={commonStyles.pageContainer}>
@@ -304,14 +305,11 @@ export const TaskListScreen = ({ navigation, route }) => {
 						</Text>
 					</TouchableOpacity>
 				</View>
-				<Button
-					title={"Get a Quote"}
-					onPress={() =>
+				<BtnDisplay onPress={() =>
 						navigation.navigate("QuoteVehicle", { currentUser: currentUser })
 					}
 				/>
 				<View>
-					<Text>{displayType == "task" ? "Appointments" : "Quotes"}</Text>
 					{data ? (
 						<FlatList
 							data={

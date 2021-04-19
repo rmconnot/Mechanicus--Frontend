@@ -61,7 +61,7 @@ export function ProfileScreen({ navigation, route }) {
                         <Text style={commonStyles.h3}>Notification</Text>
                     </View>
                     <View style={styles.inputBox}>
-                        <Text style={commonStyles.h3}>About us</Text>
+                        <Text style={commonStyles.h3}>About Mechanicus</Text>
                     </View>
                 </View>
 

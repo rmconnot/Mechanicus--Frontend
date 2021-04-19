@@ -1,6 +1,8 @@
 import React, { useState }  from 'react';
 import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, Image, Button } from 'react-native';
 import { gql, useMutation } from "@apollo/client";
+import { colors, commonStyles } from "../../common/Style";
+import { BtnLarge } from "../../common/Buttons";
 import styles from './Styles';
 
 
@@ -54,68 +56,61 @@ export const AddVehicleManualScreen = ({ navigation, route }) => {
 	};
     
     return (
-        <View style={styles.container}>
-            <Text style={styles.logo}>Add Vehicle Maunally</Text>
-            <View>
-                <Text style={styles.inputText} >VIN</Text>
+        <View style={commonStyles.pageContainer}>
+            <View style={styles.content}>
+                <Text style={styles.label} >VIN</Text>
                 <TextInput  
-                    style={styles.inputBox}
-                    placeholder="Enter VIN of your vehicle" 
-                    placeholderTextColor="#003f5c"
+                    style={commonStyles.inputBox}
+                    placeholder="Enter vehicle VIN" 
+                    placeholderTextColor={colors.gray4}
                     onChangeText={(text) =>
                         setInput((prevState) => ({ ...prevState, vin: text.trim() }))
                     }
                 />
-                <Text style={styles.inputText} >Type</Text>
+                <Text style={styles.label} >Type</Text>
 
                 <TextInput  
-                    style={styles.inputBox}
-                    placeholder="Enter type of your vehicle" 
-                    placeholderTextColor="#003f5c"
+                    style={commonStyles.inputBox}
+                    placeholder="Enter vehicle type" 
+                    placeholderTextColor={colors.gray4}
                     onChangeText={(text) =>
                         setInput((prevState) => ({ ...prevState, type: text.trim() }))
                     }                
                 />
-                <Text style={styles.inputText} >Year</Text>
+                <Text style={styles.label} >Year</Text>
 
                 <TextInput  
-                    style={styles.inputBox}
-                    placeholder="Enter year of your vehicle" 
-                    placeholderTextColor="#003f5c"
+                    style={commonStyles.inputBox}
+                    placeholder="Enter vehicle year" 
+                    placeholderTextColor={colors.gray4}
                     onChangeText={(text) =>
                         setInput((prevState) => ({ ...prevState, year: parseInt(text.trim(),10) }))
                     }
                 />
-                <Text style={styles.inputText} >Maker</Text>
+                <Text style={styles.label} >Make</Text>
 
                 <TextInput  
-                    style={styles.inputBox}
-                    placeholder="Enter maker of your vehicle" 
-                    placeholderTextColor="#003f5c"
+                    style={commonStyles.inputBox}
+                    placeholder="Enter vehicle make" 
+                    placeholderTextColor={colors.gray4}
                     onChangeText={(text) =>
                         setInput((prevState) => ({ ...prevState, make: text.trim() }))
                     }
                 />
-                <Text style={styles.inputText} >Model</Text>
+                <Text style={styles.label} >Model</Text>
             
                 <TextInput  
-                    style={styles.inputBox}
-                    placeholder="Enter model of your vehicle" 
-                    placeholderTextColor="#003f5c"
+                    style={commonStyles.inputBox}
+                    placeholder="Enter vehicle model" 
+                    placeholderTextColor={colors.gray4}
                     onChangeText={(text) =>
                         setInput((prevState) => ({ ...prevState, model: text.trim() }))
                     }
                 />     
             </View>
 
-           
-            <TouchableOpacity style={styles.registerBtn} onPress={addVehicle}>
-            <Text style={styles.registerText}>Confirm</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelBtn} onPress={() => navigation.goBack()}>
-            <Text style={styles.cancelText}>Cancel</Text>
-            </TouchableOpacity>
-    
+            <BtnLarge title="confirm" onPress={addVehicle}/>
+            <BtnLarge title="cancel" onPress={() => navigation.goBack()} cancel={true}/>
         </View>
         );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
 	TextInput,
 	Text,
@@ -120,7 +120,8 @@ export const VehicleInfoCard = ({
 export const MechanicInfoCard = ({
 	item = sampleAppointment.mechanic, //vehicle data object
 }) => {
-	return (
+	if(item){
+		return (
 		<View style={commonStyles.card}>
 			<Text style={[commonStyles.h3, { marginBottom: 12 }]}>
 				{item.firstName} {item.lastName}
@@ -131,10 +132,21 @@ export const MechanicInfoCard = ({
 			</View>
 		</View>
 	);
+	}
+
+	return (
+		<View style={[commonStyles.card, commonStyles.cardBody]}>
+			<Text style={[commonStyles.body, { color: colors.gray4 }]}>
+				Mechanic not assigned
+			</Text>
+		</View>
+	);
+	
 };
 
 export const ServiceInfoCard = ({
 	item = sampleAppointment.quote.services,
+	handleTotalPrice,
 }) => {
 	const renderItem = ({ item }) => {
 		return (
@@ -151,6 +163,15 @@ export const ServiceInfoCard = ({
 		});
 		return total;
 	};
+
+	useEffect(
+		() => {
+			if( handleTotalPrice && item ){
+				handleTotalPrice(get_cost());
+			}
+		}
+	);
+	
 	if (item) {
 		return (
 			<View style={commonStyles.card}>
@@ -189,8 +210,8 @@ export const VehicleCard = ({
 					title={"Get A Quote"}
 					onPress={() =>
 						navigation.navigate("QuoteVehicle", {
-							...route,
-							vehicle: item,
+							...route.params,
+							selectedVehicle: item.id,
 						})
 					}
 				/>

@@ -44,7 +44,7 @@ export const VehicleListScreen = ({ navigation, route }) => {
 	);
 
     const renderItem = ({item}) => {
-        return <VehicleCard item={item} />;
+        return <VehicleCard item={item} navigation={navigation} route={route}/>;
     };
 
 

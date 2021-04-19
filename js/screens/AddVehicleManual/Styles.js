@@ -8,6 +8,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  label: {
+    fontSize: fonts.body,
+    color: colors.text,
+    marginBottom: 4,
+  },
   title:{
     fontSize: fonts.h1,
     color: colors.text,
@@ -15,7 +20,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center'
   },
-
+  content: {
+    marginBottom: 32,
+  },
   inputBox: {
 		borderStyle: "solid",
 		backgroundColor: 'white',

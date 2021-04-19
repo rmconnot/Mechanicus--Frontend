@@ -7,11 +7,15 @@ import {
 	Button,
 	Platform,
 	Alert,
+	SafeAreaView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import styles from "./Styles";
-import { gql, useMutation } from "@apollo/client";
 import Moment from "moment";
+import styles from "./Styles";
+import { colors, commonStyles } from "../../common/Style";
+import { Icon } from "../../common/Svg";
+import { BtnLarge, BtnBare } from "../../common/Buttons";
+import { gql, useMutation } from "@apollo/client";
 
 const APPOINTMENT_MUTATION = gql`
 	mutation(
@@ -31,8 +35,11 @@ const APPOINTMENT_MUTATION = gql`
 	}
 `;
 
-export function ScheduleScreen({ navigation, route }) {
-	console.log("scheduleScreen route.params: ", route.params);
+export function ScheduleScreen({ 
+	navigation, 
+	route,
+}) {
+	// console.log("scheduleScreen route.params: ", route.params);
 
 	const currentDate = Date.now();
 
@@ -87,32 +94,57 @@ export function ScheduleScreen({ navigation, route }) {
 	};
 
 	return (
-		<View style={styles.container}>
-			<Text style={styles.logo}>Schedule</Text>
-			<View style={styles.inputView}>
-				<DateTimePicker
-					value={scheduleInput.date}
-					mode="date"
-					is24Hour={true}
-					display="default"
-					onChange={onChange}
-				/>
+		<SafeAreaView style={commonStyles.pageContainer}>
+			<BtnBare title="Cancel" onPress={()=>{
+				navigation.navigate("TaskList");
+			}}/>
+			<View style={[commonStyles.card, commonStyles.shadowDefault, styles.row]}>
+				
+				<View style={styles.col}>
+					<View style={styles.labelContainer}>
+						<Icon name="calendar" size={24} color={colors.primaryDark} />
+						<Text style={commonStyles.h3}>Date</Text>
+					</View>
+					<View style={commonStyles.inputBox2}>
+						<DateTimePicker
+							value={scheduleInput.date}
+							mode="date"
+							is24Hour={true}
+							display="default"
+							onChange={onChange}
+						/>
+					</View>
+				</View>
+				
+				<View style={styles.col}>
+					<View style={styles.labelContainer}>
+						<Icon name="clock" size={24} color={colors.primaryDark} />
+						<Text style={commonStyles.h3}>Time</Text>
+					</View>
+					<View style={commonStyles.inputBox2}>
+						<DateTimePicker
+							value={scheduleInput.date}
+							mode="time"
+							is24Hour={true}
+							// minuteInterval={15}
+							display="default"
+							onChange={onChange}
+						/>
+					</View>
+				</View>
+
 			</View>
-			<View style={styles.inputView}>
-				<DateTimePicker
-					value={scheduleInput.date}
-					mode="time"
-					is24Hour={true}
-					// minuteInterval={15}
-					display="default"
-					onChange={onChange}
-				/>
-			</View>
-			<View style={styles.inputView}>
+			
+			<View style={[commonStyles.card, commonStyles.shadowDefault]}>
+				<View style={styles.labelContainer}>
+					<Icon name="building" size={24} color={colors.primaryDark} />
+					<Text style={commonStyles.h3}>Address</Text>
+				</View>
 				<TextInput
-					style={styles.inputText}
-					placeholder="Enter your Address"
-					placeholderTextColor="#003f5c"
+					style={[commonStyles.inputBox2, styles.multiline]}
+					multiline={true}
+					placeholder="street, apt number, state, postcode"
+					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setScheduleInput((prevState) => {
@@ -120,12 +152,17 @@ export function ScheduleScreen({ navigation, route }) {
 						})
 					}
 				/>
+				
 			</View>
-			<View style={styles.inputView}>
+			<View style={[commonStyles.card, commonStyles.shadowDefault]}>
+				<View style={styles.labelContainer}>
+					<Icon name="phone" size={24} color={colors.primaryDark} />
+					<Text style={commonStyles.h3}>Phone#</Text>
+				</View>
 				<TextInput
-					style={styles.inputText}
+					style={commonStyles.inputBox2}
 					placeholder="Enter your phone number"
-					placeholderTextColor="#003f5c"
+					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
 						setScheduleInput((prevState) => {
@@ -134,21 +171,13 @@ export function ScheduleScreen({ navigation, route }) {
 					}
 				/>
 			</View>
-			<TouchableOpacity
-				style={styles.registerBtn}
-				onPress={
-					// Alert.alert("jump to the payment page" + scheduleInput.date)
-					handleConfirmation
-				}
-			>
-				<Text style={styles.registerText}>Confirm</Text>
-			</TouchableOpacity>
-			<TouchableOpacity
-				style={styles.cancelBtn}
-				onPress={() => Alert.alert("jump to the quote page")}
-			>
-				<Text style={styles.cancelText}>Cancel</Text>
-			</TouchableOpacity>
-		</View>
+			<View style={{marginTop: 48}}>
+			<BtnLarge 
+			title={"Schedule & Pay"}
+			onPress={handleConfirmation}
+			/>
+			</View>
+			
+		</SafeAreaView>
 	);
 }

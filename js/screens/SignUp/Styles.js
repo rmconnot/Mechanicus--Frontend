@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
+	codeContainer: {
+		flexDirection: "row",
+		marginBottom: 24,
+		padding: 8,
+		backgroundColor: "white",
+		borderRadius: 4,
+	},
 	optionRow: {
 		paddingTop: 12,
 		marginTop: 4,
@@ -31,9 +38,13 @@ const styles = StyleSheet.create({
 		borderStyle: "solid",
 		backgroundColor: "white",
 		padding: 12,
-		marginBottom: 26,
+		marginBottom: 24,
 		borderRadius: 4,
 		fontSize: fonts.body,
+	},
+	codeInput: {
+		flex: 1,
+		marginBottom: 0,
 	},
 	checkboxMark: {
 		width: 16,
@@ -43,29 +54,9 @@ const styles = StyleSheet.create({
 		borderRadius: 2,
 		justifyContent: "center",
 	},
-	forgot: {
-		color: "white",
-		fontSize: 12,
-	},
-	registerBtn: {
-		width: "80%",
-		backgroundColor: "#fff",
-		borderRadius: 25,
-		borderWidth: 2.5,
-		borderColor: "#fff",
-		height: 50,
-		alignItems: "center",
-		justifyContent: "center",
-		marginTop: 40,
-		marginBottom: 10,
-	},
-	registerText: {
-		color: "#7ad7f0",
-		fontSize: 16,
-	},
 	codeBtn: {
-		width: "35%",
-		borderRadius: 25,
+		padding: 12,
+		borderRadius: 4,
 		backgroundColor: "#6787e7",
 		height: 50,
 		alignItems: "center",
@@ -73,19 +64,6 @@ const styles = StyleSheet.create({
 	},
 	codeBtnText: {
 		color: "#fff",
-		fontSize: 14,
-	},
-	cancelBtn: {
-		width: "80%",
-		backgroundColor: "#7ad7f0",
-		borderRadius: 25,
-		borderWidth: 2.5,
-		borderColor: "#fff",
-		height: 50,
-		alignItems: "center",
-		justifyContent: "center",
-		marginTop: 20,
-		marginBottom: 10,
 	},
 });
 

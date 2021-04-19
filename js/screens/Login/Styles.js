@@ -18,14 +18,6 @@ const styles = StyleSheet.create({
   content: {
     marginBottom: 48,
   },
-  inputBox: {
-		borderStyle: "solid",
-		backgroundColor: 'white',
-		padding: 12,
-		marginBottom: 26,
-		borderRadius: 4,
-    fontSize: fonts.body,
-	},
   pswContainer: {
     flexDirection: "row",
     alignItems: "flex-start",
