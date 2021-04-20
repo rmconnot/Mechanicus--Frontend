@@ -79,7 +79,7 @@ export default function QuoteVehicleScreen({ navigation, route }) {
                     () => navigation.navigate("AddVehicleManual",{...route})
                 }/>
 				<FlatList
-					data={data.vehicles}
+					data={data? data.vehicles:[]}
 					renderItem={renderVehicleItem}
 					keyExtractor={(item) => item.id.toString()}
 				/>
@@ -88,9 +88,11 @@ export default function QuoteVehicleScreen({ navigation, route }) {
 			<NavGroup
 				navigation={navigation}
 				options={navOption}
-				routeProps={Object.assign({}, currentUser, {
+				routeProps={{
+					...route.params,
 					selectedVehicle: selectedVehicle,
-				})}
+				}}
+				disabled={ selectedVehicle == "" }
 			/>
 		</SafeAreaView>
 	);

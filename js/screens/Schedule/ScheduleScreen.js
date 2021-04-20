@@ -8,12 +8,14 @@ import {
 	Platform,
 	Alert,
 	SafeAreaView,
+	ScrollView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Moment from "moment";
 import styles from "./Styles";
 import { colors, commonStyles } from "../../common/Style";
 import { Icon } from "../../common/Svg";
+import { TopNavBar } from "../../common/TopNav";
 import { BtnLarge, BtnBare } from "../../common/Buttons";
 import { gql, useMutation } from "@apollo/client";
 
@@ -94,10 +96,14 @@ export function ScheduleScreen({
 	};
 
 	return (
-		<SafeAreaView style={commonStyles.pageContainer}>
-			<BtnBare title="Cancel" onPress={()=>{
-				navigation.navigate("TaskList");
-			}}/>
+		<SafeAreaView style={{flex:1}}>
+			<TopNavBar 
+			title="Schedule" 
+			cancel={true} 
+			onPressBack={() => navigation.navigate("TaskList", route.params)}
+			onPressCancel={() => navigation.navigate("TaskList", route.params)}
+			/>
+			<ScrollView style={[commonStyles.pageContainer, {marginTop: 12}]}>
 			<View style={[commonStyles.card, commonStyles.shadowDefault, styles.row]}>
 				
 				<View style={styles.col}>
@@ -177,7 +183,7 @@ export function ScheduleScreen({
 			onPress={handleConfirmation}
 			/>
 			</View>
-			
+			</ScrollView>
 		</SafeAreaView>
 	);
 }

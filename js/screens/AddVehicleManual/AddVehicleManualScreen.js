@@ -1,5 +1,5 @@
 import React, { useState }  from 'react';
-import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, Image, Button } from 'react-native';
+import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, Image, Button, ScrollView, SafeAreaView } from 'react-native';
 import { gql, useMutation } from "@apollo/client";
 import { colors, commonStyles } from "../../common/Style";
 import { BtnLarge } from "../../common/Buttons";
@@ -15,8 +15,10 @@ const VEHICLE_MUTATION = gql`
 `;
 
 export const AddVehicleManualScreen = ({ navigation, route }) => {
+    const { currentUser } = route.params;
+    console.log(currentUser.id);
     const [input, setInput] = useState({
-        customerID: route.params.id,
+        customerID: currentUser.id,
         vin: "",
         type:"",
         year:0,
@@ -56,7 +58,7 @@ export const AddVehicleManualScreen = ({ navigation, route }) => {
 	};
     
     return (
-        <View style={commonStyles.pageContainer}>
+        <ScrollView style={commonStyles.pageContainer}>
             <View style={styles.content}>
                 <Text style={styles.label} >VIN</Text>
                 <TextInput  
@@ -111,6 +113,6 @@ export const AddVehicleManualScreen = ({ navigation, route }) => {
 
             <BtnLarge title="confirm" onPress={addVehicle}/>
             <BtnLarge title="cancel" onPress={() => navigation.goBack()} cancel={true}/>
-        </View>
+        </ScrollView>
         );
 }

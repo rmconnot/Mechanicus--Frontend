@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   content: {
-    marginBottom: 32,
+    marginBottom: 24,
   },
   inputBox: {
 		borderStyle: "solid",

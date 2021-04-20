@@ -181,7 +181,7 @@ export const SignUpScreen = ({ navigation }) => {
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
-						setInput((prevState) => ({ ...prevState, password: text.trim() }))
+						setInput((prevState) => ({ ...prevState, phone: text.trim() }))
 					}
 				/>
 
@@ -210,14 +210,11 @@ export const SignUpScreen = ({ navigation }) => {
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
-						setInput((prevState) => ({
-							...prevState,
-							confirmPassword: text.trim(),
-						}))
+						setInput((prevState) => ({ ...prevState, password: text.trim() }))
 					}
 				/>
 
-				<Text style={[commonStyles.body, styles.label]}>Confirm password</Text>
+				<Text style={[commonStyles.body, styles.label]}>Confirm Password</Text>
 				<TextInput
 					secureTextEntry={true}
 					style={commonStyles.inputBox}
@@ -225,9 +222,14 @@ export const SignUpScreen = ({ navigation }) => {
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
-						setInput((prevState) => ({ ...prevState, phone: text.trim() }))
+						setInput((prevState) => ({
+							...prevState,
+							confirmPassword: text.trim(),
+						}))
 					}
 				/>
+
+				
 			</View>
 			
 

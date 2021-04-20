@@ -35,7 +35,7 @@ export function ProfileScreen({ navigation, route }) {
 
     return (
         <SafeAreaView style={commonStyles.container}> 
-            <View style={commonStyles.pageContainer}>
+            <View style={[commonStyles.pageContainer, {flex:1}]}>
                 <View style={styles.titleRow}>
                     <Icon name = "account" color = {colors.gray4} size = {56}/>
                     <Text style={[commonStyles.h2, styles.userName]}>{data.customerProfile.firstName} {data.customerProfile.lastName}</Text>
