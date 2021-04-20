@@ -157,11 +157,15 @@ export const ServiceInfoCard = ({
 		);
 	};
 	const get_cost = (services) => {
+		const tax_rate = 0.06,
+			  labor_rate = 95;
 		let total = 0;
 		item.forEach((obj) => {
 			total += obj.price;
 		});
-		return total;
+		let tax = total*0.06;
+		let fee = 2.50;
+		return total+tax+fee;
 	};
 
 	useEffect(
@@ -175,7 +179,11 @@ export const ServiceInfoCard = ({
 	if (item) {
 		return (
 			<View style={commonStyles.card}>
-				<FlatList data={item} renderItem={renderItem} />
+				<FlatList 
+				data={item} 
+				renderItem={renderItem} 
+				keyExtractor={(item) => item?item.id.toString():""}
+				/>
 				<View style={styles.totalEntry}>
 					<Text style={commonStyles.body}>Total Price </Text>
 					<Text style={commonStyles.h3}> {get_cost()}</Text>

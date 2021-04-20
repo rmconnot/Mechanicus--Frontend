@@ -81,55 +81,51 @@ function ServiceEntry({ text, price }) {
 }
 /* <QuoteReviewScreen> */
 export default function QuoteReviewScreen({ navigation, route }) {
+	const { currentUser, selectedServices, selectedVehicle } = route.params;
 	const sectionTitleStyle = [commonStyles.body, {color: colors.gray3}];
 	// console.log(" QuoteReview route params: ", route.params);
 
 	const [quoteID, setQuoteID] = useState(null),
 		  [totalPrice, setTotalPrice] = useState(0);
-
+	
+	/* get services data */
 	const {
 		data: servicesData,
 		loading: servicesLoading,
 		error: servicesError,
 	} = useQuery(SERVICES_QUERY, {
 		variables: {
-			servicesList: route.params.selectedServices,
+			servicesList: selectedServices,
 		},
+		onError: (error) => console.log(JSON.stringify(error, null, 2)),
 	});
 
+	/* get vehicle data */
 	const {
 		data: vehicleData,
 		loading: vehicleLoading,
 		error: vehicleError,
 	} = useQuery(VEHICLE_QUERY, {
 		variables: {
-			vehicleID: route.params.selectedVehicle,
+			vehicleID: selectedVehicle,
 		},
+		onError: (error) => console.log(JSON.stringify(error, null, 2)),
 	});
 
-	const [createQuote, { data: quoteData, error }] = useMutation(QUOTE_MUTATION);
-
-	if (error) {
-		console.error(error.message);
-	}
-
-	let servicesArray = [];
-
-	if (servicesData) {
-		for (let service of servicesData.services) {
-			servicesArray.push(service.id);
-		}
-		// console.log("servicesArray: ", servicesArray);
-	}
+	/* create quote */
+	const [createQuote, { data: quoteData, error }] = useMutation(
+		QUOTE_MUTATION, {
+			onError: (error) => console.log(JSON.stringify(error, null, 2)),
+		});
 
 	const saveQuote = async () => {
 		await createQuote({
 			variables: {
 				costEstimate: totalPrice,
-				customerID: route.params.id,
+				customerID: currentUser.id,
 				status: "quote",
-				vehicleID: vehicleData.vehicle.id,
-				services: servicesArray,
+				vehicleID: selectedVehicle,
+				services: selectedServices,
 			},
 		}).then((result) => {
 			let quoteID = result.data.createQuote.id;
@@ -139,7 +135,9 @@ export default function QuoteReviewScreen({ navigation, route }) {
 				routes: [
 					{
 						name: "Schedule",
-						params: { quoteID: quoteID },
+						params: { 
+							...route.params,
+							quoteID: quoteID },
 					},
 				],
 			});
@@ -155,7 +153,7 @@ export default function QuoteReviewScreen({ navigation, route }) {
 						<View style={styles.row}>
 							<Text style={sectionTitleStyle}>Vehicle</Text>
 							<BtnBare onPress={() => navigation.navigate(
-								"QuoteVehicle", route
+								"QuoteVehicle", {...route.params}
 								)}/>
 						</View>
 						<VehicleInfoCard item={ vehicleData? vehicleData.vehicle : "" }/>
@@ -165,7 +163,7 @@ export default function QuoteReviewScreen({ navigation, route }) {
 						<View style={styles.row}>
 							<Text style={sectionTitleStyle}>Service</Text>
 							<BtnBare onPress={() => navigation.navigate(
-								"QuoteService", route
+								"QuoteService", {...route.params}
 								)}/>
 						</View>
 						<ServiceInfoCard 

@@ -15,14 +15,14 @@ const BtmNavOptions = [
 export function NavGroup({
 	navigation,
 	options = [
-		{ title: "Back", to: "TaskList", data: {}, disabled: false },
-		{ title: "Next", to: "VehicleList", data: {}, disabled: false },
+		{ title: "Back", to: "TaskList", },
+		{ title: "Next", to: "VehicleList", },
 	],
-	routeProps,
-	callbackFunction = null,
+	routeProps = null,
+	disabled = false,
 }) {
-	const navigate = navigation.navigate;
-	// console.log("callbackFunction: ", callbackFunction);
+	
+	
 	if(options.length==1){
 		return (
 			<View style={styles.navGroupContainer}>
@@ -30,13 +30,13 @@ export function NavGroup({
 				</View>
 				<View style={styles.navGroupItem}>
 					<BtnLarge
-						style={styles.navGroupItem}
-						title={options[0].title}
-						onPress={() =>
-							navigation.navigate(
-								options[0].to,
-								routeProps ? routeProps : null
-							)}
+					disabled={disabled}
+					style={styles.navGroupItem}
+					title={options[0].title}
+					onPress={() =>
+						navigation.navigate(
+							options[0].to, routeProps,
+						)}
 					/>
 				</View>
 			</View>
@@ -50,8 +50,7 @@ export function NavGroup({
 					sub = {options[0].title == "Back"}
 					onPress = {() =>
 						navigation.navigate(
-							options[0].to,
-							routeProps ? routeProps : null
+							options[0].to, routeProps,
 						)}
 				/>
 			</View>
@@ -61,10 +60,9 @@ export function NavGroup({
 					title={options[1].title}
 					onPress={() =>
 						navigation.navigate(
-							options[1].to,
-							routeProps ? routeProps : null
+							options[1].to, routeProps,
 						)}
-					disabled={options[1].disabled}
+					disabled={disabled}
 				/>
 			</View>
 		</View>
@@ -137,6 +135,7 @@ export default function BottomNav({
 
 const styles = StyleSheet.create({
 	bottomNav: {
+		flex: 0.1,
 		flexDirection: "row",
 		justifyContent: "space-around",
 		backgroundColor: "white",
