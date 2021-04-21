@@ -39,6 +39,7 @@ const APPOINTMENT_QUERY = gql`
 					vin
 				}
 				services {
+					id
 					type
 					price
 				}

@@ -6,6 +6,7 @@ import {
 	TouchableOpacity,
 	FlatList,
 	SafeAreaView,
+	ScrollView,
 } from "react-native";
 import BottomNav from "../../common/BottomNav";
 import { gql, useQuery } from "@apollo/client";
@@ -13,6 +14,7 @@ import { TaskCard, QuoteCard } from "../../common/Card";
 import { styles } from "./Styles";
 import { commonStyles } from "../../common/Style";
 import { BtnDisplay } from "../../common/Buttons";
+import TopNav, { TaskTop } from "../../common/TopNav";
 
 const sampleQuotes = [
 	{
@@ -89,6 +91,7 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 					imgUrl
 				}
 				services {
+					id
 					type
 					price
 				}
@@ -117,6 +120,7 @@ const APPOINTMENTS_QUERY = gql`
 					imgUrl
 				}
 				services {
+					id
 					type
 					price
 				}
@@ -180,8 +184,8 @@ const QUOTES_SUBSCRIPTION = gql`
 
 export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
-	console.log(currentUser);
-	const [displayType, setDisplayType] = useState("task");
+	console.log(route.params);
+	const [displayType, setDisplayType] = useState("appointments");
 
 	const { subscribeToMore, data, error, loading } = useQuery(
 		APPOINTMENTS_QUERY,
@@ -191,25 +195,13 @@ export const TaskListScreen = ({ navigation, route }) => {
 		}
 	);
 
-	const switchToTask = () => {
-		setDisplayType("task");
-		console.log(data.appointments);
-	};
-
-	const switchToQuote = () => {
-		setDisplayType("quote");
-		console.log(data.quotes);
-	};
-
 	const {
 		subscribeToMore: subscribeToMoreQuotes,
 		data: quoteData,
 		error: quoteError,
 		loading: quoteLoading,
 	} = useQuery(QUOTES_QUERY, {
-		variables: {
-			customerID: currentUser.id,
-		},
+		variables: { customerID: currentUser.id },
 		onError: (error) => console.log(JSON.stringify(error, null, 2)),
 	});
 
@@ -280,53 +272,45 @@ export const TaskListScreen = ({ navigation, route }) => {
 
 	return (
 		<SafeAreaView style={commonStyles.container}>
-			<View style={commonStyles.pageContainer}>
-				<View style={styles.tabContainer}>
-					<TouchableOpacity
-						style={
-							displayType == "task" ? styles.switchBtnActive : styles.switchBtn
+			<View style={{ flex: 1 }}>
+				<TaskTop activated={displayType} handleStatus={setDisplayType} />
+				<View style={commonStyles.pageContainer}>
+					<FlatList
+						ListHeaderComponent={
+							<BtnDisplay
+								onPress={() =>
+									navigation.navigate("QuoteVehicle", {
+										currentUser: currentUser,
+									})
+								}
+							/>
 						}
-						onPress={switchToTask}
-					>
-						<Text style={displayType == "task" ? styles.tabActive : styles.tab}>
-							Tasks
-						</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={
-							displayType == "quote" ? styles.switchBtnActive : styles.switchBtn
+						ListFooterComponent={<View style={commonStyles.blankFooter}></View>}
+						ListEmptyComponent={<Text>No upcoming appointments</Text>}
+						data={
+							displayType == "appointments"
+								? data
+									? data.appointments
+									: ""
+								: quoteData
+								? quoteData.quotes
+								: ""
 						}
-						onPress={switchToQuote}
-					>
-						<Text
-							style={displayType == "quote" ? styles.tabActive : styles.tab}
-						>
-							Quotes
-						</Text>
-					</TouchableOpacity>
-				</View>
-				<BtnDisplay
-					onPress={() =>
-						navigation.navigate("QuoteVehicle", { currentUser: currentUser })
-					}
-				/>
-				<View>
-					{data ? (
-						<FlatList
-							data={
-								displayType == "task" ? data.appointments : quoteData.quotes
-							}
-							renderItem={
-								displayType == "task" ? renderItemPresent : renderItemQuotes
-							}
-							keyExtractor={(item) => item.id.toString()}
-						/>
-					) : (
-						<Text>No upcoming appointments</Text>
-					)}
+						renderItem={
+							displayType == "appointments"
+								? renderItemPresent
+								: renderItemQuotes
+						}
+						keyExtractor={(item) => item.id.toString()}
+					/>
 				</View>
 			</View>
-			<BottomNav navigation={navigation} routeProps={route} activated="Home" />
+			<BottomNav
+				style={{ flex: 0.1 }}
+				navigation={navigation}
+				routeProps={route}
+				activated="Home"
+			/>
 		</SafeAreaView>
 	);
 };

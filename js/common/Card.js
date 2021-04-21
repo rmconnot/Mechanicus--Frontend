@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	TextInput,
 	Text,
@@ -157,12 +157,26 @@ export const ServiceInfoCard = ({
 			</View>
 		);
 	};
+
+	const [fees, setFees] = useState({
+		tax: null,
+		fee: null,
+	});
+
+	console.log("fees: ", fees);
+
 	const get_cost = (services) => {
+		const tax_rate = 0.06,
+			labor_rate = 95;
 		let total = 0;
 		item.forEach((obj) => {
 			total += obj.price;
 		});
-		return total;
+		let tax = total * 0.06;
+		if (!fees.tax) setFees((prevState) => ({ ...prevState, tax: tax }));
+		let fee = 2.5;
+		if (!fees.fee) setFees((prevState) => ({ ...prevState, fee: fee }));
+		return total + tax + fee;
 	};
 
 	useEffect(() => {
@@ -174,10 +188,18 @@ export const ServiceInfoCard = ({
 	if (item) {
 		return (
 			<View style={commonStyles.card}>
+				<View style={styles.entry}>
+					<Text style={commonStyles.body}>Tax</Text>
+					<Text style={commonStyles.body}>{fees.tax}</Text>
+				</View>
+				<View style={styles.entry}>
+					<Text style={commonStyles.body}>Fees</Text>
+					<Text style={commonStyles.body}>{fees.fee}</Text>
+				</View>
 				<FlatList
 					data={item}
 					renderItem={renderItem}
-					keyExtractor={(item) => item.id.toString()}
+					keyExtractor={(item) => (item ? item.id.toString() : "")}
 				/>
 				<View style={styles.totalEntry}>
 					<Text style={commonStyles.body}>Total Price </Text>

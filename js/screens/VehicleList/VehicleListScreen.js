@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TextInput, Text, View, FlatList, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import { commonStyles } from '../../common/Style';
 import BottomNav from '../../common/BottomNav';
+import { TopNavBar } from '../../common/TopNav';
 import { VehicleCard } from '../../common/Card';
 import { BtnDisplay } from '../../common/Buttons';
 import { styles } from './Styles';
@@ -50,9 +51,10 @@ export const VehicleListScreen = ({ navigation, route }) => {
 
     return (
         <SafeAreaView style={commonStyles.container}>
-            <View style={commonStyles.pageContainer}>
+            <TopNavBar title="My Vehicles" plain={true}/>
+            <View style={[commonStyles.pageContainer, {flex:1}]}>
                 <BtnDisplay title="New Vechicle" icon="add" left={true} onPress={
-                    () => navigation.navigate("AddVehicleManual",{...route})
+                    () => navigation.navigate("AddVehicleManual",{...route.params})
                 }/>
                 <FlatList
                     data={data?data.vehicles:[]}

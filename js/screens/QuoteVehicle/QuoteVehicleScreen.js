@@ -105,6 +105,7 @@ export default function QuoteVehicleScreen({ navigation, route }) {
 				routeProps={Object.assign({}, route.params, {
 					selectedVehicle: selectedVehicle,
 				})}
+				disabled={selectedVehicle == ""}
 			/>
 		</SafeAreaView>
 	);

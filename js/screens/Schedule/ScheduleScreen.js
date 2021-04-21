@@ -8,12 +8,14 @@ import {
 	Platform,
 	Alert,
 	SafeAreaView,
+	ScrollView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Moment from "moment";
 import styles from "./Styles";
 import { colors, commonStyles } from "../../common/Style";
 import { Icon } from "../../common/Svg";
+import { TopNavBar } from "../../common/TopNav";
 import { BtnLarge, BtnBare } from "../../common/Buttons";
 import { gql, useMutation } from "@apollo/client";
 
@@ -92,86 +94,90 @@ export function ScheduleScreen({ navigation, route }) {
 	};
 
 	return (
-		<SafeAreaView style={commonStyles.pageContainer}>
-			<BtnBare
-				title="Cancel"
-				onPress={() => {
-					navigation.navigate("TaskList");
-				}}
+		<SafeAreaView style={{ flex: 1 }}>
+			<TopNavBar
+				title="Schedule"
+				cancel={true}
+				onPressBack={() => navigation.navigate("TaskList", route.params)}
+				onPressCancel={() => navigation.navigate("TaskList", route.params)}
 			/>
-			<View style={[commonStyles.card, commonStyles.shadowDefault, styles.row]}>
-				<View style={styles.col}>
-					<View style={styles.labelContainer}>
-						<Icon name="calendar" size={24} color={colors.primaryDark} />
-						<Text style={commonStyles.h3}>Date</Text>
+			<ScrollView style={[commonStyles.pageContainer, { marginTop: 12 }]}>
+				<View
+					style={[commonStyles.card, commonStyles.shadowDefault, styles.row]}
+				>
+					<View style={styles.col}>
+						<View style={styles.labelContainer}>
+							<Icon name="calendar" size={24} color={colors.primaryDark} />
+							<Text style={commonStyles.h3}>Date</Text>
+						</View>
+						<View style={commonStyles.inputBox2}>
+							<DateTimePicker
+								value={scheduleInput.date}
+								mode="date"
+								is24Hour={true}
+								display="default"
+								onChange={onChange}
+							/>
+						</View>
 					</View>
-					<View style={commonStyles.inputBox2}>
-						<DateTimePicker
-							value={scheduleInput.date}
-							mode="date"
-							is24Hour={true}
-							display="default"
-							onChange={onChange}
-						/>
+
+					<View style={styles.col}>
+						<View style={styles.labelContainer}>
+							<Icon name="clock" size={24} color={colors.primaryDark} />
+							<Text style={commonStyles.h3}>Time</Text>
+						</View>
+						<View style={commonStyles.inputBox2}>
+							<DateTimePicker
+								value={scheduleInput.date}
+								mode="time"
+								is24Hour={true}
+								// minuteInterval={15}
+								display="default"
+								onChange={onChange}
+							/>
+						</View>
 					</View>
 				</View>
 
-				<View style={styles.col}>
+				<View style={[commonStyles.card, commonStyles.shadowDefault]}>
 					<View style={styles.labelContainer}>
-						<Icon name="clock" size={24} color={colors.primaryDark} />
-						<Text style={commonStyles.h3}>Time</Text>
+						<Icon name="building" size={24} color={colors.primaryDark} />
+						<Text style={commonStyles.h3}>Address</Text>
 					</View>
-					<View style={commonStyles.inputBox2}>
-						<DateTimePicker
-							value={scheduleInput.date}
-							mode="time"
-							is24Hour={true}
-							// minuteInterval={15}
-							display="default"
-							onChange={onChange}
-						/>
+					<TextInput
+						style={[commonStyles.inputBox2, styles.multiline]}
+						multiline={true}
+						placeholder="street, apt number, state, postcode"
+						placeholderTextColor={colors.gray4}
+						autoCapitalize="none"
+						onChangeText={(text) =>
+							setScheduleInput((prevState) => {
+								return { ...prevState, address: text };
+							})
+						}
+					/>
+				</View>
+				<View style={[commonStyles.card, commonStyles.shadowDefault]}>
+					<View style={styles.labelContainer}>
+						<Icon name="phone" size={24} color={colors.primaryDark} />
+						<Text style={commonStyles.h3}>Phone#</Text>
 					</View>
+					<TextInput
+						style={commonStyles.inputBox2}
+						placeholder="Enter your phone number"
+						placeholderTextColor={colors.gray4}
+						autoCapitalize="none"
+						onChangeText={(text) =>
+							setScheduleInput((prevState) => {
+								return { ...prevState, phone: text };
+							})
+						}
+					/>
 				</View>
-			</View>
-
-			<View style={[commonStyles.card, commonStyles.shadowDefault]}>
-				<View style={styles.labelContainer}>
-					<Icon name="building" size={24} color={colors.primaryDark} />
-					<Text style={commonStyles.h3}>Address</Text>
+				<View style={{ marginTop: 48 }}>
+					<BtnLarge title={"Schedule & Pay"} onPress={handleConfirmation} />
 				</View>
-				<TextInput
-					style={[commonStyles.inputBox2, styles.multiline]}
-					multiline={true}
-					placeholder="street, apt number, state, postcode"
-					placeholderTextColor={colors.gray4}
-					autoCapitalize="none"
-					onChangeText={(text) =>
-						setScheduleInput((prevState) => {
-							return { ...prevState, address: text };
-						})
-					}
-				/>
-			</View>
-			<View style={[commonStyles.card, commonStyles.shadowDefault]}>
-				<View style={styles.labelContainer}>
-					<Icon name="phone" size={24} color={colors.primaryDark} />
-					<Text style={commonStyles.h3}>Phone#</Text>
-				</View>
-				<TextInput
-					style={commonStyles.inputBox2}
-					placeholder="Enter your phone number"
-					placeholderTextColor={colors.gray4}
-					autoCapitalize="none"
-					onChangeText={(text) =>
-						setScheduleInput((prevState) => {
-							return { ...prevState, phone: text };
-						})
-					}
-				/>
-			</View>
-			<View style={{ marginTop: 48 }}>
-				<BtnLarge title={"Schedule & Pay"} onPress={handleConfirmation} />
-			</View>
+			</ScrollView>
 		</SafeAreaView>
 	);
 }

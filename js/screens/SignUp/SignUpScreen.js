@@ -217,7 +217,7 @@ export const SignUpScreen = ({ navigation }) => {
 					}
 				/>
 
-				<Text style={[commonStyles.body, styles.label]}>Confirm password</Text>
+				<Text style={[commonStyles.body, styles.label]}>Confirm Password</Text>
 				<TextInput
 					secureTextEntry={true}
 					style={commonStyles.inputBox}

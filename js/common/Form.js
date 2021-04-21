@@ -217,15 +217,13 @@ export function SubOptions({
 
 	const renderSubItem = ({ item }) => {
 		return (
-			<View>
-				<ServiceCheckbox
-					id={item.id}
-					text={item.type}
-					price={item.price}
-					checked={item.checked}
-					handleStatus={handleStatus}
-				/>
-			</View>
+			<ServiceCheckbox
+				id={item.id}
+				text={item.type}
+				price={item.price}
+				checked={item.checked}
+				handleStatus={handleStatus}
+			/>
 		);
 	};
 	return (
@@ -236,7 +234,7 @@ export function SubOptions({
 					status ? styles.checkboxContainerActive : styles.checkboxContainer,
 				]}
 				activeOpacity={0.6}
-				onPress={(e) => changeStatus()}
+				onPress={changeStatus}
 			>
 				<Text style={styles.serviceText}>{item.type}</Text>
 				<View style={styles.leftPart}>
@@ -260,67 +258,37 @@ export function SubOptions({
 }
 
 export function CheckboxGroup({
+	initSelections = [], //initSelections
 	options = sampleServiceList,
 	handleCheckedServices,
 	Menuchecked = false,
 }) {
-	const initSelections = () => {
-		let result = [];
-		options.forEach((item) => {
-			if (item.checked) result.push(item.id);
-		});
-		return result;
-	};
-
-	const [Menustatus, onChangeMenuStatus] = React.useState(Menuchecked);
-	const changeMenuStatus = () => {
-		onChangeMenuStatus(!Menustatus);
-	};
-
 	//selections: stored ids of checked options
-	const [selections, onChangeSelections] = React.useState(
-		initSelections(options)
-	);
+	const [selections, onChangeSelections] = React.useState(initSelections);
 	const handleStatus = (item) => {
 		let temp = selections.slice();
 		let index = selections.indexOf(item.id);
 		//if item is not checked and exist in selections, remove it from selections
 		if (!item.checked && index != -1) {
-			// if (item.id == "02") {
-			// 	changeMenuStatus();
-			// 	console.log("menu status not checked", Menustatus);
-			// 	temp.splice(index, 1);
-			// 	onChangeSelections(temp);
-			// }
 			temp.splice(index, 1);
 			onChangeSelections(temp);
 		} //if item is checked and not in selections, add it in
 		else if (item.checked && index == -1) {
-			// if (item.id == "02") {
-			// 	changeMenuStatus();
-			// 	console.log("menu status checked", Menustatus);
-			// 	temp.push(item.id);
-			// 	onChangeSelections(temp);
-			// }
 			temp.push(item.id);
 			onChangeSelections(temp);
 		}
 	};
 
 	const renderItem = ({ item }) => {
-		if (item.options && Menustatus) {
-			return (
-				<View>
-					<SubOptions options={item} />
-				</View>
-			);
+		if (item.options) {
+			return <SubOptions item={item} handleStatus={handleStatus} />;
 		}
 		return (
 			<ServiceCheckbox
 				id={item.id}
 				text={item.type}
 				price={item.price}
-				checked={item.checked}
+				checked={selections.includes(item.id)}
 				handleStatus={handleStatus}
 			/>
 		);
@@ -340,6 +308,13 @@ export function CheckboxGroup({
 				renderItem={renderItem}
 				keyExtractor={(item) => item.id.toString()}
 				style={styles.flatListContainer}
+				ListEmptyComponent={
+					<View style={[commonStyles.card, commonStyles.cardBody]}>
+						<Text style={[commonStyles.body, { color: colors.gray4 }]}>
+							Loading Services...
+						</Text>
+					</View>
+				}
 			/>
 		</View>
 	);

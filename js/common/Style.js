@@ -37,8 +37,18 @@ export const commonStyles = StyleSheet.create({
         flex: 1,
         justifyContent: "space-between",
     },
+    row: {
+        flexDirection: "row",
+        justifyContent: 'center',
+        alignItems: "center",
+    },
+    header: {
+		borderBottomLeftRadius: 24,
+		borderBottomRightRadius: 24,
+    },
     pageContainer: {
         paddingHorizontal: 16,
+        marginTop: 12,
     },
     card: {
         padding: 16,
@@ -59,6 +69,9 @@ export const commonStyles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
     },
+    blankFooter: {
+        height: 5*fonts.body,
+    },
     tag: {
         backgroundColor: colors.gray5,
         borderRadius: 12,
@@ -72,7 +85,6 @@ export const commonStyles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 4,
-        marginVertical: 8,
     },
     btn_sub: {
         borderWidth: 1,
@@ -92,8 +104,9 @@ export const commonStyles = StyleSheet.create({
         paddingVertical: 4,
     },
     btn_lg: {
-        paddingVertical: 16,
+        paddingVertical: 12,
         paddingHorizontal: 24,
+        marginVertical: 8,
     },
     btn_display: {
         paddingHorizontal: 24,

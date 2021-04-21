@@ -40,49 +40,23 @@ const emptyServiceList = [
 		price: 0,
 	},
 ];
-const sampleServiceList = [
-	{
-		id: "01",
-		type: "Vehicle Inspection",
-		price: 100,
-	},
-	{
-		id: "02",
-		type: "Oil change",
-		price: 100,
-	},
-	{
-		id: "03",
-		type: "Brake repair",
-		price: 100,
-	},
-	{
-		id: "04",
-		type: "Battery replacement",
-		price: 100,
-	},
-	{
-		id: "05",
-		type: "Battery Jump Service",
-		price: 100,
-	},
-];
 
 /* <QuoteServiceScreen> */
 export default function QuoteServiceScreen({ navigation, route }) {
-	let navigate = navigation.navigate;
-	console.log("Quote Service route params: ", route.params);
-
+	// console.log("route params: ", route.params);
+	const { currentUser } = route.params;
 	const { data, error, loading } = useQuery(SERVICES_QUERY);
 
-	const [servicesListProp, setServicesListProp] = useState();
+	const [selectedServices, setSelectedServices] = useState(
+		route.params.selectedServices || []
+	);
 
 	if (error) {
 		Alert.alert("Error!", error.message, [{ text: "OK", style: "OK" }]);
 	}
 
 	const handleCheckedServices = (servicesList) => {
-		setServicesListProp(servicesList);
+		setSelectedServices(servicesList);
 	};
 
 	return (
@@ -90,6 +64,7 @@ export default function QuoteServiceScreen({ navigation, route }) {
 			<View>
 				<QuoteProgress curStep={2} status={[true, true, false]} />
 				<CheckboxGroup
+					initSelections={selectedServices}
 					options={data ? data.services : emptyServiceList}
 					handleCheckedServices={handleCheckedServices}
 				/>
@@ -98,9 +73,11 @@ export default function QuoteServiceScreen({ navigation, route }) {
 			<NavGroup
 				navigation={navigation}
 				options={navOption}
-				routeProps={Object.assign({}, route.params, {
-					selectedServices: servicesListProp,
-				})}
+				routeProps={{
+					...route.params,
+					selectedServices: selectedServices,
+				}}
+				disabled={selectedServices.length == 0}
 			/>
 		</SafeAreaView>
 	);
