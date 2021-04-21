@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
 	TextInput,
 	Text,
@@ -120,18 +120,20 @@ export const VehicleInfoCard = ({
 export const MechanicInfoCard = ({
 	item = sampleAppointment.mechanic, //vehicle data object
 }) => {
-	if(item){
+	if (item) {
 		return (
-		<View style={commonStyles.card}>
-			<Text style={[commonStyles.h3, { marginBottom: 12 }]}>
-				{item.firstName} {item.lastName}
-			</Text>
-			<View style={styles.row}>
-				<Icon name={"phone"} size={18} color={colors.primaryDark} />
-				<Text style={[commonStyles.body, { marginLeft: 8 }]}>{item.phone}</Text>
+			<View style={commonStyles.card}>
+				<Text style={[commonStyles.h3, { marginBottom: 12 }]}>
+					{item.firstName} {item.lastName}
+				</Text>
+				<View style={styles.row}>
+					<Icon name={"phone"} size={18} color={colors.primaryDark} />
+					<Text style={[commonStyles.body, { marginLeft: 8 }]}>
+						{item.phone}
+					</Text>
+				</View>
 			</View>
-		</View>
-	);
+		);
 	}
 
 	return (
@@ -141,7 +143,6 @@ export const MechanicInfoCard = ({
 			</Text>
 		</View>
 	);
-	
 };
 
 export const ServiceInfoCard = ({
@@ -164,18 +165,20 @@ export const ServiceInfoCard = ({
 		return total;
 	};
 
-	useEffect(
-		() => {
-			if( handleTotalPrice && item ){
-				handleTotalPrice(get_cost());
-			}
+	useEffect(() => {
+		if (handleTotalPrice && item) {
+			handleTotalPrice(get_cost());
 		}
-	);
-	
+	});
+
 	if (item) {
 		return (
 			<View style={commonStyles.card}>
-				<FlatList data={item} renderItem={renderItem} />
+				<FlatList
+					data={item}
+					renderItem={renderItem}
+					keyExtractor={(item) => item.id.toString()}
+				/>
 				<View style={styles.totalEntry}>
 					<Text style={commonStyles.body}>Total Price </Text>
 					<Text style={commonStyles.h3}> {get_cost()}</Text>

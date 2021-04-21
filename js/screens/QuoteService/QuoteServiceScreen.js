@@ -1,19 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, Alert, SafeAreaView } from 'react-native';
-import { CheckboxGroup } from '../../common/Form';
-import { NavGroup } from '../../common/BottomNav';
-import { QuoteProgress } from '../../common/Progress';
+import React, { useState, useEffect } from "react";
+import {
+	View,
+	Text,
+	Button,
+	StyleSheet,
+	Alert,
+	SafeAreaView,
+} from "react-native";
+import { CheckboxGroup } from "../../common/Form";
+import { NavGroup } from "../../common/BottomNav";
+import { QuoteProgress } from "../../common/Progress";
 import { gql, useQuery } from "@apollo/client";
-import { TabRouter } from '@react-navigation/routers';
+import { TabRouter } from "@react-navigation/routers";
 
 const SERVICES_QUERY = gql`
-    query {
-        services {
-            id
-            type
-            price
-        }
-    }
+	query {
+		services {
+			id
+			type
+			price
+		}
+	}
 `;
 
 const navOption = [
@@ -64,7 +71,7 @@ const sampleServiceList = [
 /* <QuoteServiceScreen> */
 export default function QuoteServiceScreen({ navigation, route }) {
 	let navigate = navigation.navigate;
-	// console.log("route params: ", route.params);
+	console.log("Quote Service route params: ", route.params);
 
 	const { data, error, loading } = useQuery(SERVICES_QUERY);
 

@@ -29,19 +29,17 @@ const APPOINTMENT_MUTATION = gql`
 			customerID: $customerID
 			quoteID: $quoteID
 			scheduleDate: $scheduleDate
+			status: "pending"
 		) {
 			id
 		}
 	}
 `;
 
-export function ScheduleScreen({ 
-	navigation, 
-	route,
-}) {
-	// console.log("scheduleScreen route.params: ", route.params);
+export function ScheduleScreen({ navigation, route }) {
+	console.log("scheduleScreen route.params: ", route.params);
 
-	const currentDate = Date.now();
+	const currentDate = new Date();
 
 	const [scheduleInput, setScheduleInput] = useState({
 		date: currentDate,
@@ -69,7 +67,7 @@ export function ScheduleScreen({
 	console.log("scheduleInput: ", scheduleInput);
 
 	console.log("variables: ", {
-		customerID: route.params.currentUser,
+		customerID: route.params.currentUser.id,
 		quoteID: route.params.quoteID,
 		scheduleDate: Moment(scheduleInput.date)
 			.format("DD-MMM-YYYY h:mm A")
@@ -80,7 +78,7 @@ export function ScheduleScreen({
 	const handleConfirmation = () => {
 		createAppointment({
 			variables: {
-				customerID: route.params.currentUser,
+				customerID: route.params.currentUser.id,
 				quoteID: route.params.quoteID,
 				scheduleDate: Moment(scheduleInput.date)
 					.format("DD-MMM-YYYY h:mm A")
@@ -95,11 +93,13 @@ export function ScheduleScreen({
 
 	return (
 		<SafeAreaView style={commonStyles.pageContainer}>
-			<BtnBare title="Cancel" onPress={()=>{
-				navigation.navigate("TaskList");
-			}}/>
+			<BtnBare
+				title="Cancel"
+				onPress={() => {
+					navigation.navigate("TaskList");
+				}}
+			/>
 			<View style={[commonStyles.card, commonStyles.shadowDefault, styles.row]}>
-				
 				<View style={styles.col}>
 					<View style={styles.labelContainer}>
 						<Icon name="calendar" size={24} color={colors.primaryDark} />
@@ -115,7 +115,7 @@ export function ScheduleScreen({
 						/>
 					</View>
 				</View>
-				
+
 				<View style={styles.col}>
 					<View style={styles.labelContainer}>
 						<Icon name="clock" size={24} color={colors.primaryDark} />
@@ -132,9 +132,8 @@ export function ScheduleScreen({
 						/>
 					</View>
 				</View>
-
 			</View>
-			
+
 			<View style={[commonStyles.card, commonStyles.shadowDefault]}>
 				<View style={styles.labelContainer}>
 					<Icon name="building" size={24} color={colors.primaryDark} />
@@ -152,7 +151,6 @@ export function ScheduleScreen({
 						})
 					}
 				/>
-				
 			</View>
 			<View style={[commonStyles.card, commonStyles.shadowDefault]}>
 				<View style={styles.labelContainer}>
@@ -171,13 +169,9 @@ export function ScheduleScreen({
 					}
 				/>
 			</View>
-			<View style={{marginTop: 48}}>
-			<BtnLarge 
-			title={"Schedule & Pay"}
-			onPress={handleConfirmation}
-			/>
+			<View style={{ marginTop: 48 }}>
+				<BtnLarge title={"Schedule & Pay"} onPress={handleConfirmation} />
 			</View>
-			
 		</SafeAreaView>
 	);
 }

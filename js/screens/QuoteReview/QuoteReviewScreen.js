@@ -4,9 +4,13 @@ import { render } from "react-dom";
 import { useQuery, gql, useMutation } from "@apollo/client";
 import { NavGroup } from "../../common/BottomNav";
 import { QuoteProgress } from "../../common/Progress";
-import { ServiceInfoCard, VehicleCard, VehicleInfoCard } from "../../common/Card";
+import {
+	ServiceInfoCard,
+	VehicleCard,
+	VehicleInfoCard,
+} from "../../common/Card";
 import { colors, commonStyles } from "../../common/Style";
-import {  BtnLarge, BtnBare } from "../../common/Buttons";
+import { BtnLarge, BtnBare } from "../../common/Buttons";
 import { styles } from "./Styles";
 
 const sampleServiceList = [
@@ -81,11 +85,11 @@ function ServiceEntry({ text, price }) {
 }
 /* <QuoteReviewScreen> */
 export default function QuoteReviewScreen({ navigation, route }) {
-	const sectionTitleStyle = [commonStyles.body, {color: colors.gray3}];
-	// console.log(" QuoteReview route params: ", route.params);
+	const sectionTitleStyle = [commonStyles.body, { color: colors.gray3 }];
+	console.log(" QuoteReview route params: ", route.params);
 
 	const [quoteID, setQuoteID] = useState(null),
-		  [totalPrice, setTotalPrice] = useState(0);
+		[totalPrice, setTotalPrice] = useState(0);
 
 	const {
 		data: servicesData,
@@ -126,7 +130,7 @@ export default function QuoteReviewScreen({ navigation, route }) {
 		await createQuote({
 			variables: {
 				costEstimate: totalPrice,
-				customerID: route.params.id,
+				customerID: route.params.currentUser.id,
 				status: "quote",
 				vehicleID: vehicleData.vehicle.id,
 				services: servicesArray,
@@ -139,7 +143,10 @@ export default function QuoteReviewScreen({ navigation, route }) {
 				routes: [
 					{
 						name: "Schedule",
-						params: { quoteID: quoteID },
+						params: {
+							quoteID: quoteID,
+							currentUser: route.params.currentUser,
+						},
 					},
 				],
 			});
@@ -154,28 +161,27 @@ export default function QuoteReviewScreen({ navigation, route }) {
 					<View style={styles.section}>
 						<View style={styles.row}>
 							<Text style={sectionTitleStyle}>Vehicle</Text>
-							<BtnBare onPress={() => navigation.navigate(
-								"QuoteVehicle", route
-								)}/>
+							<BtnBare
+								onPress={() => navigation.navigate("QuoteVehicle", route)}
+							/>
 						</View>
-						<VehicleInfoCard item={ vehicleData? vehicleData.vehicle : "" }/>
+						<VehicleInfoCard item={vehicleData ? vehicleData.vehicle : ""} />
 					</View>
-					
+
 					<View>
 						<View style={styles.row}>
 							<Text style={sectionTitleStyle}>Service</Text>
-							<BtnBare onPress={() => navigation.navigate(
-								"QuoteService", route
-								)}/>
+							<BtnBare
+								onPress={() => navigation.navigate("QuoteService", route)}
+							/>
 						</View>
-						<ServiceInfoCard 
-						item={ servicesData? servicesData.services : "" }
-						handleTotalPrice={setTotalPrice}
+						<ServiceInfoCard
+							item={servicesData ? servicesData.services : ""}
+							handleTotalPrice={setTotalPrice}
 						/>
 					</View>
-					
 				</View>
-				
+
 				<BtnLarge title={"confirm & schedule"} onPress={saveQuote} />
 			</View>
 		</View>

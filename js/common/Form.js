@@ -8,10 +8,10 @@ import {
 	TouchableOpacity,
 	TextInput,
 	Checkbox,
-	Image
+	Image,
 } from "react-native";
-import {colors, fonts, commonStyles} from './Style';
-import {Icon} from './Svg';
+import { colors, fonts, commonStyles } from "./Style";
+import { Icon } from "./Svg";
 
 /* consts */
 const sampleOptions = [
@@ -60,8 +60,7 @@ const sampleServiceList = [
 				type: "conventional oil",
 				price: 120,
 			},
-			
-		]
+		],
 	},
 	{
 		id: "03",
@@ -89,7 +88,7 @@ class FormInputBox extends React.Component {
 	props: {
 		placeholder: String,
 		name: String,
-		title: String
+		title: String,
 	};
 
 	state: {
@@ -97,13 +96,13 @@ class FormInputBox extends React.Component {
 		phone: "",
 		password: "",
 		confirmPassword: "",
-		verification:"",
-		address1:"",
-		address2:""
-    }
+		verification: "",
+		address1: "",
+		address2: "",
+	};
 	render() {
 		// console.log("TabNav active: ", this.props.title.toLowerCase());
-		let name = this.props.name
+		let name = this.props.name;
 		return (
 			<View>
 				<Text style={styles.inputText}>{this.props.title}</Text>
@@ -122,23 +121,41 @@ class FormInputBox extends React.Component {
 }
 
 export function SignUpInput() {
-	
 	return (
 		<View style={styles.formGroup}>
-			<FormInputBox placeholder="    username@email.address" name="email" title="Email"/>
-			<FormInputBox placeholder="    123-456-7890" name="phone" title="Phone"/>
-			<FormInputBox placeholder="    8 digit numbers" name="password" title="Password"/>
-			<FormInputBox placeholder="    8 digit numbers" name="confirmPassword" title="Confirm password"/>
+			<FormInputBox
+				placeholder="    username@email.address"
+				name="email"
+				title="Email"
+			/>
+			<FormInputBox placeholder="    123-456-7890" name="phone" title="Phone" />
+			<FormInputBox
+				placeholder="    8 digit numbers"
+				name="password"
+				title="Password"
+			/>
+			<FormInputBox
+				placeholder="    8 digit numbers"
+				name="confirmPassword"
+				title="Confirm password"
+			/>
 		</View>
 	);
 }
 
 export function LogInInput() {
-	
 	return (
 		<View style={styles.formGroup}>
-			<FormInputBox placeholder="    username@email.address" name="email" title="Email"/>
-			<FormInputBox placeholder="    8 digit numbers" name="password" title="password"/>
+			<FormInputBox
+				placeholder="    username@email.address"
+				name="email"
+				title="Email"
+			/>
+			<FormInputBox
+				placeholder="    8 digit numbers"
+				name="password"
+				title="password"
+			/>
 		</View>
 	);
 }
@@ -157,26 +174,32 @@ export function ServiceCheckbox({
 		handleStatus({ checked: !status, id: id });
 		onChangeStatus(!status);
 	};
-	const icon = status? <Icon name={"complete"} color={"white"}/>: <Text></Text>;
+	const icon = status ? (
+		<Icon name={"complete"} color={"white"} />
+	) : (
+		<Text></Text>
+	);
 	return (
 		<TouchableOpacity
-			style={[commonStyles.shadowDefault, status? styles.checkboxContainerActive: styles.checkboxContainer]}
+			style={[
+				commonStyles.shadowDefault,
+				status ? styles.checkboxContainerActive : styles.checkboxContainer,
+			]}
 			activeOpacity={0.6}
 			onPress={(e) => changeStatus()}
 		>
-			<Text style={styles.serviceText}>
-				{text}
-			</Text>
-			<View style={styles.leftPart}> 
+			<Text style={styles.serviceText}>{text}</Text>
+			<View style={styles.leftPart}>
 				<View style={styles.leftPart1}>
-					<Icon name='money' color = {colors.primaryDark} size={24}/>
+					<Icon name="money" color={colors.primaryDark} size={24} />
 					<Text style={styles.servicePrice}>{price}</Text>
 				</View>
-				<View style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}>
-					<Icon name={"complete"} color={"white"}/>
+				<View
+					style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}
+				>
+					<Icon name={"complete"} color={"white"} />
 				</View>
 			</View>
-			
 		</TouchableOpacity>
 	);
 }
@@ -187,12 +210,11 @@ export function SubOptions({
 	item = sampleServiceList[1],
 	handleStatus = () => {}, //handle status change in checkboxes
 }) {
-
 	const [status, onChangeStatus] = React.useState(checked);
 	const changeStatus = () => {
 		onChangeStatus(!status);
 	};
-	
+
 	const renderSubItem = ({ item }) => {
 		return (
 			<View>
@@ -204,45 +226,43 @@ export function SubOptions({
 					handleStatus={handleStatus}
 				/>
 			</View>
-
 		);
 	};
 	return (
 		<View>
-		<TouchableOpacity
-			style={[commonStyles.shadowDefault, status? styles.checkboxContainerActive: styles.checkboxContainer]}
-			activeOpacity={0.6}
-			onPress={(e) => changeStatus()}
-		>
-			<Text style={styles.serviceText}>
-				{item.type}
-			</Text>
-			<View style={styles.leftPart}> 
-			<View style={styles.leftPart1}>
-				<Icon name='money' color = {colors.primaryDark} size={24}/>
-				<Text style={styles.servicePrice}>{item.price}</Text>
-			</View>
+			<TouchableOpacity
+				style={[
+					commonStyles.shadowDefault,
+					status ? styles.checkboxContainerActive : styles.checkboxContainer,
+				]}
+				activeOpacity={0.6}
+				onPress={(e) => changeStatus()}
+			>
+				<Text style={styles.serviceText}>{item.type}</Text>
+				<View style={styles.leftPart}>
+					<View style={styles.leftPart1}>
+						<Icon name="money" color={colors.primaryDark} size={24} />
+						<Text style={styles.servicePrice}>{item.price}</Text>
+					</View>
 
-			<View style={styles.checkboxMark}/>
-			</View>
-			
-		</TouchableOpacity>
-		<FlatList
-			data={item.options}
-			renderItem={renderSubItem}
-			keyExtractor={(item) => item.id.toString()}
-			style={status?styles.showFlatList:styles.hideFlatList}
-			extraData={status}
+					<View style={styles.checkboxMark} />
+				</View>
+			</TouchableOpacity>
+			<FlatList
+				data={item.options}
+				renderItem={renderSubItem}
+				keyExtractor={(item) => item.id.toString()}
+				style={status ? styles.showFlatList : styles.hideFlatList}
+				extraData={status}
 			/>
 		</View>
 	);
-
-};
+}
 
 export function CheckboxGroup({
 	options = sampleServiceList,
 	handleCheckedServices,
-	Menuchecked = false
+	Menuchecked = false,
 }) {
 	const initSelections = () => {
 		let result = [];
@@ -266,34 +286,33 @@ export function CheckboxGroup({
 		let index = selections.indexOf(item.id);
 		//if item is not checked and exist in selections, remove it from selections
 		if (!item.checked && index != -1) {
-			if (item.id == "02") {
-				changeMenuStatus();
-				console.log("menu status not checked", Menustatus);
-				temp.splice(index, 1);
-				onChangeSelections(temp);
-			}
+			// if (item.id == "02") {
+			// 	changeMenuStatus();
+			// 	console.log("menu status not checked", Menustatus);
+			// 	temp.splice(index, 1);
+			// 	onChangeSelections(temp);
+			// }
 			temp.splice(index, 1);
 			onChangeSelections(temp);
 		} //if item is checked and not in selections, add it in
 		else if (item.checked && index == -1) {
-			if (item.id == "02") {
-				changeMenuStatus();
-				console.log("menu status checked", Menustatus);
-				temp.push(item.id);
-				onChangeSelections(temp);
-			}
+			// if (item.id == "02") {
+			// 	changeMenuStatus();
+			// 	console.log("menu status checked", Menustatus);
+			// 	temp.push(item.id);
+			// 	onChangeSelections(temp);
+			// }
 			temp.push(item.id);
 			onChangeSelections(temp);
 		}
 	};
 
-	
 	const renderItem = ({ item }) => {
 		if (item.options && Menustatus) {
 			return (
-			<View>
-				<SubOptions options={item}/> 
-			</View>
+				<View>
+					<SubOptions options={item} />
+				</View>
 			);
 		}
 		return (
@@ -303,11 +322,9 @@ export function CheckboxGroup({
 				price={item.price}
 				checked={item.checked}
 				handleStatus={handleStatus}
-	
 			/>
 		);
 	};
-
 
 	useEffect(() => {
 		console.log("selections: ", selections);
@@ -324,10 +341,9 @@ export function CheckboxGroup({
 				keyExtractor={(item) => item.id.toString()}
 				style={styles.flatListContainer}
 			/>
-
 		</View>
 	);
-};
+}
 
 const styles = StyleSheet.create({
 	container: {},
@@ -338,10 +354,9 @@ const styles = StyleSheet.create({
 		padding: 8,
 		justifyContent: "space-between",
 		alignItems: "center",
-		backgroundColor: 'white',
-		padding: 20, 
+		backgroundColor: "white",
+		padding: 20,
 		borderRadius: 8,
-
 	},
 	checkboxContainerActive: {
 		width: "100%",
@@ -350,24 +365,23 @@ const styles = StyleSheet.create({
 		padding: 8,
 		justifyContent: "space-between",
 		alignItems: "center",
-		backgroundColor: 'white',
-		padding: 20, 
+		backgroundColor: "white",
+		padding: 20,
 		borderRadius: 8,
 		borderColor: colors.primaryDark,
-		borderWidth: 1
-
+		borderWidth: 1,
 	},
 	hideFlatList: {
-		opacity: 0, 
-		height: 0
+		opacity: 0,
+		height: 0,
 	},
 	showFlatList: {
 		width: "90%",
-		marginLeft: 35
+		marginLeft: 35,
 	},
 	flatListContainer: {
 		width: "95%",
-		paddingLeft: 20
+		paddingLeft: 20,
 	},
 	checkboxMark: {
 		width: 16,
@@ -382,24 +396,24 @@ const styles = StyleSheet.create({
 	checkboxMarkActive: {
 		backgroundColor: colors.primaryDark,
 	},
-	serviceText:{
-		fontSize:fonts.body,
+	serviceText: {
+		fontSize: fonts.body,
 		color: colors.text,
 	},
-	servicePrice:{
+	servicePrice: {
 		fontSize: fonts.h3,
 		color: colors.text,
 	},
-	leftPart:{
-		flexDirection:'row'
+	leftPart: {
+		flexDirection: "row",
 	},
-	leftPart1:{
-		flexDirection:'row',
-		paddingRight: 14
+	leftPart1: {
+		flexDirection: "row",
+		paddingRight: 14,
 	},
 	inputBox: {
 		borderStyle: "solid",
-		backgroundColor: 'white',
+		backgroundColor: "white",
 		paddingVertical: 12,
 		marginHorizontal: 60,
 		marginBottom: 40,
@@ -408,11 +422,9 @@ const styles = StyleSheet.create({
 	inputText: {
 		paddingLeft: 60,
 		fontSize: fonts.body,
-		color: colors.text
+		color: colors.text,
 	},
 	formGroup: {
-		display:"flex",
+		display: "flex",
 	},
-
-
 });

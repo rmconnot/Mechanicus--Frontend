@@ -305,7 +305,8 @@ export const TaskListScreen = ({ navigation, route }) => {
 						</Text>
 					</TouchableOpacity>
 				</View>
-				<BtnDisplay onPress={() =>
+				<BtnDisplay
+					onPress={() =>
 						navigation.navigate("QuoteVehicle", { currentUser: currentUser })
 					}
 				/>
@@ -318,6 +319,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 							renderItem={
 								displayType == "task" ? renderItemPresent : renderItemQuotes
 							}
+							keyExtractor={(item) => item.id.toString()}
 						/>
 					) : (
 						<Text>No upcoming appointments</Text>

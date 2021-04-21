@@ -43,20 +43,22 @@ import { TEST } from "./moduleTest";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { IP_ADDRESS } from "./Secrets";
+
 // navigation
 const Stack = createStackNavigator();
 
 // connect to backend
 
-const IP = "192.168.0.5"; 
+// const IP = "192.168.1.126";
 // You will need to replace '192.168.1.126' with your IP address
 const httpLink = new HttpLink({
 	// uri: "http://10.20.1.148:4000/graphql",
-	uri: `http://${IP}:4000/graphql`, 
+	uri: `http://${IP_ADDRESS}:4000/graphql`,
 });
 
 const wsLink = new WebSocketLink({
-	uri: `ws://${IP}:4000/subscriptions`,
+	uri: `ws://${IP_ADDRESS}:4000/subscriptions`,
 	options: {
 		reconnect: true,
 	},

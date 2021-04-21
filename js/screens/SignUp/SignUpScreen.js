@@ -181,7 +181,7 @@ export const SignUpScreen = ({ navigation }) => {
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
-						setInput((prevState) => ({ ...prevState, password: text.trim() }))
+						setInput((prevState) => ({ ...prevState, phone: text.trim() }))
 					}
 				/>
 
@@ -199,10 +199,25 @@ export const SignUpScreen = ({ navigation }) => {
 							}))
 						}
 					/>
-					<BtnSmall title="send code" onPress={sendVerification}/>
+					<BtnSmall title="send code" onPress={sendVerification} />
 				</View>
-				
+
 				<Text style={[commonStyles.body, styles.label]}>Password</Text>
+				<TextInput
+					secureTextEntry={true}
+					style={commonStyles.inputBox}
+					placeholder="8 digit numbers"
+					placeholderTextColor={colors.gray4}
+					autoCapitalize="none"
+					onChangeText={(text) =>
+						setInput((prevState) => ({
+							...prevState,
+							password: text.trim(),
+						}))
+					}
+				/>
+
+				<Text style={[commonStyles.body, styles.label]}>Confirm password</Text>
 				<TextInput
 					secureTextEntry={true}
 					style={commonStyles.inputBox}
@@ -216,20 +231,7 @@ export const SignUpScreen = ({ navigation }) => {
 						}))
 					}
 				/>
-
-				<Text style={[commonStyles.body, styles.label]}>Confirm password</Text>
-				<TextInput
-					secureTextEntry={true}
-					style={commonStyles.inputBox}
-					placeholder="8 digit numbers"
-					placeholderTextColor={colors.gray4}
-					autoCapitalize="none"
-					onChangeText={(text) =>
-						setInput((prevState) => ({ ...prevState, phone: text.trim() }))
-					}
-				/>
 			</View>
-			
 
 			<BtnLarge title="Sign Up" onPress={handleSubmission} />
 
