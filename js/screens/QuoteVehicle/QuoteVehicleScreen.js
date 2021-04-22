@@ -40,6 +40,20 @@ const VEHICLES_QUERY = gql`
 	}
 `;
 
+const VEHICLES_SUBSCRIPTION = gql`
+	subscription($customerID: Int!) {
+		newVehicle(customerID: $customerID) {
+			id
+			vin
+			vehicleType
+			year
+			make
+			model
+			imgUrl
+		}
+	}
+`;
+
 /* <QuoteVehicleScreen> */
 export default function QuoteVehicleScreen({ navigation, route }) {
 	const { currentUser } = route.params;
@@ -48,12 +62,27 @@ export default function QuoteVehicleScreen({ navigation, route }) {
 		route.params.selectedVehicle || ""
 	);
 
-	const { data, loading, error } = useQuery(VEHICLES_QUERY, {
+	const { subscribeToMore, data, loading, error } = useQuery(VEHICLES_QUERY, {
 		variables: { customerID: currentUser.id },
 		onError: (error) => console.log(JSON.stringify(error, null, 2)),
 	});
 
 	if (data) console.log("data: ", data);
+
+	subscribeToMore({
+		document: VEHICLES_SUBSCRIPTION,
+		variables: { customerID: currentUser.id },
+		updateQuery: (prev, { subscriptionData }) => {
+			const newVehicle = subscriptionData.data.newVehicle;
+			if (!prev.vehicles.find((vehicle) => vehicle.id === newVehicle.id))
+				return Object.assign(
+					{},
+					{
+						vehicles: [...prev.vehicles, newVehicle],
+					}
+				);
+		},
+	});
 
 	const renderVehicleItem = ({ item }) => {
 		return (
@@ -86,7 +115,7 @@ export default function QuoteVehicleScreen({ navigation, route }) {
 					title="New Vechicle"
 					icon="add"
 					left={true}
-					onPress={() => navigation.navigate("AddVehicleManual", { ...route })}
+					onPress={() => navigation.navigate("AddVehicleManual", route.params)}
 				/>
 				{data != undefined ? (
 					<FlatList

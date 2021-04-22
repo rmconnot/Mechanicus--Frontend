@@ -35,6 +35,7 @@
     "react-native-tab-view": "^2.16.0",
     "react-native-web": "~0.13.12",
     "subscriptions-transport-ws": "^0.9.18",
+    "tipsi-stripe": "^9.0.0",
     "urql": "^2.0.2"
   },
   "devDependencies": {
