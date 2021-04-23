@@ -33,6 +33,9 @@ import { ScheduleScreen } from "./js/screens/Schedule/ScheduleScreen";
 // SCREENS-PROFILE
 import { ProfileScreen } from "./js/screens/Profile/ProfileScreen";
 
+// SCREENS-PAYMENT
+import PaymentScreen from "./js/screens/Payment/PaymentScreen";
+
 // FRONT END TESTING
 import { test1Screen } from "./test1Screen";
 import { test2Screen } from "./test2Screen";
@@ -85,7 +88,8 @@ export default function App() {
 		<ApolloProvider client={client}>
 			<NavigationContainer>
 				<Stack.Navigator
-					initialRouteName="LogIn"
+					initialRouteName="Payment"
+					// "LogIn"
 					screenOptions={{
 						// headerStyle: [commonStyles.header, commonStyles.shadowDefault],
 						headerBackTitleVisible: false,
@@ -192,6 +196,8 @@ export default function App() {
 						}}
 					/>
 					<Stack.Screen name="QuoteComplete" component={QuoteCompleteScreen} />
+
+					<Stack.Screen name="Payment" component={PaymentScreen} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		</ApolloProvider>
