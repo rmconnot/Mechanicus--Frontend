@@ -166,7 +166,7 @@ export const SignUpScreen = ({ navigation }) => {
 				<Text style={[commonStyles.body, styles.label]}>Email</Text>
 				<TextInput
 					style={commonStyles.inputBox}
-					placeholder="username@email.address"
+					placeholder="Enter your email address"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
@@ -177,7 +177,8 @@ export const SignUpScreen = ({ navigation }) => {
 				<Text style={[commonStyles.body, styles.label]}>Phone</Text>
 				<TextInput
 					style={commonStyles.inputBox}
-					placeholder="123-456-7890"
+					placeholder="Enter your phone number"
+					keyboardType = 'numeric'
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
@@ -190,6 +191,7 @@ export const SignUpScreen = ({ navigation }) => {
 					<TextInput
 						style={[commonStyles.inputBox, styles.codeInput]}
 						placeholder="Verification code"
+						keyboardType = 'numeric'
 						placeholderTextColor={colors.gray4}
 						autoCapitalize="none"
 						onChangeText={(text) =>
@@ -206,7 +208,7 @@ export const SignUpScreen = ({ navigation }) => {
 				<TextInput
 					secureTextEntry={true}
 					style={commonStyles.inputBox}
-					placeholder="8 digit numbers"
+					placeholder="Enter your password"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
@@ -218,7 +220,7 @@ export const SignUpScreen = ({ navigation }) => {
 				<TextInput
 					secureTextEntry={true}
 					style={commonStyles.inputBox}
-					placeholder="8 digit numbers"
+					placeholder="Confirm your password"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
