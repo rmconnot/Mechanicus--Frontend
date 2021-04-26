@@ -83,7 +83,7 @@ export function ScheduleScreen({ navigation, route }) {
 				customerID: route.params.currentUser.id,
 				quoteID: route.params.quoteID,
 				scheduleDate: Moment(scheduleInput.date)
-					.format("DD-MMM-YYYY h:mm A")
+					.format("MM/DD/YYYY h:mm A")
 					.toString(),
 				address: scheduleInput.address,
 			},
