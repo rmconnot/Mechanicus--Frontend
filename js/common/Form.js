@@ -166,6 +166,7 @@ export function ServiceCheckbox({
 	id = "test",
 	text = "option displayed",
 	price = 100,
+	laborTime = 2.0,
 	checked = false,
 	handleStatus = () => {}, //handle status change in checkboxes
 }) {
@@ -188,11 +189,13 @@ export function ServiceCheckbox({
 			activeOpacity={0.6}
 			onPress={(e) => changeStatus()}
 		>
-			<Text style={styles.serviceText}>{text}</Text>
+			<View style={{flex: 2/3}}>
+				<Text style={styles.serviceText}>{text}</Text>
+			</View>
 			<View style={styles.leftPart}>
 				<View style={styles.leftPart1}>
 					<Icon name="money" color={colors.primaryDark} size={24} />
-					<Text style={styles.servicePrice}>{price}</Text>
+					<Text style={styles.servicePrice}>{price || laborTime*95}</Text>
 				</View>
 				<View
 					style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}
@@ -288,6 +291,7 @@ export function CheckboxGroup({
 				id={item.id}
 				text={item.type}
 				price={item.price}
+				laborTime={item.laborTime}
 				checked={selections.includes(item.id)}
 				handleStatus={handleStatus}
 			/>

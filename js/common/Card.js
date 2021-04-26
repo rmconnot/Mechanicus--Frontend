@@ -150,10 +150,11 @@ export const ServiceInfoCard = ({
 	handleTotalPrice,
 }) => {
 	const renderItem = ({ item }) => {
+		const {type, price, laborTime} = item;
 		return (
 			<View style={styles.entry}>
-				<Text style={commonStyles.body}>{item.type}</Text>
-				<Text style={commonStyles.body}>{item.price}</Text>
+				<Text style={commonStyles.body}>{type}</Text>
+				<Text style={commonStyles.body}>{price || laborTime*95}</Text>
 			</View>
 		);
 	};
@@ -170,13 +171,13 @@ export const ServiceInfoCard = ({
 			labor_rate = 95;
 		let total = 0;
 		item.forEach((obj) => {
-			total += obj.price;
+			total += obj.price || obj.laborTime*labor_rate;
 		});
 		let tax = total * 0.06;
-		if (!fees.tax) setFees((prevState) => ({ ...prevState, tax: tax }));
-		let fee = 2.5;
-		if (!fees.fee) setFees((prevState) => ({ ...prevState, fee: fee }));
-		return total + tax + fee;
+		// if (!fees.tax) setFees((prevState) => ({ ...prevState, tax: tax }));
+		// let fee = 2.5;
+		// if (!fees.fee) setFees((prevState) => ({ ...prevState, fee: fee }));
+		return total + tax;
 	};
 
 	useEffect(() => {
@@ -189,18 +190,18 @@ export const ServiceInfoCard = ({
 		return (
 			<View style={commonStyles.card}>
 				<View style={styles.entry}>
-					<Text style={commonStyles.body}>Tax</Text>
-					<Text style={commonStyles.body}>{fees.tax}</Text>
+					<Text style={commonStyles.h4}>Labor</Text>
+					<FlatList
+						data={item}
+						renderItem={renderItem}
+						keyExtractor={(item) => (item ? item.id.toString() : "")}
+					/>
 				</View>
 				<View style={styles.entry}>
-					<Text style={commonStyles.body}>Fees</Text>
+					<Text style={commonStyles.h4}>Parts</Text>
 					<Text style={commonStyles.body}>{fees.fee}</Text>
 				</View>
-				<FlatList
-					data={item}
-					renderItem={renderItem}
-					keyExtractor={(item) => (item ? item.id.toString() : "")}
-				/>
+				
 				<View style={styles.totalEntry}>
 					<Text style={commonStyles.body}>Total Price </Text>
 					<Text style={commonStyles.h3}> {get_cost()}</Text>
@@ -211,7 +212,9 @@ export const ServiceInfoCard = ({
 
 	return (
 		<View style={commonStyles.card}>
-			<Text>No services selected</Text>
+			<Text style={[commonStyles.body, { color: colors.gray4 }]}>
+				No services selected
+			</Text>
 		</View>
 	);
 };

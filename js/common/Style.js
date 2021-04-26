@@ -161,6 +161,11 @@ export const commonStyles = StyleSheet.create({
         fontSize: fonts.h3,
         fontWeight: "600",
     },
+    h4: {
+        color: colors.text,
+        fontSize: fonts.body,
+        fontWeight: "600",
+    },
     body: {
         color: colors.text,
         fontSize: fonts.body,

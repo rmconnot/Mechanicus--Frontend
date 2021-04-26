@@ -49,6 +49,12 @@ const APPOINTMENT_QUERY = gql`
 					id
 					type
 					price
+					laborTime
+					parts {
+						id
+						type
+						price
+					}
 				}
 			}
 		}

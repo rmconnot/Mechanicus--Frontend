@@ -3,8 +3,6 @@ import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, Image } fro
 import { colors, fonts, commonStyles} from './Style';
 import { Icon } from './Svg';
 import { BtnBare } from './Buttons';
-import ImageSrcs from './Images';
-
 
 export const TaskTop = ({
 	activated = "appointments",
@@ -92,83 +90,83 @@ export const TopNavBar = ({
 	);
 };
 
-class TabNav extends React.Component {
-	props: {
-		to: string,
-		title: String,
-		navigate: () => mixed,
-		active: Boolean, //check if tab is activated
-		routeProps: Object,
-	};
+// class TabNav extends React.Component {
+// 	props: {
+// 		to: string,
+// 		title: String,
+// 		navigate: () => mixed,
+// 		active: Boolean, //check if tab is activated
+// 		routeProps: Object,
+// 	};
 
 
-	render() {
-		let to = this.props.to;
+// 	render() {
+// 		let to = this.props.to;
 		
-		// console.log("TabNav active: ", this.props.title.toLowerCase());
-		if (this.props.active) {
-			return (
-				<View style={[styles.topNav, commonStyles.shadowDefault]}>
-					<TouchableOpacity
-						style={this.props.active?styles.activeBtn:styles.inactiveBtn}
-						onPress={() =>
-							this.props.navigate(
-								to,
-								this.props.routeProps ? this.props.routeProps : null
-							)
-						}
-					>
-						<Text
-							style={this.props.active?styles.activeBtn:styles.inactiveBtn}>
-								{this.props.title}
-						</Text>
-					</TouchableOpacity>
-					<Image
-							style={{ width: "30%" }}
-							source={require('../../assets/underline_active.png')}
-						/>
-				</View>
-			);
-		}
-		else {
-			return (
-				<View style={[styles.topNav, commonStyles.shadowDefault]}>
-					<TouchableOpacity
-						style={this.props.active?styles.activeBtn:styles.inactiveBtn}
-						onPress={() =>
-							this.props.navigate(
-								to,
-								this.props.routeProps ? this.props.routeProps : null
-							)
-						}
-					>
-						<Text
-							style={this.props.active?styles.activeBtn:styles.inactiveBtn}>
-								{this.props.title}
-						</Text>
-					</TouchableOpacity>
-				</View>
-			);
-		}
+// 		// console.log("TabNav active: ", this.props.title.toLowerCase());
+// 		if (this.props.active) {
+// 			return (
+// 				<View style={[styles.topNav, commonStyles.shadowDefault]}>
+// 					<TouchableOpacity
+// 						style={this.props.active?styles.activeBtn:styles.inactiveBtn}
+// 						onPress={() =>
+// 							this.props.navigate(
+// 								to,
+// 								this.props.routeProps ? this.props.routeProps : null
+// 							)
+// 						}
+// 					>
+// 						<Text
+// 							style={this.props.active?styles.activeBtn:styles.inactiveBtn}>
+// 								{this.props.title}
+// 						</Text>
+// 					</TouchableOpacity>
+// 					<Image
+// 							style={{ width: "30%" }}
+// 							source={require('../../assets/underline_active.png')}
+// 						/>
+// 				</View>
+// 			);
+// 		}
+// 		else {
+// 			return (
+// 				<View style={[styles.topNav, commonStyles.shadowDefault]}>
+// 					<TouchableOpacity
+// 						style={this.props.active?styles.activeBtn:styles.inactiveBtn}
+// 						onPress={() =>
+// 							this.props.navigate(
+// 								to,
+// 								this.props.routeProps ? this.props.routeProps : null
+// 							)
+// 						}
+// 					>
+// 						<Text
+// 							style={this.props.active?styles.activeBtn:styles.inactiveBtn}>
+// 								{this.props.title}
+// 						</Text>
+// 					</TouchableOpacity>
+// 				</View>
+// 			);
+// 		}
 
 
-	}
-}
+// 	}
+// }
 
-/* <TopNav> */
-export default function TopNav({ 
-	navigation, 
-	activated = "Appointments",
-	routeProps
-}) {
-	const navigate = navigation.navigate;
-	return (
-		<View style={styles.container}>
-			<TabNav title="Appointments" to="test1" navigate={navigate} active={activated=="Appointments"} routeProps={routeProps}/>
-			<TabNav title="Quotes" to="test2" navigate={navigate}  active={activated=="Quotes"} routeProps={routeProps}/>
-		</View>
-	);
-}
+// /* <TopNav> */
+// export default function TopNav({ 
+// 	navigation, 
+// 	activated = "Appointments",
+// 	routeProps
+// }) {
+// 	const navigate = navigation.navigate;
+// 	return (
+// 		<View style={styles.container}>
+// 			<TabNav title="Appointments" to="test1" navigate={navigate} active={activated=="Appointments"} routeProps={routeProps}/>
+// 			<TabNav title="Quotes" to="test2" navigate={navigate}  active={activated=="Quotes"} routeProps={routeProps}/>
+// 		</View>
+// 	);
+// }
 
 const styles = StyleSheet.create({
 	container: {
