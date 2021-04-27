@@ -45,7 +45,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { commonStyles, colors } from "./js/common/Style";
 import { Icon } from "./js/common/Svg";
 
-import { IP_ADDRESS } from "./Secrets";
+import IP_ADDRESS from "./Secrets";
 
 // navigation
 const Stack = createStackNavigator();
@@ -85,7 +85,7 @@ export default function App() {
 		<ApolloProvider client={client}>
 			<NavigationContainer>
 				<Stack.Navigator
-					initialRouteName="LogIn"
+					initialRouteName="test1"
 					screenOptions={{
 						// headerStyle: [commonStyles.header, commonStyles.shadowDefault],
 						headerBackTitleVisible: false,
