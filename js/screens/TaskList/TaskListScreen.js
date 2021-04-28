@@ -259,7 +259,6 @@ export const TaskListScreen = ({ navigation, route }) => {
 	};
 
 	const renderItemQuotes = ({ item }) => {
-		console.log("this is");
 		return (
 			<QuoteCard
 				item={item}

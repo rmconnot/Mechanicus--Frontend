@@ -264,6 +264,7 @@ export const QuoteCard = ({
 	item = sampleAppointment.quote,
 }) => {
 	const { createdAt, costEstimate, services, vehicle } = item;
+	const currentUser = route.params.currentUser;
 	let serviceStr = get_service_string(services);
 
 	return (
@@ -286,7 +287,8 @@ export const QuoteCard = ({
 					onPress={() =>
 						navigation.navigate("Schedule", {
 							...route,
-							quote: item,
+							quoteID: item.id,
+							currentUser: currentUser,
 						})
 					}
 				/>
