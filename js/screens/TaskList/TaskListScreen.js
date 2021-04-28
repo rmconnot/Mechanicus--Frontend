@@ -101,6 +101,7 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 				lastName
 				phone
 			}
+			finalCost
 		}
 	}
 `;
@@ -130,6 +131,7 @@ const APPOINTMENTS_QUERY = gql`
 				lastName
 				phone
 			}
+			finalCost
 		}
 	}
 `;
@@ -237,13 +239,30 @@ export const TaskListScreen = ({ navigation, route }) => {
 				!prev.appointments.find(
 					(appointment) => appointment.id === newAppointment.id
 				)
-			)
+			) {
 				return Object.assign(
 					{},
 					{
 						appointments: [...prev.appointments, newAppointment],
 					}
 				);
+			} else {
+				const index = prev.appointments.indexOf(
+					prev.appointments.find(
+						(appointment) => appointment.id === newAppointment.id
+					)
+				);
+
+				console.log("index: ", index);
+
+				console.log("prev appointment: ", prev.appointments[index]);
+
+				prev.appointments[index] = newAppointment;
+
+				console.log("new appointment: ", prev.appointments[index]);
+
+				return { appointments: prev.appointments };
+			}
 		},
 	});
 
