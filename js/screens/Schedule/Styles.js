@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   timePickerView:{
       flexDirection:"row",
       width:"100%",
-  }
+  },
 });
 
 export default styles;
