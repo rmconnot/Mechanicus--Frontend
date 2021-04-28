@@ -18,6 +18,7 @@ import { Icon } from "../../common/Svg";
 import { TopNavBar } from "../../common/TopNav";
 import { BtnLarge, BtnBare } from "../../common/Buttons";
 import { gql, useMutation } from "@apollo/client";
+import {Picker} from '@react-native-community/picker';
 
 const APPOINTMENT_MUTATION = gql`
 	mutation(
@@ -43,10 +44,17 @@ export function ScheduleScreen({ navigation, route }) {
 
 	const currentDate = new Date();
 
+	//trueHour refers to the hour the user is experiencing, same as trueDay
+	const trueHour = currentDate.getHours();
+	const trueDay = Moment(currentDate)
+	.format("DD-MMM-YYYY")
+	.toString()
+
 	const [scheduleInput, setScheduleInput] = useState({
 		date: currentDate,
 		address: "",
 		phone: "",
+		time: "11:00-12:00pm"
 	});
 
 	const [appointmentID, setAppointmentID] = useState();
@@ -66,14 +74,15 @@ export function ScheduleScreen({ navigation, route }) {
 		});
 	};
 
+
 	console.log("scheduleInput: ", scheduleInput);
 
 	console.log("variables: ", {
 		customerID: route.params.currentUser.id,
 		quoteID: route.params.quoteID,
 		scheduleDate: Moment(scheduleInput.date)
-			.format("DD-MMM-YYYY h:mm A")
-			.toString(),
+			.format("DD-MMM-YYYY")
+			.toString() + scheduleInput.time,
 		address: scheduleInput.address,
 	});
 
@@ -83,8 +92,8 @@ export function ScheduleScreen({ navigation, route }) {
 				customerID: route.params.currentUser.id,
 				quoteID: route.params.quoteID,
 				scheduleDate: Moment(scheduleInput.date)
-					.format("MM/DD/YYYY h:mm A")
-					.toString(),
+					.format("DD-MMM-YYYY")
+					.toString() + " " + scheduleInput.time,
 				address: scheduleInput.address,
 			},
 		}).then((result) => {
@@ -128,13 +137,28 @@ export function ScheduleScreen({ navigation, route }) {
 						</View>
 						<View style={commonStyles.inputBox2}>
 							<DateTimePicker
-								value={scheduleInput.date}
-								mode="time"
-								is24Hour={true}
-								// minuteInterval={15}
-								display="default"
-								onChange={onChange}
-							/>
+									value={scheduleInput.date}
+									mode="time"
+									is24Hour={true}
+									// minuteInterval={15}
+									display="default"
+									onChange={onChange}
+								/>
+							{/* <Picker
+								mode="dropdown"
+								selectedValue={scheduleInput.time}
+								style={{ height: 24, width: 300 }}
+								onValueChange={(value) => setScheduleInput({time: value})}
+							>
+							<Picker.Item label={scheduleInput.date!=trueDay?"11:00-12:00pm":trueHour<11?"11:00-12:00pm":"not available"} value="11:00-12:00pm"/>
+							<Picker.Item label={scheduleInput.date!=trueDay?"12:00-1:00pm":trueHour<12?"12:00-1:00pm":"not available"} value="12:00-1:00pm"/>
+							<Picker.Item label={scheduleInput.date!=trueDay?"1:00-2:00pm":trueHour<13?"1:00-2:00pm":"not available"} value="1:00-2:00pm"/>
+							<Picker.Item label={scheduleInput.date!=trueDay?"2:00-3:00pm":trueHour<14?"2:00-3:00pm":"not available"} value="2:00-3:00pm"/>
+							<Picker.Item label={scheduleInput.date!=trueDay?"3:00-4:00pm":trueHour<15?"3:00-4:00pm":"not available"} value="3:00-4:00pm"/>
+							<Picker.Item label={scheduleInput.date!=trueDay?"4:00-5:00pm":trueHour<16?"4:00-5:00pm":"not available"} value="4:00-5:00pm"/>
+							<Picker.Item label={scheduleInput.date=trueDay?"5:00-6:00pm":trueHour<17?"5:00-6:00pm":"not available"} value="5:00-6:00pm"/>
+							<Picker.Item label={scheduleInput.date!=trueDay?"6:00-6:30pm":trueHour<18?"6:00-6:30pm":"not available"} value="6:00-6:30pm"/>
+							</Picker> */}
 						</View>
 					</View>
 				</View>
