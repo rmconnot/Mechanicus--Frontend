@@ -42,11 +42,22 @@ export const commonStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
     },
+    rowSpread: {
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        alignItems: "center",
+    },
+    rowLeft: {
+        flexDirection: "row",
+        justifyContent: 'flex-start',
+        alignItems: "center",
+    },
     header: {
 		borderBottomLeftRadius: 24,
 		borderBottomRightRadius: 24,
     },
     pageContainer: {
+        width: "100%",
         paddingHorizontal: 16,
         marginTop: 12,
     },
@@ -55,7 +66,7 @@ export const commonStyles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 8,
         // marginHorizontal: 24,
-        marginVertical: 6,
+        marginBottom: 12,
     },
     cardHeader: {
         flexDirection: "row",
@@ -164,7 +175,8 @@ export const commonStyles = StyleSheet.create({
     h4: {
         color: colors.text,
         fontSize: fonts.body,
-        fontWeight: "600",
+        fontWeight: "700",
+        textTransform: "uppercase",
     },
     body: {
         color: colors.text,
@@ -184,7 +196,7 @@ export const commonStyles = StyleSheet.create({
     sectionTitle: {
         color: colors.gray3,
         fontSize: fonts.body,
-        marginBottom: 4,
+        marginBottom: 2,
     },
     // spacing
     m_b_s: {
@@ -210,4 +222,10 @@ export const commonStyles = StyleSheet.create({
 		borderRadius: 4,
         fontSize: fonts.body,
     },
+    //deco
+    dividingLine: {
+		borderTopWidth: 1,
+		borderTopColor: colors.gray5,
+		height: 16,
+	},
 });
