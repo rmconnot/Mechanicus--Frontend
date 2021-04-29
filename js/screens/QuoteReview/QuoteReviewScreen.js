@@ -129,7 +129,7 @@ export default function QuoteReviewScreen({ navigation, route }) {
 			variables: {
 				costEstimate: totalPrice,
 				customerID: currentUser.id,
-				status: "quote",
+				status: "CONFIRMED",
 				vehicleID: selectedVehicle,
 				services: selectedServices,
 			},

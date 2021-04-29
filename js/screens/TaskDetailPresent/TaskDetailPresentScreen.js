@@ -127,6 +127,14 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 		},
 	});
 
+	const currentAppointmentStep = {
+		PENDING: 0,
+		CANCELED: 0,
+		APPROVED: 1,
+		PAID: 2,
+		COMPLETED: 2,
+	};
+
 	console.log(data);
 	// data = data.appointment;
 
@@ -140,7 +148,7 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 				onPress={() => Alert.alert("jump to the cancel page")}
 			/>
 
-			<TaskProgress />
+			<TaskProgress curStep={currentAppointmentStep[data.appointment.status]} />
 
 			<View style={styles.section}>
 				<Text style={commonStyles.sectionTitle}>Schedule</Text>
@@ -157,12 +165,25 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 				<VehicleInfoCard item={data.appointment.quote.vehicle} />
 			</View>
 
-			<View style={styles.section}>
-				<Text style={commonStyles.sectionTitle}>Service</Text>
-				<ServiceInfoCard item={data.appointment.quote.services} />
-			</View>
+			{data.appointment.status != "COMPLETED" &&
+			data.appointment.status != "PAID" ? (
+				<View style={styles.section}>
+					<Text style={commonStyles.sectionTitle}>Service</Text>
+					<ServiceInfoCard item={data.appointment.quote.services} />
+				</View>
+			) : null}
 
-			{data.appointment.status === "completed" ? (
+			{data.appointment.status === "COMPLETED" ||
+			data.appointment.status === "PAID" ? (
+				<View style={commonStyles.card}>
+					<View style={styles.totalEntry}>
+						<Text style={commonStyles.body}>Total Price </Text>
+						<Text style={commonStyles.h3}> {data.appointment.finalCost}</Text>
+					</View>
+				</View>
+			) : null}
+
+			{data.appointment.status === "COMPLETED" ? (
 				<PaymentModule
 					navigation={navigation}
 					route={route}

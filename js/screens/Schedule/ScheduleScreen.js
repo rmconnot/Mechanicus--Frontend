@@ -18,7 +18,7 @@ import { Icon } from "../../common/Svg";
 import { TopNavBar } from "../../common/TopNav";
 import { BtnLarge, BtnBare } from "../../common/Buttons";
 import { gql, useMutation } from "@apollo/client";
-import {Picker} from '@react-native-community/picker';
+import { Picker } from "@react-native-community/picker";
 
 const APPOINTMENT_MUTATION = gql`
 	mutation(
@@ -32,7 +32,7 @@ const APPOINTMENT_MUTATION = gql`
 			customerID: $customerID
 			quoteID: $quoteID
 			scheduleDate: $scheduleDate
-			status: "pending"
+			status: "PENDING"
 		) {
 			id
 		}
@@ -46,15 +46,13 @@ export function ScheduleScreen({ navigation, route }) {
 
 	//trueHour refers to the hour the user is experiencing, same as trueDay
 	const trueHour = currentDate.getHours();
-	const trueDay = Moment(currentDate)
-	.format("DD-MMM-YYYY")
-	.toString()
+	const trueDay = Moment(currentDate).format("DD-MMM-YYYY").toString();
 
 	const [scheduleInput, setScheduleInput] = useState({
 		date: currentDate,
 		address: "",
 		phone: "",
-		time: "11:00-12:00pm"
+		time: "11:00-12:00pm",
 	});
 
 	const [appointmentID, setAppointmentID] = useState();
@@ -74,15 +72,14 @@ export function ScheduleScreen({ navigation, route }) {
 		});
 	};
 
-
 	console.log("scheduleInput: ", scheduleInput);
 
 	console.log("variables: ", {
 		customerID: route.params.currentUser.id,
 		quoteID: route.params.quoteID,
-		scheduleDate: Moment(scheduleInput.date)
-			.format("DD-MMM-YYYY")
-			.toString() + scheduleInput.time,
+		scheduleDate:
+			Moment(scheduleInput.date).format("DD-MMM-YYYY").toString() +
+			scheduleInput.time,
 		address: scheduleInput.address,
 	});
 
@@ -91,9 +88,10 @@ export function ScheduleScreen({ navigation, route }) {
 			variables: {
 				customerID: route.params.currentUser.id,
 				quoteID: route.params.quoteID,
-				scheduleDate: Moment(scheduleInput.date)
-					.format("DD-MMM-YYYY")
-					.toString() + " " + scheduleInput.time,
+				scheduleDate:
+					Moment(scheduleInput.date).format("DD-MMM-YYYY").toString() +
+					" " +
+					scheduleInput.time,
 				address: scheduleInput.address,
 			},
 		}).then((result) => {
@@ -137,13 +135,13 @@ export function ScheduleScreen({ navigation, route }) {
 						</View>
 						<View style={commonStyles.inputBox2}>
 							<DateTimePicker
-									value={scheduleInput.date}
-									mode="time"
-									is24Hour={true}
-									// minuteInterval={15}
-									display="default"
-									onChange={onChange}
-								/>
+								value={scheduleInput.date}
+								mode="time"
+								is24Hour={true}
+								// minuteInterval={15}
+								display="default"
+								onChange={onChange}
+							/>
 							{/* <Picker
 								mode="dropdown"
 								selectedValue={scheduleInput.time}

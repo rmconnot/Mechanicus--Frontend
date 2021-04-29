@@ -87,21 +87,21 @@ export default function PaymentModule({ navigation, route, appointment }) {
 					updateAppointment({
 						variables: {
 							id: appointment.id,
-							status: "Paid",
+							status: "PAID",
 						},
 					});
 				})
 				.then((result) => {
 					console.log("result: ", result);
 					setToken(token.tokenId);
-					navigation.goBack();
+					// navigation.goBack();
 					return;
 				});
 	};
 
 	return (
 		<View>
-			<Text>{tokenID ? tokenID : "No token"}</Text>
+			{/* <Text>{tokenID ? tokenID : "No token"}</Text> */}
 			<BtnLarge
 				title={tokenID ? "Payment Complete" : "Pay Now"}
 				onPress={makePayment}
