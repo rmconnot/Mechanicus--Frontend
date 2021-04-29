@@ -11,8 +11,8 @@ export function test2Screen({navigation}) {
 
     return (
         <View style={styles.container}> 
-
             <TopNav navigation={navigation} activated = "Quotes"/>
+            
             
         </View>
         
