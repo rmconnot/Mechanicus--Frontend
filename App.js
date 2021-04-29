@@ -85,7 +85,8 @@ export default function App() {
 		<ApolloProvider client={client}>
 			<NavigationContainer>
 				<Stack.Navigator
-					initialRouteName="test1"
+					initialRouteName="LogIn"
+					// "LogIn"
 					screenOptions={{
 						// headerStyle: [commonStyles.header, commonStyles.shadowDefault],
 						headerBackTitleVisible: false,

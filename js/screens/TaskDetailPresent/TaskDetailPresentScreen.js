@@ -10,10 +10,15 @@ import {
 	Button,
 } from "react-native";
 import { TaskProgress } from "../../common/Progress";
-import { VehicleInfoCard, MechanicInfoCard, ServiceInfoCard } from "../../common/Card";
+import {
+	VehicleInfoCard,
+	MechanicInfoCard,
+	ServiceInfoCard,
+} from "../../common/Card";
 import { commonStyles, colors } from "../../common/Style";
 import { styles } from "./Styles";
 import { gql, useQuery } from "@apollo/client";
+import PaymentModule from "../../common/Payment";
 
 const imageURL = {
 	circle: "./images/circle.png",
@@ -23,8 +28,10 @@ const imageURL = {
 const APPOINTMENT_QUERY = gql`
 	query($appointmentID: Int!) {
 		appointment(appointmentID: $appointmentID) {
+			id
 			scheduleDate
 			status
+			finalCost
 			mechanic {
 				firstName
 				lastName
@@ -132,28 +139,36 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 				title="Cancel"
 				onPress={() => Alert.alert("jump to the cancel page")}
 			/>
-			
+
 			<TaskProgress />
-			
-			<View style={styles.section} >
+
+			<View style={styles.section}>
 				<Text style={commonStyles.sectionTitle}>Schedule</Text>
 				<Text style={commonStyles.h3}>{data.appointment.scheduleDate}</Text>
 			</View>
 
-			<View style={styles.section} >
+			{/* <View style={styles.section}>
 				<Text style={commonStyles.sectionTitle}>Mechanician</Text>
-				<MechanicInfoCard item = { data ? data.appointment.mechanic : ""}/>
-			</View>
+				<MechanicInfoCard item={data ? data.appointment.mechanic : ""} />
+			</View> */}
 
-			<View style={styles.section} >
+			<View style={styles.section}>
 				<Text style={commonStyles.sectionTitle}>Vehicle</Text>
-				<VehicleInfoCard item={ data.appointment.quote.vehicle } />
+				<VehicleInfoCard item={data.appointment.quote.vehicle} />
 			</View>
 
-			<View style={styles.section} >
+			<View style={styles.section}>
 				<Text style={commonStyles.sectionTitle}>Service</Text>
-				<ServiceInfoCard item={data.appointment.quote.services}/>
+				<ServiceInfoCard item={data.appointment.quote.services} />
 			</View>
+
+			{data.appointment.status === "completed" ? (
+				<PaymentModule
+					navigation={navigation}
+					route={route}
+					appointment={data.appointment}
+				/>
+			) : null}
 		</View>
 	);
 }
