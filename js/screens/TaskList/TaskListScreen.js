@@ -85,6 +85,7 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 			quote {
 				vehicle {
 					id
+					vin
 					make
 					model
 					year
@@ -114,6 +115,7 @@ const APPOINTMENTS_QUERY = gql`
 			quote {
 				vehicle {
 					id
+					vin
 					make
 					model
 					year
@@ -145,6 +147,7 @@ const QUOTES_QUERY = gql`
 			}
 			vehicle {
 				id
+				vin
 				make
 				model
 				year
@@ -168,6 +171,7 @@ const QUOTES_SUBSCRIPTION = gql`
 			}
 			vehicle {
 				id
+				vin
 				make
 				model
 				year

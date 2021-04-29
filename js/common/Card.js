@@ -101,7 +101,7 @@ export const VehicleInfoCard = ({
 					</Text>
 					<Text style={commonStyles.body}>{item.year}</Text>
 					<Text style={[commonStyles.cap2, { marginTop: 12 }]}>
-						VIN {item.vin}
+						VIN: {item.vin}
 					</Text>
 				</View>
 			</View>
