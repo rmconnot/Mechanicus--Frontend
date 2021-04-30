@@ -83,8 +83,8 @@ export function ScheduleScreen({ navigation, route }) {
 		address: scheduleInput.address,
 	});
 
-	const handleConfirmation = () => {
-		createAppointment({
+	const handleConfirmation = async () => {
+		let createdAppointment = await createAppointment({
 			variables: {
 				customerID: route.params.currentUser.id,
 				quoteID: route.params.quoteID,
@@ -94,10 +94,9 @@ export function ScheduleScreen({ navigation, route }) {
 					scheduleInput.time,
 				address: scheduleInput.address,
 			},
-		}).then((result) => {
-			console.log("result: ", result);
-			setAppointmentID(result.data.createAppointment.id);
 		});
+
+		navigation.replace("TaskList", route.params);
 	};
 
 	return (
@@ -197,7 +196,7 @@ export function ScheduleScreen({ navigation, route }) {
 					/>
 				</View>
 				<View style={{ marginTop: 48 }}>
-					<BtnLarge title={"Schedule & Pay"} onPress={handleConfirmation} />
+					<BtnLarge title={"Confirm"} onPress={handleConfirmation} />
 				</View>
 			</ScrollView>
 		</SafeAreaView>

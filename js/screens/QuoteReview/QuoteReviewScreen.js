@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import { render } from "react-dom";
 import { useQuery, gql, useMutation } from "@apollo/client";
@@ -125,7 +125,7 @@ export default function QuoteReviewScreen({ navigation, route }) {
 	);
 
 	const saveQuote = async () => {
-		await createQuote({
+		let createdQuote = await createQuote({
 			variables: {
 				costEstimate: totalPrice,
 				customerID: currentUser.id,
@@ -133,22 +133,14 @@ export default function QuoteReviewScreen({ navigation, route }) {
 				vehicleID: selectedVehicle,
 				services: selectedServices,
 			},
-		}).then((result) => {
-			let quoteID = result.data.createQuote.id;
-			setQuoteID(quoteID);
-			navigation.reset({
-				index: 0,
-				routes: [
-					{
-						name: "Schedule",
-						params: {
-							quoteID: quoteID,
-							currentUser: route.params.currentUser,
-						},
-					},
-				],
-			});
 		});
+
+		navigation.replace("Schedule", {
+			quoteID: createdQuote.data.createQuote.id,
+			currentUser: route.params.currentUser,
+		});
+
+		return;
 	};
 
 	return (
