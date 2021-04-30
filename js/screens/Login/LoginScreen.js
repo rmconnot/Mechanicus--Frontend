@@ -58,6 +58,7 @@ export default function Login({ navigation }) {
 	});
 
 	const handleLogin = async () => {
+		console.log(input);
 		getCustomer({
 			variables: { email: input.email, password: input.password },
 		});

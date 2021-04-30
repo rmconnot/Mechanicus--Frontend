@@ -53,21 +53,25 @@ const sampleAppointment = {
 const imageHeight = 50;
 const taskStatus = {
 	// pending approved canceled completed
-	pending: {
+	PENDING: {
 		color: colors.secondaryDark,
 		bgColor: colors.secondaryLight,
 	},
-	approved: {
+	APPROVED: {
 		color: colors.primaryDark,
 		bgColor: colors.primaryLight,
 	},
-	completed: {
+	COMPLETED: {
 		color: colors.gray3,
 		bgColor: colors.gray6,
 	},
-	canceled: {
+	CANCELED: {
 		color: colors.gray3,
 		bgColor: colors.gray6,
+	},
+	PAID: {
+		color: colors.darkGreen,
+		bgColor: colors.lightGreen,
 	},
 };
 export const Tag = ({
@@ -343,10 +347,17 @@ export const TaskCard = ({
 					color={tagStyle.color}
 					bgColor={tagStyle.bgColor}
 				/>
+				{item.status === "COMPLETED" ? (
+					<Tag
+						title="Payment Required"
+						color={colors.secondaryDark}
+						bgColor={colors.secondaryLight}
+					/>
+				) : null}
 				<Text
 					style={[
 						commonStyles.h3,
-						item.status == "completed" ? { color: colors.gray3 } : "",
+						item.status == "COMPLETED" ? { color: colors.gray3 } : "",
 					]}
 				>
 					{item.scheduleDate}

@@ -62,17 +62,36 @@ const APPOINTMENT_QUERY = gql`
 	}
 `;
 
-export default function TaskDetailPresentScreen({ 
-	navigation, 
-	route 
-}) {
-	const { appointment } = route.params;
-	console.log(appointment);
+
+export default function TaskDetailPresentScreen({ navigation, route }) {
+	const { appointmentID } = route.params;
+	console.log(appointmentID);
+
+	const { loading, data, error } = useQuery(APPOINTMENT_QUERY, {
+		variables: {
+			appointmentID: appointmentID,
+		},
+	});
+
+	const currentAppointmentStep = {
+		PENDING: 0,
+		CANCELED: 0,
+		APPROVED: 1,
+		PAID: 2,
+		COMPLETED: 2,
+	};
+
+	console.log(data);
+	// data = data.appointment;
+
+	if (loading) return <Text>Loading...</Text>;
+	if (error) return <Text>Oh no... {error.message}</Text>;
+
 	return (
 		<SafeAreaView style={commonStyles.container}>
 			<ScrollView style={commonStyles.pageContainer}>
 
-			<TaskProgress />
+			<TaskProgress curStep={currentAppointmentStep[data.appointment.status]} />
 
 			<View style={styles.section}>
 				<Text style={commonStyles.sectionTitle}>Schedule</Text>
@@ -89,12 +108,31 @@ export default function TaskDetailPresentScreen({
 				<VehicleInfoCard item={appointment.quote.vehicle} />
 			</View>
 
-			<View style={styles.section}>
-				<Text style={commonStyles.sectionTitle}>Service</Text>
-				<ServiceInfoCard item={appointment.quote.billItems} />
-			</View>
+// 			<View style={styles.section}>
+// 				<Text style={commonStyles.sectionTitle}>Service</Text>
+// 				<ServiceInfoCard item={appointment.quote.billItems} />
+// 			</View>
 
-			{appointment.status === "completed" ? (
+// 			{appointment.status === "completed" ? (
+			{data.appointment.status != "COMPLETED" &&
+			data.appointment.status != "PAID" ? (
+				<View style={styles.section}>
+					<Text style={commonStyles.sectionTitle}>Service</Text>
+					<ServiceInfoCard item={data.appointment.quote.services} />
+				</View>
+			) : null}
+
+			{data.appointment.status === "COMPLETED" ||
+			data.appointment.status === "PAID" ? (
+				<View style={commonStyles.card}>
+					<View style={styles.totalEntry}>
+						<Text style={commonStyles.body}>Total Price </Text>
+						<Text style={commonStyles.h3}> {data.appointment.finalCost}</Text>
+					</View>
+				</View>
+			) : null}
+
+			{data.appointment.status === "COMPLETED" ? (
 				<PaymentModule
 					navigation={navigation}
 					route={route}

@@ -1,36 +1,37 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const fonts = {
-    h1: 28,
-    h2: 22,
-    h3: 20,
-    body: 17,
-    note: 13,
-    caption2: 11,
+	h1: 28,
+	h2: 22,
+	h3: 20,
+	body: 17,
+	note: 13,
+	caption2: 11,
 };
 
 export const colors = {
-    primary: "#81DEE4",
-    primaryDark: "#1AA5AE",
-    primaryLight: "#DEF7F9",
-    secondary: "#EE7451",
-    secondaryDark: "#BD421F",
-    secondaryLight: "#F8DFD8",
-    text: "#333333",
-    gray2: "#4F4F4F",
-    gray3: "#828282",
-    gray4: "#BDBDBD",
-    gray5: "#E0E0E0",
-    gray6: "#F5F5F5",
-}
-
-export const spacings = {
-    XS: 4,
-    S: 12,
-    M: 24,
-    L: 48,
+	primary: "#81DEE4",
+	primaryDark: "#1AA5AE",
+	primaryLight: "#DEF7F9",
+	secondary: "#EE7451",
+	secondaryDark: "#BD421F",
+	secondaryLight: "#F8DFD8",
+	text: "#333333",
+	gray2: "#4F4F4F",
+	gray3: "#828282",
+	gray4: "#BDBDBD",
+	gray5: "#E0E0E0",
+	gray6: "#F5F5F5",
+	darkGreen: "#2F4F2F",
+	lightGreen: "#E0EEE0",
 };
 
+export const spacings = {
+	XS: 4,
+	S: 12,
+	M: 24,
+	L: 48,
+};
 
 export const commonStyles = StyleSheet.create({
     container: {
@@ -209,15 +210,15 @@ export const commonStyles = StyleSheet.create({
 		backgroundColor: 'white',
 		padding: 12,
 		borderRadius: 4,
-        fontSize: fonts.body,
-        marginBottom: 24,
+		fontSize: fonts.body,
+		marginBottom: 24,
 	},
-    //outlined white box
-    inputBox2: {
-        color: colors.text,
-        borderWidth: 1,
-        borderColor: colors.gray4,
-		backgroundColor: 'white',
+	//outlined white box
+	inputBox2: {
+		color: colors.text,
+		borderWidth: 1,
+		borderColor: colors.gray4,
+		backgroundColor: "white",
 		padding: 12,
 		borderRadius: 4,
         fontSize: fonts.body,
@@ -229,3 +230,4 @@ export const commonStyles = StyleSheet.create({
 		height: 16,
 	},
 });
+
