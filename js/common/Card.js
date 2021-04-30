@@ -193,12 +193,12 @@ export const ServiceInfoCard = ({
 
 				<View style={styles.entry}>
 					<Text style={commonStyles.body}>Tax</Text>
-					<Text style={commonStyles.body}>{bill.total*tax_rate}</Text>
+					<Text style={commonStyles.body}>{(bill.total*tax_rate).toFixed(2)}</Text>
 				</View>
 
 				<View style={styles.totalEntry}>
 					<Text style={commonStyles.body}>Total $  </Text>
-					<Text style={commonStyles.h3}> {bill.total*(1+tax_rate)}</Text>
+					<Text style={commonStyles.h3}> {(bill.total*(1+tax_rate)).toFixed(2)}</Text>
 				</View>
 			</View>
 		);
@@ -246,7 +246,7 @@ export const VehicleCard = ({
 				<View style={styles.col_B}>
 					<Text style={commonStyles.body}>{item.year}</Text>
 					<Text style={[commonStyles.cap2, { marginTop: 12 }]}>
-						VIN {item.vin}
+						VIN {item.vin||"--"}
 					</Text>
 				</View>
 			</View>
@@ -270,7 +270,7 @@ export const QuoteCard = ({
 			style={[commonStyles.card, commonStyles.shadowDefault]}
 			onPress={(e) =>
 				navigation.navigate("QuoteDetail", {
-					...route,
+					...route.params,
 					quote: item,
 				})
 			}
@@ -284,7 +284,7 @@ export const QuoteCard = ({
 					title={"schedule"}
 					onPress={() =>
 						navigation.navigate("Schedule", {
-							...route,
+							...route.params,
 							quoteID: item.id,
 							// currentUser: currentUser,
 						})

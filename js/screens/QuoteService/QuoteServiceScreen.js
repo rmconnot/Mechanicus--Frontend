@@ -72,7 +72,7 @@ export default function QuoteServiceScreen({ navigation, route }) {
 				<CheckboxGroup
 					initSelections={selectedServices}
 					options={data ? data.services : emptyServiceList}
-					handleCheckedServices={handleCheckedServices}
+					handleCheckedServices={setSelectedServices}
 				/>
 			</View>
 

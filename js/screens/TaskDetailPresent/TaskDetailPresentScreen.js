@@ -71,10 +71,6 @@ export default function TaskDetailPresentScreen({
 	return (
 		<SafeAreaView style={commonStyles.container}>
 			<ScrollView style={commonStyles.pageContainer}>
-			<Button
-				title="Cancel"
-				onPress={() => Alert.alert("jump to the cancel page")}
-			/>
 
 			<TaskProgress />
 

@@ -59,7 +59,7 @@ export const commonStyles = StyleSheet.create({
     pageContainer: {
         width: "100%",
         paddingHorizontal: 16,
-        marginTop: 12,
+        marginTop: 8,
     },
     card: {
         padding: 16,

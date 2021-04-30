@@ -199,7 +199,7 @@ export function ScheduleScreen({ navigation, route }) {
 					/>
 				</View>
 				<View style={{ marginTop: 48 }}>
-					<BtnLarge title={"Schedule & Pay"} onPress={handleConfirmation} />
+					<BtnLarge title={"Confirm"} onPress={handleConfirmation} />
 				</View>
 			</ScrollView>
 		</SafeAreaView>
