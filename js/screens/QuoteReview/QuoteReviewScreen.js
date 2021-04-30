@@ -45,15 +45,25 @@ const VEHICLE_QUERY = gql`
 	}
 `;
 
-const SERVICES_QUERY = gql`
-	query($servicesList: [Int]) {
-		services(servicesList: $servicesList) {
-			id
-			type
-			price
-		}
-	}
-`;
+// const SERVICES_QUERY = gql`
+// 	query($servicesList: [Int]) {
+// 		services(servicesList: $servicesList) {
+// 			id
+// 			type
+// 			price
+// 		}
+// 	}
+// `;
+
+// const PARTS_QUERY = gql`
+// 	query($partsList: [Int]) {
+// 		parts(partsList: $partsList) {
+// 			id
+// 			type
+// 			price
+// 		}
+// 	}
+// `;
 
 const QUOTE_MUTATION = gql`
 	mutation(
@@ -61,14 +71,14 @@ const QUOTE_MUTATION = gql`
 		$customerID: Int!
 		$status: String!
 		$vehicleID: Int!
-		$services: [Int]!
+		$billItems: [BillItemInput]!
 	) {
 		createQuote(
 			costEstimate: $costEstimate
 			customerID: $customerID
 			status: $status
 			vehicleID: $vehicleID
-			services: $services
+			billItems: $billItems
 		) {
 			id
 		}
@@ -92,18 +102,6 @@ export default function QuoteReviewScreen({ navigation, route }) {
 	const [quoteID, setQuoteID] = useState(null),
 		[totalPrice, setTotalPrice] = useState(0);
 
-	/* get services data */
-	const {
-		data: servicesData,
-		loading: servicesLoading,
-		error: servicesError,
-	} = useQuery(SERVICES_QUERY, {
-		variables: {
-			servicesList: selectedServices,
-		},
-		onError: (error) => console.log(JSON.stringify(error, null, 2)),
-	});
-
 	/* get vehicle data */
 	const {
 		data: vehicleData,
@@ -124,6 +122,16 @@ export default function QuoteReviewScreen({ navigation, route }) {
 		}
 	);
 
+	/*  */
+	const make_billItemInput = (selectedServices) => {
+		let temp = selectedServices.slice();
+		temp.forEach( item => {
+			delete item["service"];
+			delete item["part"];
+		})
+		return temp;
+	}
+	
 	const saveQuote = async () => {
 		let createdQuote = await createQuote({
 			variables: {
@@ -131,7 +139,7 @@ export default function QuoteReviewScreen({ navigation, route }) {
 				customerID: currentUser.id,
 				status: "CONFIRMED",
 				vehicleID: selectedVehicle,
-				services: selectedServices,
+				billItems: make_billItemInput(selectedServices),
 			},
 		});
 
@@ -170,7 +178,7 @@ export default function QuoteReviewScreen({ navigation, route }) {
 							/>
 						</View>
 						<ServiceInfoCard
-							item={servicesData ? servicesData.services : ""}
+							item={selectedServices}
 							handleTotalPrice={setTotalPrice}
 						/>
 					</View>

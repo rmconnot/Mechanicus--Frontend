@@ -3,6 +3,7 @@ import { colors } from "../../common/Style";
 
 //////////////TaskDetailPresent////////////////////
 export const styles = StyleSheet.create({
+
 	section: {
 		marginBottom: 24,
 	},

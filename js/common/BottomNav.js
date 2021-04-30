@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
 import {colors, fonts, commonStyles} from './Style';
-import ImageSrcs from './Images';
 import { BtnLarge } from './Buttons';
 import { Icon } from './Svg';
 

@@ -8,6 +8,8 @@ import {
 	Alert,
 	Image,
 	Button,
+	SafeAreaView,
+	ScrollView
 } from "react-native";
 import { TaskProgress } from "../../common/Progress";
 import {
@@ -31,7 +33,6 @@ const APPOINTMENT_QUERY = gql`
 			id
 			scheduleDate
 			status
-			finalCost
 			mechanic {
 				firstName
 				lastName
@@ -45,77 +46,22 @@ const APPOINTMENT_QUERY = gql`
 					imgUrl
 					vin
 				}
-				services {
-					id
-					type
-					price
+				billItems {
+					service {
+						id
+						type
+					}
+					part {
+						id
+						type
+					}
+					cost
 				}
 			}
 		}
 	}
 `;
 
-const sampleQuotes = [
-	{
-		id: 1,
-		scheduleDate: "03/04/2021",
-		status: "confirm",
-		services: [
-			{
-				price: 100,
-				type: "Vehicle Inspection",
-			},
-			{
-				price: 110,
-				type: "Oil change",
-			},
-		],
-		mechanic: {
-			firstName: "Michael",
-			lastName: "Williams",
-			phone: "123-456-7890",
-		},
-		vehicle: {
-			vin: "0987654321",
-			vehicleType: "SUV",
-			year: 2010,
-			make: "Chevrolet",
-			model: "Trailblazer",
-			imgUrl:
-				"https://www.gannett-cdn.com/presto/2020/07/10/PDTF/76f14475-53f5-4abe-ae0f-a4f4911c8be3-IMG_2481.JPG",
-		},
-	},
-
-	{
-		id: 2,
-		scheduleDate: "05/04/2021",
-		status: "confirm",
-		services: [
-			{
-				price: 100,
-				type: "Vehicle Inspection",
-			},
-			{
-				price: 110,
-				type: "Oil change",
-			},
-		],
-		mechanic: {
-			firstName: "Bill",
-			lastName: "Davis",
-			phone: "123-456-7890",
-		},
-		vehicle: {
-			vin: "1122334455",
-			vehicleType: "Truck",
-			year: 2005,
-			make: "Toyota",
-			model: "Tundra",
-			imgUrl:
-				"https://www.toyota.com/imgix/responsive/images/mlp/colorizer/2021/tundra/8W2/1.png",
-		},
-	},
-];
 
 export default function TaskDetailPresentScreen({ navigation, route }) {
 	const { appointmentID } = route.params;
@@ -142,29 +88,32 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 	if (error) return <Text>Oh no... {error.message}</Text>;
 
 	return (
-		<View style={commonStyles.pageContainer}>
-			<Button
-				title="Cancel"
-				onPress={() => Alert.alert("jump to the cancel page")}
-			/>
+		<SafeAreaView style={commonStyles.container}>
+			<ScrollView style={commonStyles.pageContainer}>
 
 			<TaskProgress curStep={currentAppointmentStep[data.appointment.status]} />
 
 			<View style={styles.section}>
 				<Text style={commonStyles.sectionTitle}>Schedule</Text>
-				<Text style={commonStyles.h3}>{data.appointment.scheduleDate}</Text>
+				<Text style={commonStyles.h3}>{appointment.scheduleDate}</Text>
 			</View>
 
-			{/* <View style={styles.section}>
-				<Text style={commonStyles.sectionTitle}>Mechanician</Text>
-				<MechanicInfoCard item={data ? data.appointment.mechanic : ""} />
-			</View> */}
+			<View style={styles.section}>
+				<Text style={commonStyles.sectionTitle}>Mechanic</Text>
+				<MechanicInfoCard item={appointment.mechanic} />
+			</View>
 
 			<View style={styles.section}>
 				<Text style={commonStyles.sectionTitle}>Vehicle</Text>
-				<VehicleInfoCard item={data.appointment.quote.vehicle} />
+				<VehicleInfoCard item={appointment.quote.vehicle} />
 			</View>
 
+// 			<View style={styles.section}>
+// 				<Text style={commonStyles.sectionTitle}>Service</Text>
+// 				<ServiceInfoCard item={appointment.quote.billItems} />
+// 			</View>
+
+// 			{appointment.status === "completed" ? (
 			{data.appointment.status != "COMPLETED" &&
 			data.appointment.status != "PAID" ? (
 				<View style={styles.section}>
@@ -187,9 +136,10 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 				<PaymentModule
 					navigation={navigation}
 					route={route}
-					appointment={data.appointment}
+					appointment={appointment}
 				/>
 			) : null}
-		</View>
+			</ScrollView>
+		</SafeAreaView>
 	);
 }

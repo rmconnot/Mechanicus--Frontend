@@ -163,97 +163,121 @@ export function LogInInput() {
 /*=============================*/
 /* <Checkbox> */
 export function ServiceCheckbox({
-	id = "test",
-	text = "option displayed",
-	price = 100,
+	item, 
+	selections,
 	checked = false,
 	handleStatus = () => {}, //handle status change in checkboxes
 }) {
-	const [status, onChangeStatus] = React.useState(checked);
+	const { id, type, price, parts, laborTime } = item;
+	const [status, onChangeStatus] = React.useState(checked),
+		  [toggled, setToggled] = React.useState(true);
+
 	const changeStatus = () => {
-		handleStatus({ checked: !status, id: id });
+		handleStatus({ 
+			serviceID: id, 
+			cost: price || laborTime*95 , 
+			service: item,
+		});
+		if(!status) setToggled(false);
 		onChangeStatus(!status);
 	};
-	const icon = status ? (
-		<Icon name={"complete"} color={"white"} />
-	) : (
-		<Text></Text>
-	);
+	
+	const partChecked = (part) => {
+		for(let i = 0; i < selections.length; i++ ){
+			let obj = selections[i];
+			if("partID" in obj && obj.partID==part.id) return true;
+		}
+		return false;
+	};
+	
+	const renderPartItem = ({item}) => (
+		<PartCheckbox 
+		item={item} 
+		checked={partChecked(item)}
+		handleStatus={handleStatus}
+		/>);
+
+	
 	return (
-		<TouchableOpacity
-			style={[
-				commonStyles.shadowDefault,
-				status ? styles.checkboxContainerActive : styles.checkboxContainer,
-			]}
-			activeOpacity={0.6}
-			onPress={(e) => changeStatus()}
-		>
-			<Text style={styles.serviceText}>{text}</Text>
-			<View style={styles.leftPart}>
-				<View style={styles.leftPart1}>
-					<Icon name="money" color={colors.primaryDark} size={24} />
-					<Text style={styles.servicePrice}>{price}</Text>
-				</View>
-				<View
-					style={[styles.checkboxMark, status ? styles.checkboxMarkActive : ""]}
+		<View style={[
+			commonStyles.shadowDefault, styles.card, 
+			status ? styles.active : null,
+		]}>
+			<View style={[commonStyles.rowSpread, styles.option]}>
+				<TouchableOpacity 
+				style={[commonStyles.rowLeft, {flex: 2/3}]} 
+				onPress={changeStatus} 
 				>
-					<Icon name={"complete"} color={"white"} />
+					<View style={[
+						styles.checkboxMark, 
+						status ? styles.checkboxMarkActive : null,
+					]}>
+						<Icon name={"complete"} color={"white"} />
+					</View>
+					<Text style={styles.serviceText}>{type}</Text>
+				</TouchableOpacity>
+
+				<View style={{flexDirection: "row"}}>
+					<Icon name="money" color={colors.primaryDark} size={24} />
+					<Text style={styles.servicePrice}>{( price || laborTime*95 ).toFixed(1)}</Text>
+					<TouchableOpacity
+					style={{marginLeft:12}}
+					onPress={()=>setToggled(!toggled)}
+					disabled={!(parts && parts.length>0)}
+					>
+						<Icon name={toggled?"arrow_down":"arrow_top"} color={parts && parts.length>0?colors.gray3 : colors.gray5} size={24}/>
+					</TouchableOpacity>
 				</View>
 			</View>
-		</TouchableOpacity>
+
+			{toggled ? null : (
+				<View>
+				<View style={styles.dividingLine}></View>
+					<FlatList
+					data={parts}
+					renderItem={renderPartItem}
+					keyExtractor={(item) => item.id.toString()}
+					/>
+				</View>
+			)}
+		</View>
 	);
 }
-
-//suboptions for oil change
-export function SubOptions({
+export function PartCheckbox({
+	item,
 	checked = false,
-	item = sampleServiceList[1],
-	handleStatus = () => {}, //handle status change in checkboxes
+	handleStatus,
 }) {
-	const [status, onChangeStatus] = React.useState(checked);
+	const {id, type, price} = item,
+		  [status, onChangeStatus] = useState(checked);
+
 	const changeStatus = () => {
+		handleStatus({ 
+			partID: id, 
+			cost: price, 
+			part: item,
+		});
 		onChangeStatus(!status);
 	};
 
-	const renderSubItem = ({ item }) => {
-		return (
-			<ServiceCheckbox
-				id={item.id}
-				text={item.type}
-				price={item.price}
-				checked={item.checked}
-				handleStatus={handleStatus}
-			/>
-		);
-	};
 	return (
-		<View>
-			<TouchableOpacity
-				style={[
-					commonStyles.shadowDefault,
-					status ? styles.checkboxContainerActive : styles.checkboxContainer,
-				]}
-				activeOpacity={0.6}
-				onPress={changeStatus}
-			>
-				<Text style={styles.serviceText}>{item.type}</Text>
-				<View style={styles.leftPart}>
-					<View style={styles.leftPart1}>
-						<Icon name="money" color={colors.primaryDark} size={24} />
-						<Text style={styles.servicePrice}>{item.price}</Text>
-					</View>
-
-					<View style={styles.checkboxMark} />
-				</View>
-			</TouchableOpacity>
-			<FlatList
-				data={item.options}
-				renderItem={renderSubItem}
-				keyExtractor={(item) => item.id.toString()}
-				style={status ? styles.showFlatList : styles.hideFlatList}
-				extraData={status}
-			/>
-		</View>
+		<TouchableOpacity
+		onPress = {changeStatus}
+		style={[
+			commonStyles.rowSpread, styles.option, 
+			status?styles.partActive:styles.partInactive]}
+		>
+			<View style={commonStyles.rowLeft}>
+				<Icon name="complete" size={18} color={
+					checked? colors.primaryDark : "transparent"
+				}/>
+				<Text style={[commonStyles.body, {marginLeft:12}]}>{type}</Text>
+			</View>
+			<View style={commonStyles.rowLeft}>
+				<Icon name="money" size={18} color={checked? colors.primaryDark : colors.gray4}/>
+				<Text style={commonStyles.body}>{price.toFixed(1)}</Text>
+			</View>
+		</TouchableOpacity>
 	);
 }
 
@@ -267,16 +291,41 @@ export function CheckboxGroup({
 	const [selections, onChangeSelections] = React.useState(initSelections);
 	const handleStatus = (item) => {
 		let temp = selections.slice();
-		let index = selections.indexOf(item.id);
+		let index = find_bill_item(item);
 		//if item is not checked and exist in selections, remove it from selections
-		if (!item.checked && index != -1) {
+		if (index != -1) {
 			temp.splice(index, 1);
-			onChangeSelections(temp);
 		} //if item is checked and not in selections, add it in
-		else if (item.checked && index == -1) {
-			temp.push(item.id);
-			onChangeSelections(temp);
+		else if (index == -1) {
+			temp.push(item);
 		}
+		// console.log(selections);
+		onChangeSelections(temp);
+		handleCheckedServices(temp);
+	};
+	const find_bill_item = (item) => {
+		if(selections.length<=0) return -1;
+		if("serviceID" in item){
+			for(let i=0; i<selections.length;i++){
+				let obj = selections[i];
+				if("serviceID" in obj && obj.serviceID==item.serviceID) return i;
+			}
+		} else if ("partID" in item) {
+			for(let i=0; i<selections.length;i++){
+				let obj = selections[i];
+				if("partID" in obj && obj.partID==item.partID) return i;
+			}
+		}
+		return -1;
+	};
+
+	const serviceChecked = (service) => {
+		if(selections.length<=0) return false;
+		for(let i = 0; i < selections.length; i++ ){
+			let obj = selections[i];
+			if("serviceID" in  obj && obj.serviceID==service.id) return true;
+		}
+		return false;
 	};
 
 	const renderItem = ({ item }) => {
@@ -285,10 +334,9 @@ export function CheckboxGroup({
 		}
 		return (
 			<ServiceCheckbox
-				id={item.id}
-				text={item.type}
-				price={item.price}
-				checked={selections.includes(item.id)}
+				item={item}
+				selections={selections}
+				checked={serviceChecked(item)}
 				handleStatus={handleStatus}
 			/>
 		);
@@ -322,29 +370,24 @@ export function CheckboxGroup({
 
 const styles = StyleSheet.create({
 	container: {},
-	checkboxContainer: {
-		width: "100%",
-		flexDirection: "row",
-		marginBottom: 20,
-		padding: 8,
-		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "white",
-		padding: 20,
-		borderRadius: 8,
-	},
-	checkboxContainerActive: {
-		width: "100%",
-		flexDirection: "row",
-		marginBottom: 20,
-		padding: 8,
-		justifyContent: "space-between",
-		alignItems: "center",
-		backgroundColor: "white",
-		padding: 20,
-		borderRadius: 8,
+	active: {//for service checkbox container
 		borderColor: colors.primaryDark,
 		borderWidth: 1,
+		backgroundColor: "white",
+	},
+	card: {
+        backgroundColor: colors.gray6,
+        borderRadius: 8,
+        marginBottom: 12,
+	},
+	option: {
+		// backgroundColor: "white",
+		padding: 12,
+		borderRadius: 8,
+	},
+	dividingLine: {
+		borderTopWidth: 1,
+		borderTopColor: colors.gray5,
 	},
 	hideFlatList: {
 		opacity: 0,
@@ -359,12 +402,12 @@ const styles = StyleSheet.create({
 		paddingLeft: 20,
 	},
 	checkboxMark: {
-		width: 16,
-		height: 16,
+		width: 18,
+		height: 18,
 		borderColor: colors.primaryDark,
-		borderWidth: 2,
+		borderWidth: 1,
 		borderRadius: 2,
-		margin: 4,
+		marginRight: 12,
 		justifyContent: "center",
 		alignItems: "center",
 	},
@@ -378,13 +421,6 @@ const styles = StyleSheet.create({
 	servicePrice: {
 		fontSize: fonts.h3,
 		color: colors.text,
-	},
-	leftPart: {
-		flexDirection: "row",
-	},
-	leftPart1: {
-		flexDirection: "row",
-		paddingRight: 14,
 	},
 	inputBox: {
 		borderStyle: "solid",
@@ -401,5 +437,11 @@ const styles = StyleSheet.create({
 	},
 	formGroup: {
 		display: "flex",
+	},
+	partActive: {
+		backgroundColor: "white",
+	},
+	partInactive: {
+		backgroundColor: colors.gray6,
 	},
 });

@@ -90,10 +90,16 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 					year
 					imgUrl
 				}
-				services {
-					id
-					type
-					price
+				billItems {
+					service {
+						id
+						type
+					}
+					part {
+						id
+						type
+					}
+					cost
 				}
 			}
 			mechanic {
@@ -101,7 +107,7 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 				lastName
 				phone
 			}
-			finalCost
+			
 		}
 	}
 `;
@@ -120,10 +126,16 @@ const APPOINTMENTS_QUERY = gql`
 					year
 					imgUrl
 				}
-				services {
-					id
-					type
-					price
+				billItems {
+					service {
+						id
+						type
+					}
+					part {
+						id
+						type
+					}
+					cost
 				}
 			}
 			mechanic {
@@ -131,7 +143,6 @@ const APPOINTMENTS_QUERY = gql`
 				lastName
 				phone
 			}
-			finalCost
 		}
 	}
 `;
@@ -140,10 +151,16 @@ const QUOTES_QUERY = gql`
 	query($customerID: Int!) {
 		quotes(customerID: $customerID) {
 			id
-			services {
-				id
-				type
-				price
+			billItems {
+				service {
+					id
+					type
+				}
+				part {
+					id
+					type
+				}
+				cost
 			}
 			vehicle {
 				id
@@ -163,10 +180,18 @@ const QUOTES_SUBSCRIPTION = gql`
 	subscription($customerID: Int!) {
 		newQuote(customerID: $customerID) {
 			id
-			services {
-				id
-				type
-				price
+			billItems {
+				service {
+					id
+					type
+					price
+				}
+				part {
+					id
+					type
+					price
+				}
+				cost
 			}
 			vehicle {
 				id
@@ -299,7 +324,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 							/>
 						}
 						ListFooterComponent={<View style={commonStyles.blankFooter}></View>}
-						ListEmptyComponent={<Text>No upcoming appointments</Text>}
+						ListEmptyComponent={<Text style={commonStyles.body}>No upcoming appointments</Text>}
 						data={
 							displayType == "appointments"
 								? data
