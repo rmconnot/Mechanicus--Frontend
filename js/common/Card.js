@@ -105,7 +105,7 @@ export const VehicleInfoCard = ({
 					</Text>
 					<Text style={commonStyles.body}>{item.year}</Text>
 					<Text style={[commonStyles.cap2, { marginTop: 12 }]}>
-						VIN {item.vin||"--"}
+						VIN {item.vin || "--"}
 					</Text>
 				</View>
 			</View>
@@ -157,7 +157,7 @@ export const ServiceInfoCard = ({
 	const tax_rate = 0.06;
 
 	const renderItem = ({ item }) => {
-		const { type, cost} = item;
+		const { type, cost } = item;
 		return (
 			<View style={styles.entry}>
 				<Text style={commonStyles.body}>{type}</Text>
@@ -170,7 +170,7 @@ export const ServiceInfoCard = ({
 
 	useEffect(() => {
 		if (handleTotalPrice && item) {
-			handleTotalPrice(bill.total*(1+tax_rate));
+			handleTotalPrice(bill.total * (1 + tax_rate));
 		}
 	});
 
@@ -185,24 +185,29 @@ export const ServiceInfoCard = ({
 				/>
 
 				<View style={commonStyles.dividingLine}></View>
-				
+
 				<Text style={[commonStyles.h4, styles.subTitle]}>Parts</Text>
 				<FlatList
 					data={bill.parts}
 					renderItem={renderItem}
 					keyExtractor={(item) => (item ? item.id.toString() : "")}
 				/>
-				
+
 				<View style={commonStyles.dividingLine}></View>
 
 				<View style={styles.entry}>
 					<Text style={commonStyles.body}>Tax</Text>
-					<Text style={commonStyles.body}>{(bill.total*tax_rate).toFixed(2)}</Text>
+					<Text style={commonStyles.body}>
+						{(bill.total * tax_rate).toFixed(2)}
+					</Text>
 				</View>
 
 				<View style={styles.totalEntry}>
-					<Text style={commonStyles.body}>Total $  </Text>
-					<Text style={commonStyles.h3}> {(bill.total*(1+tax_rate)).toFixed(2)}</Text>
+					<Text style={commonStyles.body}>Total $ </Text>
+					<Text style={commonStyles.h3}>
+						{" "}
+						{(bill.total * (1 + tax_rate)).toFixed(2)}
+					</Text>
 				</View>
 			</View>
 		);
@@ -250,7 +255,7 @@ export const VehicleCard = ({
 				<View style={styles.col_B}>
 					<Text style={commonStyles.body}>{item.year}</Text>
 					<Text style={[commonStyles.cap2, { marginTop: 12 }]}>
-						VIN {item.vin||"--"}
+						VIN {item.vin || "--"}
 					</Text>
 				</View>
 			</View>
@@ -268,7 +273,7 @@ export const QuoteCard = ({
 	const { createdAt, costEstimate, billItems, vehicle } = item;
 	const currentUser = route.params.currentUser;
 	let serviceInfo = get_service(billItems);
-	
+
 	return (
 		<TouchableOpacity
 			style={[commonStyles.card, commonStyles.shadowDefault]}
@@ -314,11 +319,7 @@ export const QuoteCard = ({
 };
 
 // APPOINTMENT, cards displayed in appointment list
-export const TaskCard = ({ 
-	navigation, 
-	item = sampleAppointment, 
-	route 
-}) => {
+export const TaskCard = ({ navigation, item = sampleAppointment, route }) => {
 	const tagStyle = taskStatus[item.status] || {
 		color: colors.secondaryDark,
 		bgColor: colors.secondaryLight,
@@ -383,13 +384,14 @@ export const TaskCard = ({
 };
 
 const get_service = (billItems) => {
+	console.log("billItems: ", billItems);
 	let result = "";
 	let length = 0;
 	let maxLength = 50;
 
 	for (let i = 0; i < Math.min(billItems.length, 3); i++) {
 		let item = billItems[i];
-		if(item.service){
+		if (item.service) {
 			result += item.service.type + ", ";
 			length++;
 		}
@@ -413,27 +415,26 @@ const get_bill_info = (billItems) => {
 		serviceData = [],
 		total = 0;
 
-	billItems.forEach( (record) => {
-		if(record.service) {
+	billItems.forEach((record) => {
+		if (record.service) {
 			serviceData.push({
 				...record.service,
 				cost: record.cost,
 			});
-		}
-		else if (record.part) {
+		} else if (record.part) {
 			partData.push({
 				...record.part,
 				cost: record.cost,
 			});
 		}
 		total += record.cost;
-	} );
+	});
 
 	return {
 		services: serviceData,
 		parts: partData,
 		total: total,
-	}
+	};
 };
 
 const styles = StyleSheet.create({

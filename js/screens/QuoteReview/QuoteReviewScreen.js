@@ -102,6 +102,8 @@ export default function QuoteReviewScreen({ navigation, route }) {
 	const [quoteID, setQuoteID] = useState(null),
 		[totalPrice, setTotalPrice] = useState(0);
 
+	console.log("selectedServices: ", selectedServices);
+
 	/* get vehicle data */
 	const {
 		data: vehicleData,
@@ -125,13 +127,13 @@ export default function QuoteReviewScreen({ navigation, route }) {
 	/*  */
 	const make_billItemInput = (selectedServices) => {
 		let temp = selectedServices.slice();
-		temp.forEach( item => {
+		temp.forEach((item) => {
 			delete item["service"];
 			delete item["part"];
-		})
+		});
 		return temp;
-	}
-	
+	};
+
 	const saveQuote = async () => {
 		let createdQuote = await createQuote({
 			variables: {

@@ -84,7 +84,7 @@ export function ScheduleScreen({ navigation, route }) {
 	});
 
 	const handleConfirmation = async () => {
-		let createdAppointment = await createAppointment({
+		await createAppointment({
 			variables: {
 				customerID: route.params.currentUser.id,
 				quoteID: route.params.quoteID,

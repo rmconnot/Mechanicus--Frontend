@@ -83,12 +83,14 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 			scheduleDate
 			status
 			quote {
+				id
 				vehicle {
 					id
 					make
 					model
 					year
 					imgUrl
+					vin
 				}
 				billItems {
 					service {
@@ -107,7 +109,6 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 				lastName
 				phone
 			}
-			
 		}
 	}
 `;
@@ -119,12 +120,14 @@ const APPOINTMENTS_QUERY = gql`
 			scheduleDate
 			status
 			quote {
+				id
 				vehicle {
 					id
 					make
 					model
 					year
 					imgUrl
+					vin
 				}
 				billItems {
 					service {
@@ -239,7 +242,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 	if (error) console.error(`Error! ${error.message}`);
 
 	useEffect(() => {
-		subscribeToMoreQuotes({
+		let quotesUnsub = subscribeToMoreQuotes({
 			document: QUOTES_SUBSCRIPTION,
 			variables: { customerID: currentUser.id },
 			updateQuery: (prev, { subscriptionData }) => {
@@ -256,7 +259,7 @@ export const TaskListScreen = ({ navigation, route }) => {
 			},
 		});
 
-		subscribeToMore({
+		let appointmentsUnsub = subscribeToMore({
 			document: APPOINTMENTS_SUBSCRIPTION,
 			variables: { customerID: currentUser.id },
 			updateQuery: (prev, { subscriptionData }) => {
@@ -284,6 +287,10 @@ export const TaskListScreen = ({ navigation, route }) => {
 				}
 			},
 		});
+
+		return () => {
+			quotesUnsub(), appointmentsUnsub();
+		};
 	});
 
 	const renderItemPresent = ({ item }) => {
@@ -324,7 +331,9 @@ export const TaskListScreen = ({ navigation, route }) => {
 							/>
 						}
 						ListFooterComponent={<View style={commonStyles.blankFooter}></View>}
-						ListEmptyComponent={<Text style={commonStyles.body}>No upcoming appointments</Text>}
+						ListEmptyComponent={
+							<Text style={commonStyles.body}>No upcoming appointments</Text>
+						}
 						data={
 							displayType == "appointments"
 								? data
