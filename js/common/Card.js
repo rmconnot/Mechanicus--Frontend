@@ -263,7 +263,7 @@ export const QuoteCard = ({
 	route,
 	item = sampleAppointment.quote,
 }) => {
-	const { createdAt, costEstimate, services, vehicle } = item;
+	const { id, createdAt, costEstimate, services, vehicle } = item;
 	const currentUser = route.params.currentUser;
 	let serviceStr = get_service_string(services);
 
@@ -284,13 +284,20 @@ export const QuoteCard = ({
 				</View>
 				<BtnSmall
 					title={"schedule"}
-					onPress={() =>
-						navigation.navigate("Schedule", {
-							...route,
-							quoteID: item.id,
-							currentUser: currentUser,
-						})
-					}
+					onPress={() => {
+						navigation.reset({
+							index: 0,
+							routes: [
+								{
+									name: "Schedule",
+									params: {
+										quoteID: id,
+										currentUser: currentUser,
+									},
+								},
+							],
+						});
+					}}
 				/>
 			</View>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
 	TextInput,
 	Text,
@@ -7,7 +7,9 @@ import {
 	TouchableOpacity,
 	Alert,
 	Image,
+	Modal,
 	Button,
+	Pressable
 } from "react-native";
 import { TaskProgress } from "../../common/Progress";
 import {
@@ -17,7 +19,7 @@ import {
 } from "../../common/Card";
 import { commonStyles, colors } from "../../common/Style";
 import { styles } from "./Styles";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import PaymentModule from "../../common/Payment";
 
 const imageURL = {
@@ -51,6 +53,14 @@ const APPOINTMENT_QUERY = gql`
 					price
 				}
 			}
+		}
+	}
+`;
+
+const APPOINTMENT_MUTATION = gql`
+	mutation($id: Int!, $status: String!) {
+		updateAppointment(id: $id, status: $status) {
+			id
 		}
 	}
 `;
@@ -119,6 +129,7 @@ const sampleQuotes = [
 
 export default function TaskDetailPresentScreen({ navigation, route }) {
 	const { appointmentID } = route.params;
+	const [modalVisible, setModalVisible] = useState(false);
 	console.log(appointmentID);
 
 	const { loading, data, error } = useQuery(APPOINTMENT_QUERY, {
@@ -126,6 +137,13 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 			appointmentID: appointmentID,
 		},
 	});
+
+	const [updateAppointment, { data: appointmentData }] = useMutation(
+		APPOINTMENT_MUTATION,
+		{
+			onError: (error) => console.log(JSON.stringify(error, null, 2)),
+		}
+	);
 
 	console.log(data);
 	// data = data.appointment;
@@ -135,9 +153,56 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 
 	return (
 		<View style={commonStyles.pageContainer}>
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={modalVisible}
+				onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+					setModalVisible(!modalVisible);
+				}}
+			>
+				<View style={styles.centerContainer}>
+					<View style={styles.modalView}>
+						<Text style={styles.modalTitle}>
+							Are you sure you want to cancel this appointment?
+						</Text>
+						<Text style={styles.sectionTitle}>
+							You will lose the appointment and quote if you cancel the task.
+						</Text>
+						<Pressable style={styles.yesButton}
+							onPress={() => {
+								updateAppointment({
+									variables: {
+										id: appointmentID,
+										status: "canceled"
+									}
+								})
+								.then((result) => {
+									console.log("result: ", result);
+									setModalVisible(!modalVisible);
+									navigation.goBack();
+									return;
+								});
+							}}
+						>
+							<Text style={{textAlign: "center"}}>
+								YES
+							</Text>
+						</Pressable>
+						<Pressable style={styles.noButton}
+							onPress={() => setModalVisible(!modalVisible)}
+						>
+							<Text style={{textAlign: "center"}}>
+								NO
+							</Text>
+						</Pressable>
+					</View>
+				</View>
+			</Modal>
 			<Button
 				title="Cancel"
-				onPress={() => Alert.alert("jump to the cancel page")}
+				onPress={() => setModalVisible(true)}
 			/>
 
 			<TaskProgress />

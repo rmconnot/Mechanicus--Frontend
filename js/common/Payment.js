@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
-import { PaymentsStripe as Stripe } from "expo-payments-stripe";
+import { PaymentsStripe } from "expo-payments-stripe";
 import axios from "axios";
 import { gql, useMutation } from "@apollo/client";
 import { BtnLarge } from "./Buttons";
@@ -62,7 +62,7 @@ export default function PaymentModule({ navigation, route, appointment }) {
 	console.log("finalCost * 100: ", appointment.finalCost * 100);
 
 	useEffect(() => {
-		Stripe.setOptionsAsync({
+		PaymentsStripe.setOptionsAsync({
 			publishableKey:
 				"pk_test_51Ij96jEM0ZZ06oKP6PdUiTJ63cJhIkFjn3xsUAl5d0cZ8InxwDc8oBwMKEcTzHINRD2eeXpNP5BGFmVgBrk7mrUz00U2MS4NKt",
 		});
@@ -73,7 +73,7 @@ export default function PaymentModule({ navigation, route, appointment }) {
 			requiredBillingAddressFields: "full",
 		};
 
-		let token = await Stripe.paymentRequestWithCardFormAsync(options);
+		let token = await PaymentsStripe.paymentRequestWithCardFormAsync(options);
 		let response = await doPayment(appointment.finalCost * 100, token.tokenId);
 
 		if (response)
