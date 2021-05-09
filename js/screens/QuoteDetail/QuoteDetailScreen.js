@@ -15,7 +15,7 @@ import { styles } from "./Styles";
 import { gql, useQuery } from "@apollo/client";
 
 export default function QuoteDetailScreen({ navigation, route }) {
-	const { vehicle, services, createdAt } = route.params.quote;
+	const { vehicle, billItems, createdAt } = route.params.quote;
 	console.log(route.params.quote);
 	return (
 		<SafeAreaView style={commonStyles.pageContainer}>
@@ -31,7 +31,7 @@ export default function QuoteDetailScreen({ navigation, route }) {
 
 			<View style={styles.section}>
 				<Text style={commonStyles.sectionTitle}>Services</Text>
-				<ServiceInfoCard item={services}/>
+				<ServiceInfoCard item={billItems}/>
 			</View>
 			
 		</SafeAreaView>

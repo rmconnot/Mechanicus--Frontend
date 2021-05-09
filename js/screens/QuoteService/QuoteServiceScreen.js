@@ -19,6 +19,12 @@ const SERVICES_QUERY = gql`
 			id
 			type
 			price
+			laborTime
+			parts {
+				id
+				type
+				price
+			}
 		}
 	}
 `;
@@ -58,7 +64,7 @@ export default function QuoteServiceScreen({ navigation, route }) {
 	const handleCheckedServices = (servicesList) => {
 		setSelectedServices(servicesList);
 	};
-
+	
 	return (
 		<SafeAreaView style={styles.container}>
 			<View>
@@ -66,7 +72,7 @@ export default function QuoteServiceScreen({ navigation, route }) {
 				<CheckboxGroup
 					initSelections={selectedServices}
 					options={data ? data.services : emptyServiceList}
-					handleCheckedServices={handleCheckedServices}
+					handleCheckedServices={setSelectedServices}
 				/>
 			</View>
 

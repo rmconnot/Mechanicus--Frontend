@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import {
 	ApolloClient,
 	InMemoryCache,
@@ -44,7 +45,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { commonStyles, colors } from "./js/common/Style";
 import { Icon } from "./js/common/Svg";
-
+import { BtnBare } from "./js/common/Buttons";
 import { IP_ADDRESS } from "./Secrets";
 
 // navigation
@@ -137,10 +138,22 @@ export default function App() {
 							headerShown: false,
 						}}
 					/>
-					<Stack.Screen name="QuoteDetail" component={QuoteDetailScreen} />
+					<Stack.Screen
+						name="QuoteDetail"
+						component={QuoteDetailScreen}
+						options={{ headerTitle: "Quote Detail" }}
+					/>
 					<Stack.Screen
 						name="TaskDetailPresent"
 						component={TaskDetailPresentScreen}
+						options={{
+							headerTitle: "Appointment Detail",
+							headerRight: () => (
+								<View style={{ marginRight: 16 }}>
+									<BtnBare title="cancel" />
+								</View>
+							),
+						}}
 					/>
 
 					<Stack.Screen
@@ -154,6 +167,7 @@ export default function App() {
 					<Stack.Screen
 						name="AddVehicleManual"
 						component={AddVehicleManualScreen}
+						options={{ headerTitle: "New Vehicle" }}
 					/>
 					<Stack.Screen
 						name="Schedule"

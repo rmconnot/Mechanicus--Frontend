@@ -18,6 +18,7 @@ import { Icon } from "../../common/Svg";
 import { gql, useQuery } from "@apollo/client";
 import { RadioButton } from "react-native-paper";
 import { styles } from "./Styles";
+import { useEffect } from "react/cjs/react.development";
 
 const navOption = [
 	{
@@ -69,19 +70,22 @@ export default function QuoteVehicleScreen({ navigation, route }) {
 
 	if (data) console.log("data: ", data);
 
-	subscribeToMore({
-		document: VEHICLES_SUBSCRIPTION,
-		variables: { customerID: currentUser.id },
-		updateQuery: (prev, { subscriptionData }) => {
-			const newVehicle = subscriptionData.data.newVehicle;
-			if (!prev.vehicles.find((vehicle) => vehicle.id === newVehicle.id))
-				return Object.assign(
-					{},
-					{
-						vehicles: [...prev.vehicles, newVehicle],
-					}
-				);
-		},
+	useEffect(() => {
+		let vehiclesUnsub = subscribeToMore({
+			document: VEHICLES_SUBSCRIPTION,
+			variables: { customerID: currentUser.id },
+			updateQuery: (prev, { subscriptionData }) => {
+				const newVehicle = subscriptionData.data.newVehicle;
+				if (!prev.vehicles.find((vehicle) => vehicle.id === newVehicle.id))
+					return Object.assign(
+						{},
+						{
+							vehicles: [...prev.vehicles, newVehicle],
+						}
+					);
+			},
+		});
+		return () => vehiclesUnsub();
 	});
 
 	const renderVehicleItem = ({ item }) => {

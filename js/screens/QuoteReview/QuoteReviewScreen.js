@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import { render } from "react-dom";
 import { useQuery, gql, useMutation } from "@apollo/client";
@@ -45,15 +45,25 @@ const VEHICLE_QUERY = gql`
 	}
 `;
 
-const SERVICES_QUERY = gql`
-	query($servicesList: [Int]) {
-		services(servicesList: $servicesList) {
-			id
-			type
-			price
-		}
-	}
-`;
+// const SERVICES_QUERY = gql`
+// 	query($servicesList: [Int]) {
+// 		services(servicesList: $servicesList) {
+// 			id
+// 			type
+// 			price
+// 		}
+// 	}
+// `;
+
+// const PARTS_QUERY = gql`
+// 	query($partsList: [Int]) {
+// 		parts(partsList: $partsList) {
+// 			id
+// 			type
+// 			price
+// 		}
+// 	}
+// `;
 
 const QUOTE_MUTATION = gql`
 	mutation(
@@ -61,14 +71,14 @@ const QUOTE_MUTATION = gql`
 		$customerID: Int!
 		$status: String!
 		$vehicleID: Int!
-		$services: [Int]!
+		$billItems: [BillItemInput]!
 	) {
 		createQuote(
 			costEstimate: $costEstimate
 			customerID: $customerID
 			status: $status
 			vehicleID: $vehicleID
-			services: $services
+			billItems: $billItems
 		) {
 			id
 		}
@@ -92,17 +102,7 @@ export default function QuoteReviewScreen({ navigation, route }) {
 	const [quoteID, setQuoteID] = useState(null),
 		[totalPrice, setTotalPrice] = useState(0);
 
-	/* get services data */
-	const {
-		data: servicesData,
-		loading: servicesLoading,
-		error: servicesError,
-	} = useQuery(SERVICES_QUERY, {
-		variables: {
-			servicesList: selectedServices,
-		},
-		onError: (error) => console.log(JSON.stringify(error, null, 2)),
-	});
+	console.log("selectedServices: ", selectedServices);
 
 	/* get vehicle data */
 	const {
@@ -124,31 +124,33 @@ export default function QuoteReviewScreen({ navigation, route }) {
 		}
 	);
 
+	/*  */
+	const make_billItemInput = (selectedServices) => {
+		let temp = selectedServices.slice();
+		temp.forEach((item) => {
+			delete item["service"];
+			delete item["part"];
+		});
+		return temp;
+	};
+
 	const saveQuote = async () => {
-		await createQuote({
+		let createdQuote = await createQuote({
 			variables: {
 				costEstimate: totalPrice,
 				customerID: currentUser.id,
-				status: "quote",
+				status: "CONFIRMED",
 				vehicleID: selectedVehicle,
-				services: selectedServices,
+				billItems: make_billItemInput(selectedServices),
 			},
-		}).then((result) => {
-			let quoteID = result.data.createQuote.id;
-			setQuoteID(quoteID);
-			navigation.reset({
-				index: 0,
-				routes: [
-					{
-						name: "Schedule",
-						params: {
-							quoteID: quoteID,
-							currentUser: route.params.currentUser,
-						},
-					},
-				],
-			});
 		});
+
+		navigation.replace("Schedule", {
+			quoteID: createdQuote.data.createQuote.id,
+			currentUser: route.params.currentUser,
+		});
+
+		return;
 	};
 
 	return (
@@ -178,7 +180,7 @@ export default function QuoteReviewScreen({ navigation, route }) {
 							/>
 						</View>
 						<ServiceInfoCard
-							item={servicesData ? servicesData.services : ""}
+							item={selectedServices}
 							handleTotalPrice={setTotalPrice}
 						/>
 					</View>

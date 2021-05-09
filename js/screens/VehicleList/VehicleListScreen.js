@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	TextInput,
 	Text,
@@ -68,19 +68,23 @@ export const VehicleListScreen = ({ navigation, route }) => {
 		onError: (error) => console.log(JSON.stringify(error, null, 2)),
 	});
 
-	subscribeToMore({
-		document: VEHICLES_SUBSCRIPTION,
-		variables: { customerID: currentUser.id },
-		updateQuery: (prev, { subscriptionData }) => {
-			const newVehicle = subscriptionData.data.newVehicle;
-			if (!prev.vehicles.find((vehicle) => vehicle.id === newVehicle.id))
-				return Object.assign(
-					{},
-					{
-						vehicles: [...prev.vehicles, newVehicle],
-					}
-				);
-		},
+	useEffect(() => {
+		let vehiclesUnsub = subscribeToMore({
+			document: VEHICLES_SUBSCRIPTION,
+			variables: { customerID: currentUser.id },
+			updateQuery: (prev, { subscriptionData }) => {
+				const newVehicle = subscriptionData.data.newVehicle;
+				if (!prev.vehicles.find((vehicle) => vehicle.id === newVehicle.id))
+					return Object.assign(
+						{},
+						{
+							vehicles: [...prev.vehicles, newVehicle],
+						}
+					);
+			},
+		});
+
+		return () => vehiclesUnsub();
 	});
 
 	const renderItem = ({ item }) => {

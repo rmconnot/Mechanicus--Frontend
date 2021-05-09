@@ -1,36 +1,37 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const fonts = {
-    h1: 28,
-    h2: 22,
-    h3: 20,
-    body: 17,
-    note: 13,
-    caption2: 11,
+	h1: 28,
+	h2: 22,
+	h3: 20,
+	body: 17,
+	note: 13,
+	caption2: 11,
 };
 
 export const colors = {
-    primary: "#81DEE4",
-    primaryDark: "#1AA5AE",
-    primaryLight: "#DEF7F9",
-    secondary: "#EE7451",
-    secondaryDark: "#BD421F",
-    secondaryLight: "#F8DFD8",
-    text: "#333333",
-    gray2: "#4F4F4F",
-    gray3: "#828282",
-    gray4: "#BDBDBD",
-    gray5: "#E0E0E0",
-    gray6: "#F5F5F5",
-}
-
-export const spacings = {
-    XS: 4,
-    S: 12,
-    M: 24,
-    L: 48,
+	primary: "#81DEE4",
+	primaryDark: "#1AA5AE",
+	primaryLight: "#DEF7F9",
+	secondary: "#EE7451",
+	secondaryDark: "#BD421F",
+	secondaryLight: "#F8DFD8",
+	text: "#333333",
+	gray2: "#4F4F4F",
+	gray3: "#828282",
+	gray4: "#BDBDBD",
+	gray5: "#E0E0E0",
+	gray6: "#F5F5F5",
+	darkGreen: "#2F4F2F",
+	lightGreen: "#E0EEE0",
 };
 
+export const spacings = {
+	XS: 4,
+	S: 12,
+	M: 24,
+	L: 48,
+};
 
 export const commonStyles = StyleSheet.create({
     container: {
@@ -42,20 +43,31 @@ export const commonStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
     },
+    rowSpread: {
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        alignItems: "center",
+    },
+    rowLeft: {
+        flexDirection: "row",
+        justifyContent: 'flex-start',
+        alignItems: "center",
+    },
     header: {
 		borderBottomLeftRadius: 24,
 		borderBottomRightRadius: 24,
     },
     pageContainer: {
+        width: "100%",
         paddingHorizontal: 16,
-        marginTop: 12,
+        marginTop: 8,
     },
     card: {
         padding: 16,
         backgroundColor: "white",
         borderRadius: 8,
         // marginHorizontal: 24,
-        marginVertical: 6,
+        marginBottom: 12,
     },
     cardHeader: {
         flexDirection: "row",
@@ -161,6 +173,12 @@ export const commonStyles = StyleSheet.create({
         fontSize: fonts.h3,
         fontWeight: "600",
     },
+    h4: {
+        color: colors.text,
+        fontSize: fonts.body,
+        fontWeight: "700",
+        textTransform: "uppercase",
+    },
     body: {
         color: colors.text,
         fontSize: fonts.body,
@@ -179,7 +197,7 @@ export const commonStyles = StyleSheet.create({
     sectionTitle: {
         color: colors.gray3,
         fontSize: fonts.body,
-        marginBottom: 4,
+        marginBottom: 2,
     },
     // spacing
     m_b_s: {
@@ -192,17 +210,24 @@ export const commonStyles = StyleSheet.create({
 		backgroundColor: 'white',
 		padding: 12,
 		borderRadius: 4,
-        fontSize: fonts.body,
-        marginBottom: 24,
+		fontSize: fonts.body,
+		marginBottom: 24,
 	},
-    //outlined white box
-    inputBox2: {
-        color: colors.text,
-        borderWidth: 1,
-        borderColor: colors.gray4,
-		backgroundColor: 'white',
+	//outlined white box
+	inputBox2: {
+		color: colors.text,
+		borderWidth: 1,
+		borderColor: colors.gray4,
+		backgroundColor: "white",
 		padding: 12,
 		borderRadius: 4,
         fontSize: fonts.body,
     },
+    //deco
+    dividingLine: {
+		borderTopWidth: 1,
+		borderTopColor: colors.gray5,
+		height: 16,
+	},
 });
+

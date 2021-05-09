@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	View,
 	Text,
@@ -83,6 +83,7 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 			scheduleDate
 			status
 			quote {
+				id
 				vehicle {
 					id
 					vin
@@ -90,11 +91,18 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 					model
 					year
 					imgUrl
+					vin
 				}
-				services {
-					id
-					type
-					price
+				billItems {
+					service {
+						id
+						type
+					}
+					part {
+						id
+						type
+					}
+					cost
 				}
 			}
 			mechanic {
@@ -102,7 +110,6 @@ const APPOINTMENTS_SUBSCRIPTION = gql`
 				lastName
 				phone
 			}
-			finalCost
 		}
 	}
 `;
@@ -114,6 +121,7 @@ const APPOINTMENTS_QUERY = gql`
 			scheduleDate
 			status
 			quote {
+				id
 				vehicle {
 					id
 					vin
@@ -121,11 +129,18 @@ const APPOINTMENTS_QUERY = gql`
 					model
 					year
 					imgUrl
+					vin
 				}
-				services {
-					id
-					type
-					price
+				billItems {
+					service {
+						id
+						type
+					}
+					part {
+						id
+						type
+					}
+					cost
 				}
 			}
 			mechanic {
@@ -133,7 +148,6 @@ const APPOINTMENTS_QUERY = gql`
 				lastName
 				phone
 			}
-			finalCost
 		}
 	}
 `;
@@ -142,10 +156,16 @@ const QUOTES_QUERY = gql`
 	query($customerID: Int!) {
 		quotes(customerID: $customerID) {
 			id
-			services {
-				id
-				type
-				price
+			billItems {
+				service {
+					id
+					type
+				}
+				part {
+					id
+					type
+				}
+				cost
 			}
 			vehicle {
 				id
@@ -166,10 +186,18 @@ const QUOTES_SUBSCRIPTION = gql`
 	subscription($customerID: Int!) {
 		newQuote(customerID: $customerID) {
 			id
-			services {
-				id
-				type
-				price
+			billItems {
+				service {
+					id
+					type
+					price
+				}
+				part {
+					id
+					type
+					price
+				}
+				cost
 			}
 			vehicle {
 				id
@@ -190,7 +218,7 @@ const QUOTES_SUBSCRIPTION = gql`
 
 export const TaskListScreen = ({ navigation, route }) => {
 	const { currentUser } = route.params;
-	console.log(route.params);
+	// console.log(route.params);
 	const [displayType, setDisplayType] = useState("appointments");
 
 	const { subscribeToMore, data, error, loading } = useQuery(
@@ -211,63 +239,62 @@ export const TaskListScreen = ({ navigation, route }) => {
 		onError: (error) => console.log(JSON.stringify(error, null, 2)),
 	});
 
-	if (quoteData) console.log("quoteData: ", quoteData);
+	// if (quoteData) console.log("quoteData: ", quoteData);
 
 	// if (data) console.log("data: ", data);
 	if (loading) console.log("Loading...");
 	if (error) console.error(`Error! ${error.message}`);
 
-	subscribeToMoreQuotes({
-		document: QUOTES_SUBSCRIPTION,
-		variables: { customerID: currentUser.id },
-		updateQuery: (prev, { subscriptionData }) => {
-			const newQuote = subscriptionData.data.newQuote;
-			console.log("newQuote: ", newQuote);
-			if (!prev.quotes.find((quote) => quote.id === newQuote.id))
-				return Object.assign(
-					{},
-					{
-						quotes: [...prev.quotes, newQuote],
-					}
-				);
-		},
-	});
+	useEffect(() => {
+		let quotesUnsub = subscribeToMoreQuotes({
+			document: QUOTES_SUBSCRIPTION,
+			variables: { customerID: currentUser.id },
+			updateQuery: (prev, { subscriptionData }) => {
+				console.log("updating query");
+				const newQuote = subscriptionData.data.newQuote;
+				console.log("newQuote: ", newQuote);
+				if (!prev.quotes.find((quote) => quote.id === newQuote.id))
+					return Object.assign(
+						{},
+						{
+							quotes: [...prev.quotes, newQuote],
+						}
+					);
+			},
+		});
 
-	subscribeToMore({
-		document: APPOINTMENTS_SUBSCRIPTION,
-		variables: { customerID: currentUser.id },
-		updateQuery: (prev, { subscriptionData }) => {
-			const newAppointment = subscriptionData.data.newAppointment;
-			// console.log(newAppointment);
-			if (
-				!prev.appointments.find(
-					(appointment) => appointment.id === newAppointment.id
-				)
-			) {
-				return Object.assign(
-					{},
-					{
-						appointments: [...prev.appointments, newAppointment],
-					}
-				);
-			} else {
-				const index = prev.appointments.indexOf(
-					prev.appointments.find(
+		let appointmentsUnsub = subscribeToMore({
+			document: APPOINTMENTS_SUBSCRIPTION,
+			variables: { customerID: currentUser.id },
+			updateQuery: (prev, { subscriptionData }) => {
+				const newAppointment = subscriptionData.data.newAppointment;
+				console.log("newAppointment: ", newAppointment);
+				if (
+					!prev.appointments.find(
 						(appointment) => appointment.id === newAppointment.id
 					)
-				);
+				) {
+					return Object.assign(
+						{},
+						{
+							appointments: [...prev.appointments, newAppointment],
+						}
+					);
+				} else {
+					const index = prev.appointments.indexOf(
+						prev.appointments.find(
+							(appointment) => appointment.id === newAppointment.id
+						)
+					);
+					prev.appointments[index] = newAppointment;
+					return { appointments: prev.appointments };
+				}
+			},
+		});
 
-				console.log("index: ", index);
-
-				console.log("prev appointment: ", prev.appointments[index]);
-
-				prev.appointments[index] = newAppointment;
-
-				console.log("new appointment: ", prev.appointments[index]);
-
-				return { appointments: prev.appointments };
-			}
-		},
+		return () => {
+			quotesUnsub(), appointmentsUnsub();
+		};
 	});
 
 	const renderItemPresent = ({ item }) => {
@@ -308,7 +335,9 @@ export const TaskListScreen = ({ navigation, route }) => {
 							/>
 						}
 						ListFooterComponent={<View style={commonStyles.blankFooter}></View>}
-						ListEmptyComponent={<Text>No upcoming appointments</Text>}
+						ListEmptyComponent={
+							<Text style={commonStyles.body}>No upcoming appointments</Text>
+						}
 						data={
 							displayType == "appointments"
 								? data

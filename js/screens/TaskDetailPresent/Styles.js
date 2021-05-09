@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
+import { colors } from "../../common/Style";
 
 //////////////TaskDetailPresent////////////////////
 export const styles = StyleSheet.create({
@@ -9,6 +10,14 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center"
     },
+    totalEntry: {
+		flexDirection: "row",
+		justifyContent: "flex-end",
+		alignItems: "center",
+		borderTopWidth: 1,
+		borderTopColor: colors.gray5,
+		paddingTop: 12,
+	},
     modalView: {
         margin: 20,
         backgroundColor: "white",
@@ -55,3 +64,4 @@ export const styles = StyleSheet.create({
         textAlign: "center"
     }
 });
+

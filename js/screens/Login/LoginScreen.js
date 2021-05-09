@@ -58,6 +58,7 @@ export default function Login({ navigation }) {
 	});
 
 	const handleLogin = async () => {
+		console.log(input);
 		getCustomer({
 			variables: { email: input.email, password: input.password },
 		});
@@ -72,7 +73,7 @@ export default function Login({ navigation }) {
 				<Text style={[commonStyles.body, styles.label]}>Email</Text>
 				<TextInput
 					style={commonStyles.inputBox}
-					placeholder="username@email.address"
+					placeholder="Enter your email address"
 					placeholderTextColor={colors.gray4}
 					autoCapitalize="none"
 					onChangeText={(text) =>
@@ -86,7 +87,7 @@ export default function Login({ navigation }) {
 					<TextInput
 						style={[commonStyles.inputBox, styles.pswInput]}
 						secureTextEntry={!pswVisibility}
-						placeholder="8 digit numbers"
+						placeholder="Enter your password"
 						placeholderTextColor={colors.gray4}
 						autoCapitalize="none"
 						onChangeText={(text) =>

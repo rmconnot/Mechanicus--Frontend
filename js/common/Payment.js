@@ -6,8 +6,8 @@ import { gql, useMutation } from "@apollo/client";
 import { BtnLarge } from "./Buttons";
 
 const TRANSACTION_MUTATION = gql`
-	mutation($appointmentID: Int!, $cost: Float!) {
-		createTransaction(appointmentID: $appointmentID, cost: $cost) {
+	mutation($cost: Float!, $quoteID: Int!) {
+		createTransaction(cost: $cost, quoteID: $quoteID) {
 			id
 		}
 	}
@@ -41,8 +41,15 @@ const doPayment = (amount, tokenId, description, accessToken) => {
 		});
 };
 
-export default function PaymentModule({ navigation, route, appointment }) {
+export default function PaymentModule({
+	navigation,
+	route,
+	appointment,
+	totalPrice,
+}) {
 	const [tokenID, setToken] = useState();
+
+	console.log("appointment: ", appointment);
 
 	const [updateAppointment, { data: appointmentData }] = useMutation(
 		APPOINTMENT_MUTATION,
@@ -58,9 +65,6 @@ export default function PaymentModule({ navigation, route, appointment }) {
 		}
 	);
 
-	console.log("finalCost: ", appointment.finalCost);
-	console.log("finalCost * 100: ", appointment.finalCost * 100);
-
 	useEffect(() => {
 		PaymentsStripe.setOptionsAsync({
 			publishableKey:
@@ -73,35 +77,33 @@ export default function PaymentModule({ navigation, route, appointment }) {
 			requiredBillingAddressFields: "full",
 		};
 
-		let token = await PaymentsStripe.paymentRequestWithCardFormAsync(options);
-		let response = await doPayment(appointment.finalCost * 100, token.tokenId);
+		let token = await Stripe.paymentRequestWithCardFormAsync(options);
+		let response = await doPayment(totalPrice * 100, token.tokenId);
 
 		if (response)
 			createTransaction({
 				variables: {
-					appointmentID: appointment.id,
-					cost: appointment.finalCost * 1,
+					cost: totalPrice * 1,
+					quoteID: appointment.quote.id,
 				},
 			})
 				.then(() => {
 					updateAppointment({
 						variables: {
 							id: appointment.id,
-							status: "Paid",
+							status: "PAID",
 						},
 					});
 				})
 				.then((result) => {
-					console.log("result: ", result);
 					setToken(token.tokenId);
-					navigation.goBack();
 					return;
 				});
 	};
 
 	return (
 		<View>
-			<Text>{tokenID ? tokenID : "No token"}</Text>
+			{/* <Text>{tokenID ? tokenID : "No token"}</Text> */}
 			<BtnLarge
 				title={tokenID ? "Payment Complete" : "Pay Now"}
 				onPress={makePayment}
