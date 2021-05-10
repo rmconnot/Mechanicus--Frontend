@@ -39,8 +39,11 @@ export const QuoteProgress = ({
 
 export const TaskProgress = ({
     curStep = 1, //current activated step
-    status = [true,false,false], //shows if each step is done
 }) => {
+    let status = [true,false,false];
+    if(curStep==2) status = [true,true,false];
+    else if(curStep==3) status = [true,true,true];
+
     return (
     <View style={styles.progressContainer}>
         <ProgressDot label={"confirm"} active={curStep==1?true:false} done={status[0]}/>

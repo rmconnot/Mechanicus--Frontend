@@ -96,6 +96,8 @@ export function ScheduleScreen({ navigation, route }) {
 			},
 		});
 
+		console.log("schedule success");
+
 		navigation.replace("TaskList", route.params);
 	};
 

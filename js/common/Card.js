@@ -105,11 +105,7 @@ export const VehicleInfoCard = ({
 					</Text>
 					<Text style={commonStyles.body}>{item.year}</Text>
 					<Text style={[commonStyles.cap2, { marginTop: 12 }]}>
-<<<<<<< HEAD
-						VIN: {item.vin}
-=======
 						VIN {item.vin || "--"}
->>>>>>> 73cb36b9c604b30db98294e062d0a54f23220909
 					</Text>
 				</View>
 			</View>
@@ -273,12 +269,8 @@ export const QuoteCard = ({
 	route,
 	item = sampleAppointment.quote,
 }) => {
-<<<<<<< HEAD
-	const { id, createdAt, costEstimate, services, vehicle } = item;
-=======
 	console.log(item);
 	const { createdAt, costEstimate, billItems, vehicle } = item;
->>>>>>> 73cb36b9c604b30db98294e062d0a54f23220909
 	const currentUser = route.params.currentUser;
 	let serviceInfo = get_service(billItems);
 
@@ -299,22 +291,6 @@ export const QuoteCard = ({
 				</View>
 				<BtnSmall
 					title={"schedule"}
-<<<<<<< HEAD
-					onPress={() => {
-						navigation.reset({
-							index: 0,
-							routes: [
-								{
-									name: "Schedule",
-									params: {
-										quoteID: id,
-										currentUser: currentUser,
-									},
-								},
-							],
-						});
-					}}
-=======
 					onPress={() =>
 						navigation.navigate("Schedule", {
 							...route.params,
@@ -322,7 +298,6 @@ export const QuoteCard = ({
 							// currentUser: currentUser,
 						})
 					}
->>>>>>> 73cb36b9c604b30db98294e062d0a54f23220909
 				/>
 			</View>
 

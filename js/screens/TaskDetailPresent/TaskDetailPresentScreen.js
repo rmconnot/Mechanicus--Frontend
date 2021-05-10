@@ -29,20 +29,36 @@ const imageURL = {
 	line: "./images/line.png",
 };
 
+const APPOINTMENT_MUTATION = gql`
+	mutation($id: Int!, $status: String!) {
+		updateAppointment(id: $id, status: $status) {
+			id
+		}
+	}
+`;
+
 export default function TaskDetailPresentScreen({ navigation, route }) {
 	const { appointment } = route.params;
 
 	console.log("appoinment: ", appointment);
 
 	const [totalPrice, setTotalPrice] = useState();
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const currentAppointmentStep = {
 		PENDING: 1,
 		CANCELED: 1,
-		APPROVED: 2,
+		"APPROVED": 2,
 		PAID: 3,
 		COMPLETED: 3,
 	};
+
+	const [updateAppointment, { data: appointmentData }] = useMutation(
+		APPOINTMENT_MUTATION,
+		{
+			onError: (error) => console.log(JSON.stringify(error, null, 2)),
+		}
+	);
 
 	const handleTotalPrice = (total) => {
 		console.log("total: ", total);
@@ -73,8 +89,8 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 								onPress={() => {
 									updateAppointment({
 										variables: {
-											id: appointmentID,
-											status: "canceled"
+											id: appointment.id,
+											status: "CANCELED"
 										}
 									})
 									.then((result) => {
@@ -101,6 +117,7 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 				</Modal>
 				<Button
 					title="Cancel"
+					disabled={appointment.status == "CANCELED"}
 					onPress={() => setModalVisible(true)}
 				/>
 				<TaskProgress curStep={currentAppointmentStep[appointment.status]} />
