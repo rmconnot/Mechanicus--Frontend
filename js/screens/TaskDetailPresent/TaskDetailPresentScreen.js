@@ -46,11 +46,11 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 	const [modalVisible, setModalVisible] = useState(false);
 
 	const currentAppointmentStep = {
-		PENDING: 1,
-		CANCELED: 1,
+		"PENDING": 1,
+		"CANCELED": 1,
 		"APPROVED": 2,
-		PAID: 3,
-		COMPLETED: 3,
+		"PAID": 3,
+		"COMPLETED": 3,
 	};
 
 	const [updateAppointment, { data: appointmentData }] = useMutation(
