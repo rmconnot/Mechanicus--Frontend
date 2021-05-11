@@ -20,6 +20,7 @@ const VEHICLES_QUERY = gql`
 	query($customerID: Int!) {
 		vehicles(customerID: $customerID) {
 			id
+			vin
 			year
 			make
 			model

@@ -7,7 +7,9 @@ import {
 	TouchableOpacity,
 	Alert,
 	Image,
+	Modal,
 	Button,
+	Pressable,
 	SafeAreaView,
 	ScrollView,
 } from "react-native";
@@ -19,7 +21,7 @@ import {
 } from "../../common/Card";
 import { commonStyles, colors } from "../../common/Style";
 import { styles } from "./Styles";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import PaymentModule from "../../common/Payment";
 
 const imageURL = {
@@ -27,20 +29,36 @@ const imageURL = {
 	line: "./images/line.png",
 };
 
+const APPOINTMENT_MUTATION = gql`
+	mutation($id: Int!, $status: String!) {
+		updateAppointment(id: $id, status: $status) {
+			id
+		}
+	}
+`;
+
 export default function TaskDetailPresentScreen({ navigation, route }) {
 	const { appointment } = route.params;
 
 	console.log("appoinment: ", appointment);
 
 	const [totalPrice, setTotalPrice] = useState();
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const currentAppointmentStep = {
-		PENDING: 1,
-		CANCELED: 1,
-		APPROVED: 2,
-		PAID: 3,
-		COMPLETED: 3,
+		"PENDING": 1,
+		"CANCELED": 1,
+		"APPROVED": 2,
+		"PAID": 3,
+		"COMPLETED": 3,
 	};
+
+	const [updateAppointment, { data: appointmentData }] = useMutation(
+		APPOINTMENT_MUTATION,
+		{
+			onError: (error) => console.log(JSON.stringify(error, null, 2)),
+		}
+	);
 
 	const handleTotalPrice = (total) => {
 		console.log("total: ", total);
@@ -50,6 +68,58 @@ export default function TaskDetailPresentScreen({ navigation, route }) {
 	return (
 		<SafeAreaView style={commonStyles.container}>
 			<ScrollView style={commonStyles.pageContainer}>
+				<Modal
+					animationType="slide"
+					transparent={true}
+					visible={modalVisible}
+					onRequestClose={() => {
+						Alert.alert("Modal has been closed.");
+						setModalVisible(!modalVisible);
+					}}
+				>
+					<View style={styles.centerContainer}>
+						<View style={styles.modalView}>
+							<Text style={styles.modalTitle}>
+								Are you sure you want to cancel this appointment?
+							</Text>
+							<Text style={styles.sectionTitle}>
+								You will lose the appointment and quote if you cancel the task.
+							</Text>
+							<Pressable style={styles.yesButton}
+								onPress={() => {
+									updateAppointment({
+										variables: {
+											id: appointment.id,
+											status: "CANCELED"
+										}
+									})
+									.then((result) => {
+										console.log("result: ", result);
+										setModalVisible(!modalVisible);
+										navigation.goBack();
+										return;
+									});
+								}}
+							>
+								<Text style={{textAlign: "center"}}>
+									YES
+								</Text>
+							</Pressable>
+							<Pressable style={styles.noButton}
+								onPress={() => setModalVisible(!modalVisible)}
+							>
+								<Text style={{textAlign: "center"}}>
+									NO
+								</Text>
+							</Pressable>
+						</View>
+					</View>
+				</Modal>
+				<Button
+					title="Cancel"
+					disabled={appointment.status == "CANCELED"}
+					onPress={() => setModalVisible(true)}
+				/>
 				<TaskProgress curStep={currentAppointmentStep[appointment.status]} />
 
 				<View style={styles.section}>
