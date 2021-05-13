@@ -39,6 +39,15 @@ const styles = StyleSheet.create({
       flexDirection:"row",
       width:"100%",
   },
+  inputBox2: {
+		color: colors.text,
+		borderWidth: 1,
+		borderColor: colors.gray4,
+		backgroundColor: "white",
+		paddingVertical: 11,
+		borderRadius: 4,
+    fontSize: fonts.body,
+  },
 });
 
 export default styles;

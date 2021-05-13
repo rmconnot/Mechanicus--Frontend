@@ -10,6 +10,7 @@ import {
 	SafeAreaView,
 	ScrollView,
 } from "react-native";
+import Modal from 'react-native-modal';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Moment from "moment";
 import styles from "./Styles";
@@ -48,6 +49,12 @@ export function ScheduleScreen({ navigation, route }) {
 	const trueHour = currentDate.getHours();
 	const trueDay = Moment(currentDate).format("DD-MMM-YYYY").toString();
 
+	const [isModalVisible, setModalVisible] = useState(false);
+	  
+	const toggleModal = () => {
+		setModalVisible(!isModalVisible);
+	};
+
 	const [scheduleInput, setScheduleInput] = useState({
 		date: currentDate,
 		address: "",
@@ -65,12 +72,19 @@ export function ScheduleScreen({ navigation, route }) {
 	);
 
 	const onChange = (event, selectedDate) => {
-		const currentDate = selectedDate || date;
+		//const currentDate = selectedDate || date;
 		//setShow(Platform.OS === 'ios');
+		console.log()
 		setScheduleInput((prevState) => {
-			return { ...prevState, date: currentDate };
+			return { ...prevState, date: selectedDate };
 		});
 	};
+
+	const setTime = (value) => {
+		setScheduleInput((prevState) => {
+			return { ...prevState, time: value };
+		});
+	}
 
 	console.log("scheduleInput: ", scheduleInput);
 
@@ -78,7 +92,7 @@ export function ScheduleScreen({ navigation, route }) {
 		customerID: route.params.currentUser.id,
 		quoteID: route.params.quoteID,
 		scheduleDate:
-			Moment(scheduleInput.date).format("DD-MMM-YYYY").toString() +
+			Moment(scheduleInput.date).format("DD-MMM-YYYY").toString() + 
 			scheduleInput.time,
 		address: scheduleInput.address,
 	});
@@ -134,30 +148,33 @@ export function ScheduleScreen({ navigation, route }) {
 							<Icon name="clock" size={24} color={colors.primaryDark} />
 							<Text style={commonStyles.h3}>Time</Text>
 						</View>
-						<View style={commonStyles.inputBox2}>
-							<DateTimePicker
+						<View style={styles.inputBox2}>
+							{/*<DateTimePicker
 								value={scheduleInput.date}
 								mode="time"
 								is24Hour={true}
 								// minuteInterval={15}
 								display="default"
 								onChange={onChange}
-							/>
-							{/* <Picker
-								mode="dropdown"
-								selectedValue={scheduleInput.time}
-								style={{ height: 24, width: 300 }}
-								onValueChange={(value) => setScheduleInput({time: value})}
-							>
-							<Picker.Item label={scheduleInput.date!=trueDay?"11:00-12:00pm":trueHour<11?"11:00-12:00pm":"not available"} value="11:00-12:00pm"/>
-							<Picker.Item label={scheduleInput.date!=trueDay?"12:00-1:00pm":trueHour<12?"12:00-1:00pm":"not available"} value="12:00-1:00pm"/>
-							<Picker.Item label={scheduleInput.date!=trueDay?"1:00-2:00pm":trueHour<13?"1:00-2:00pm":"not available"} value="1:00-2:00pm"/>
-							<Picker.Item label={scheduleInput.date!=trueDay?"2:00-3:00pm":trueHour<14?"2:00-3:00pm":"not available"} value="2:00-3:00pm"/>
-							<Picker.Item label={scheduleInput.date!=trueDay?"3:00-4:00pm":trueHour<15?"3:00-4:00pm":"not available"} value="3:00-4:00pm"/>
-							<Picker.Item label={scheduleInput.date!=trueDay?"4:00-5:00pm":trueHour<16?"4:00-5:00pm":"not available"} value="4:00-5:00pm"/>
-							<Picker.Item label={scheduleInput.date=trueDay?"5:00-6:00pm":trueHour<17?"5:00-6:00pm":"not available"} value="5:00-6:00pm"/>
-							<Picker.Item label={scheduleInput.date!=trueDay?"6:00-6:30pm":trueHour<18?"6:00-6:30pm":"not available"} value="6:00-6:30pm"/>
-							</Picker> */}
+							/>*/}
+							<Button title={scheduleInput.time} onPress={toggleModal} />
+							<Modal isVisible={isModalVisible} backdropColor="white" onBackdropPress={() => setModalVisible(false)}>
+								<Picker
+									mode="dropdown"
+									selectedValue={scheduleInput.time}
+									style={{ height: 24, width: 300, justifyContent: 'center', fontSize: commonStyles.note, paddingLeft: 50}}
+									onValueChange={(value) => setTime(value)}
+								>
+									<Picker.Item label={Moment(scheduleInput.date).format("DD-MMM-YYYY").toString()!==trueDay?"11:00-12:00pm":trueHour<11?"11:00-12:00pm":"not available"} value="11:00-12:00pm"/>
+									<Picker.Item label={Moment(scheduleInput.date).format("DD-MMM-YYYY").toString()!==trueDay?"12:00-1:00pm":trueHour<12?"12:00-1:00pm":"not available"} value="12:00-1:00pm"/>
+									<Picker.Item label={Moment(scheduleInput.date).format("DD-MMM-YYYY").toString()!==trueDay?"1:00-2:00pm":trueHour<13?"1:00-2:00pm":"not available"} value="1:00-2:00pm"/>
+									<Picker.Item label={Moment(scheduleInput.date).format("DD-MMM-YYYY").toString()!==trueDay?"2:00-3:00pm":trueHour<14?"2:00-3:00pm":"not available"} value="2:00-3:00pm"/>
+									<Picker.Item label={Moment(scheduleInput.date).format("DD-MMM-YYYY").toString()!==trueDay?"3:00-4:00pm":trueHour<15?"3:00-4:00pm":"not available"} value="3:00-4:00pm"/>
+									<Picker.Item label={Moment(scheduleInput.date).format("DD-MMM-YYYY").toString()!==trueDay?"4:00-5:00pm":trueHour<16?"4:00-5:00pm":"not available"} value="4:00-5:00pm"/>
+									<Picker.Item label={Moment(scheduleInput.date).format("DD-MMM-YYYY").toString()!==trueDay?"5:00-6:00pm":trueHour<17?"5:00-6:00pm":"not available"} value="5:00-6:00pm"/>
+									<Picker.Item label={Moment(scheduleInput.date).format("DD-MMM-YYYY").toString()!==trueDay?"6:00-6:30pm":trueHour<18?"6:00-6:30pm":"not available"} value="6:00-6:30pm"/>
+								</Picker>
+							</Modal>
 						</View>
 					</View>
 				</View>
