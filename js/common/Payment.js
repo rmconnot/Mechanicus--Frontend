@@ -68,7 +68,8 @@ export default function PaymentModule({
 	useEffect(() => {
 		PaymentsStripe.setOptionsAsync({
 			publishableKey:
-				"pk_test_51Ij96jEM0ZZ06oKP6PdUiTJ63cJhIkFjn3xsUAl5d0cZ8InxwDc8oBwMKEcTzHINRD2eeXpNP5BGFmVgBrk7mrUz00U2MS4NKt",
+				// "pk_test_51Ij96jEM0ZZ06oKP6PdUiTJ63cJhIkFjn3xsUAl5d0cZ8InxwDc8oBwMKEcTzHINRD2eeXpNP5BGFmVgBrk7mrUz00U2MS4NKt",
+				"pk_test_51H4ZRJCdwq1u7ejTwxG2fVfD9tDv9HIRHzjqMGnoGOw2T45tRVAuEp0THfXfErl4Y5yaSA67C4YDFXf8iItt6OP500XjqXCiEW",
 		});
 	});
 
@@ -77,7 +78,7 @@ export default function PaymentModule({
 			requiredBillingAddressFields: "full",
 		};
 
-		let token = await Stripe.paymentRequestWithCardFormAsync(options);
+		let token = await PaymentsStripe.paymentRequestWithCardFormAsync(options);
 		let response = await doPayment(totalPrice * 100, token.tokenId);
 
 		if (response)

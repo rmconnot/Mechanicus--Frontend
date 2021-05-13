@@ -54,11 +54,15 @@ const Stack = createStackNavigator();
 // connect to backend
 
 const httpLink = new HttpLink({
-	uri: `http://${IP_ADDRESS}:4000/graphql`,
+	uri:
+		// `http://${IP_ADDRESS}:4000/graphql`,
+		"https://mechanicus--backend.herokuapp.com/graphql",
 });
 
 const wsLink = new WebSocketLink({
-	uri: `ws://${IP_ADDRESS}:4000/subscriptions`,
+	uri:
+		// `ws://${IP_ADDRESS}:4000/subscriptions`,
+		"wss://mechanicus--backend.herokuapp.com/subscriptions",
 	options: {
 		reconnect: true,
 	},
