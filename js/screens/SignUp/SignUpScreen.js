@@ -64,7 +64,7 @@ export const SignUpScreen = ({ navigation }) => {
 			method: "get",
 			url: `https://api.dexatel.com/v1/verify/code?code=${newCode}&phone=1${input.phone}`,
 			headers: {
-				token: "a7f963318147e003908047e6f1c0b2d3",
+				token: "61b1ba839f75e4c8c4384106732a2a5d",
 				"Content-Type": "application/json",
 			},
 			data: "",
@@ -97,7 +97,7 @@ export const SignUpScreen = ({ navigation }) => {
 			method: "post",
 			url: "https://api.dexatel.com/v1/verify/phone",
 			headers: {
-				token: "a7f963318147e003908047e6f1c0b2d3",
+				token: "61b1ba839f75e4c8c4384106732a2a5d",
 				"Content-Type": "application/json",
 			},
 			data: data,
