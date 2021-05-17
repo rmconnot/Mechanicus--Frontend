@@ -102,8 +102,6 @@ export default function QuoteReviewScreen({ navigation, route }) {
 	const [quoteID, setQuoteID] = useState(null),
 		[totalPrice, setTotalPrice] = useState(0);
 
-	console.log("selectedServices: ", selectedServices);
-
 	/* get vehicle data */
 	const {
 		data: vehicleData,

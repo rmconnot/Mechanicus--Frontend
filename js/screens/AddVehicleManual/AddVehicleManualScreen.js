@@ -19,7 +19,7 @@ import styles from "./Styles";
 const VEHICLE_MUTATION = gql`
 	mutation(
 		$customerID: Int!
-		$vin: String!
+		$vin: String
 		$type: String!
 		$year: Int!
 		$make: String!

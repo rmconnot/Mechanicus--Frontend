@@ -68,8 +68,7 @@ export default function PaymentModule({
 	useEffect(() => {
 		PaymentsStripe.setOptionsAsync({
 			publishableKey:
-				// "pk_test_51Ij96jEM0ZZ06oKP6PdUiTJ63cJhIkFjn3xsUAl5d0cZ8InxwDc8oBwMKEcTzHINRD2eeXpNP5BGFmVgBrk7mrUz00U2MS4NKt",
-				"pk_test_51H4ZRJCdwq1u7ejTwxG2fVfD9tDv9HIRHzjqMGnoGOw2T45tRVAuEp0THfXfErl4Y5yaSA67C4YDFXf8iItt6OP500XjqXCiEW",
+				"pk_live_51H4ZRJCdwq1u7ejTo6Wg264ELRskDbQ608NyEiwYzdtWTg1KY660zvMyISl1y8JmcQEMWK66qV23tNEdIreGBaEL00S2Fp0prv",
 		});
 	});
 
